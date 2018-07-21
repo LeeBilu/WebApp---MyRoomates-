@@ -32,12 +32,8 @@ app.use(function (req, res, next) {
         //In case there is no cookie and the user trying to get into an unpermitted place
         if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
             req.originalUrl.endsWith(".css") || req.originalUrl.endsWith(".js") ||
-              req.originalUrl === "/static/register.html" || req.originalUrl === "users/register")
+              req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register")
         {
-
-        //
-        // <link rel="stylesheet" href="CSS/cssForLoginAndRegisteration.css">
-        //     <script src="JS/scriptFileForLoginPage.js"></script>
 
             next();
             return;
