@@ -16,20 +16,20 @@ app.use(bodyParser.json());
 // set a cookie
 app.use(function (req, res, next) {
     // check if client sent cookie
-
     loadIdeaDataFromFile();
     let cookie = req.cookies;
     console.log(req.cookies);
     let notAValidCookie = false;
     if(cookie != undefined)
     {
+        // In case that the user sent a cookie , make sure it is a valid one
         notAValidCookie = !(mappingRandToCookieNumber.hasOwnProperty(cookie.cookieName)) ;
     }
 
 
     if (cookie === undefined || notAValidCookie)
     {
-        //In case there is no cookie and the user trying to get into wrong place
+        //In case there is no cookie and the user trying to get into an unpermitted place
         if(req.originalUrl === "/idea" || req.originalUrl === "/static/ideas.html" || req.originalUrl.startsWith("/idea"))
         {
             res.redirect('/static/register.html');
@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
     else
     {
         loadIdeaDataFromFile();
-        // yes, cookie was already present
+        // yes, cookie was already presented
         let cookie = req.cookies.cookieName;
         console.log('cookie exists', cookie);
         let user = mappingRandToCookieNumber[cookie];
@@ -69,7 +69,6 @@ app.use(function (req, res, next) {
         }
     }
 });
-
 
 app.use('/static', express.static('WWW'));
 
