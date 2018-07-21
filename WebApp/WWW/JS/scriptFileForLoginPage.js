@@ -3,11 +3,11 @@ function submitLogIn() {
 
     let password = document.getElementById("password").value;
 
-    let userName = document.getElementById("userName").value;
+    let email = document.getElementById("email").value;
 
     data = {
 
-        "user": userName,
+        "user": email,
         "password": password
 
     };

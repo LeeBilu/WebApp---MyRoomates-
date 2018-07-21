@@ -26,18 +26,27 @@ function showErrorMessage(){
     document.getElementById("submitbutton").style.marginTop= "6px";
 }
 
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 function submitRegisterationFunction(){
 
 
     let name = document.getElementById("FullName").value;
     let password = document.getElementById("password").value;
     let passwordVerification = document.getElementById("passwordVerification").value;
-    let userName = document.getElementById("userName").value;
+    let email = document.getElementById("email").value;
+    if (!validateEmail(email)) {
+        alert("'" + email + "' is invalid email. Please enter a valid email.")
+        return;
+    }
     if(password === passwordVerification)
     {
         data = {
                 "name": name,
-                "user": userName,
+                "user": email,
                 "password": password
 
         };
