@@ -30,12 +30,20 @@ app.use(function (req, res, next) {
     if (cookie === undefined || notAValidCookie)
     {
         //In case there is no cookie and the user trying to get into an unpermitted place
-        if(req.originalUrl === "/idea" || req.originalUrl === "/static/ideas.html" || req.originalUrl.startsWith("/idea"))
+        if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
+            req.originalUrl.endsWith(".css") || req.originalUrl.endsWith(".js") ||
+              req.originalUrl === "/static/register.html" || req.originalUrl === "users/register")
         {
-            res.redirect('/static/register.html');
+
+        //
+        // <link rel="stylesheet" href="CSS/cssForLoginAndRegisteration.css">
+        //     <script src="JS/scriptFileForLoginPage.js"></script>
+
+            next();
             return;
         }
-        next();
+        res.redirect('/static/register.html');
+        return;
     }
     else
     {
@@ -114,6 +122,7 @@ app.post('/users/register', function (req, res) {
     console.log("This cookie name " +req.cookies.cookieName);
     let name = req.body.user;
     console.log("name is" + name);
+    array = [];
     RegisterNewUserToFileSystem(req.body);
     updateUserFile(name);
     res.json({approve :0});
