@@ -39,7 +39,7 @@ function submitRegisterationFunction(){
     let passwordVerification = document.getElementById("passwordVerification").value;
     let email = document.getElementById("email").value;
     if (!validateEmail(email)) {
-        alert("'" + email + "' is invalid email. Please enter a valid email.")
+        alert("כתובת מייל אינה חוקית, בבקשה נסה שנית.");
         return;
     }
     if(password === passwordVerification)
@@ -86,7 +86,7 @@ function submitRegisterationFunction(){
 
     else
     {
-        prompt("The passwords are not the same");
+        prompt("שתי הסיסמאות אינן זהות, נסה שנית");
     }
 
 // Get the form data with our (yet to be defined) function.
