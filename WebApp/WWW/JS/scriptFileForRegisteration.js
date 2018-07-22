@@ -38,13 +38,43 @@ function submitRegisterationFunction(){
     let password = document.getElementById("password").value;
     let passwordVerification = document.getElementById("passwordVerification").value;
     let email = document.getElementById("email").value;
-    if (!validateEmail(email)) {
-        alert("כתובת מייל אינה חוקית, בבקשה נסה שנית.");
-        return;
+    let invalidEmail = document.getElementById("invalid-email");
+    let difPassword = document.getElementById("invalid-password");
+    let emptyName = document.getElementById("invalid-name");
+    let emptyPassword = document.getElementById(("empty-password"))
+    let error = 0;
+        if (!validateEmail(email)) {
+            error++;
+            invalidEmail.style.display = "inline-block";
+
+        }else{
+            invalidEmail.style.display = "none";
+        }
+        if(!name){
+            error++;
+            emptyName.style.display = "inline-block";
+        }else{
+            emptyName.style.display = "none";
+        }
+        if(!password){
+            error++;
+            emptyPassword.style.display = "inline-block";
+        }else{
+            emptyPassword.style.display = "none";
+        }
+        if( password !== passwordVerification){
+            error++;
+            difPassword.style.display = "inline-block";
+        }else{
+            difPassword.style.display = "none";
+        }
+
+    if(error > 0){
+            return;
     }
-    if(password === passwordVerification)
-    {
-        data = {
+
+
+        let data = {
                 "name": name,
                 "user": email,
                 "password": password
@@ -82,12 +112,7 @@ function submitRegisterationFunction(){
             .catch(function (err) {
                 console.log(err.toString());
             })
-    }
 
-    else
-    {
-        prompt("שתי הסיסמאות אינן זהות, נסה שנית");
-    }
 
 // Get the form data with our (yet to be defined) function.
 
