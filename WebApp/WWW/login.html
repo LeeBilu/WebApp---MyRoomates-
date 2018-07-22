@@ -1,30 +1,66 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Register to WebSite</title>-->
+    <!--<link rel="stylesheet" href="CSS/cssForLoginAndRegisteration.css">-->
+    <!--<script src="JS/scriptFileForLoginPage.js"></script>-->
+<!--</head>-->
+<!--<body dir="rtl">-->
+<!--<div id="login-box">-->
+    <!--<div class="left">-->
+        <!--<h1>התחברות</h1>-->
+
+        <!--<input type="text" id="email" name="email" placeholder="כתובת מייל" />-->
+        <!--<input type="password" id="password" name="password" placeholder="סיסמא" />-->
+
+        <!--<input type="submit" name="signup_submit" value="התחבר" onclick="submitLogIn()" />-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash;<div class="right">&ndash;&gt;-->
+        <!--&lt;!&ndash;<span class="loginwith">Sign in with<br />social network</span>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<button class="social-signin facebook">Log in with facebook</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="social-signin twitter">Log in with Twitter</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="social-signin google">Log in with Google+</button>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div class="or">OR</div>&ndash;&gt;-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Register to WebSite</title>
-    <link rel="stylesheet" href="CSS/cssForLoginAndRegisteration.css">
+    <title>LOGIN</title>
+    <link rel = "stylesheet" href="CSS/cssForLoginAndRegisteration.css">
+    <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="JS/scriptFileForLoginPage.js"></script>
 </head>
-<body>
-<div id="login-box">
-    <div class="left">
-        <h1>התחברות</h1>
+<body dir="rtl">
 
-        <input type="text" id="email" name="email" placeholder="כתובת מייל" />
-        <input type="password" id="password" name="password" placeholder="סיסמא" />
+    <div class="container" id="topPicDiv">
 
-        <input type="submit" name="signup_submit" value="התחבר" onclick="submitLogIn()" />
+        <div class="container" id = "login">
+            <img src="Shopping-Cart-5.png" id="topPic"	>
+            <div class="left">
+                <div class = "title">
+                    התחברות
+                </div>
+
+                <input type="text" id="email" name="email" placeholder="כתובת מייל" />
+                <br>
+                <input type="password" id="password" name="password" placeholder="סיסמא" />
+                <br>
+                <br>
+                <input type="submit" id="login-button" class="btn btn-primary" value="התחבר" onclick="submitLogIn()" />
+                <input type = "button" class="btn btn-primary" id="sign-in-button" value="הרשם" onclick="window.location.href='register.html'">
+            </div>
+        </div>
     </div>
 
-    <div class="right">
-        <span class="loginwith">Sign in with<br />social network</span>
 
-        <button class="social-signin facebook">Log in with facebook</button>
-        <button class="social-signin twitter">Log in with Twitter</button>
-        <button class="social-signin google">Log in with Google+</button>
-    </div>
-    <div class="or">OR</div>
-</div>
 </body>
 </html>

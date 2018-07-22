@@ -1,32 +1,79 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Register to WebSite</title>-->
+    <!--<link rel="stylesheet" href="CSS/cssForLoginAndRegisteration.css">-->
+    <!--<script src="JS/scriptFileForRegisteration.js"></script>-->
+<!--</head>-->
+<!--<body dir="rtl">-->
+<!--<div id="login-box">-->
+    <!--<div class="left">-->
+        <!--<h1>הרשמה</h1>-->
+        <!--<p id="loginStatus" style="display: none;"> Login failed - Wrong user name or password</p>-->
+        <!--<input type="text" id="FullName" name="fullName" placeholder="שם מלא" />-->
+        <!--<input type="text" id="email" name="email" placeholder="כתובת מייל" />-->
+        <!--<input type="password" id="password" name="password" placeholder="סיסמא" />-->
+        <!--<input type="password" id="passwordVerification" name="password2" placeholder="סיסמא חוזרת" />-->
+
+        <!--<input type="submit" name="signup_submit" id="submitbutton" value="הירשם" onclick="submitRegisterationFunction()" />-->
+    <!--</div>-->
+
+    <!--<div class="right">-->
+        <!--<span class="loginwith">Sign in with<br />social network</span>-->
+
+        <!--<button class="social-signin facebook">הרשמה בעזרת facebook</button>-->
+        <!--<button class="social-signin twitter">הרשמה בעזרת Twitter</button>-->
+        <!--<button class="social-signin google">הרשמה בעזרת Google+</button>-->
+    <!--</div>-->
+    <!--<div class="or">או</div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Register to WebSite</title>
-    <link rel="stylesheet" href="CSS/cssForLoginAndRegisteration.css">
-    <script src="JS/scriptFileForRegisteration.js"></script>
+    <title>Register</title>
+    <script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
+
+
+
+
+
 <body dir="rtl">
-<div id="login-box">
-    <div class="left">
-        <h1>הרשמה</h1>
-        <p id="loginStatus" style="display: none;"> Login failed - Wrong user name or password</p>
-        <input type="text" id="FullName" name="fullName" placeholder="שם מלא" />
-        <input type="text" id="email" name="email" placeholder="כתובת מייל" />
-        <input type="password" id="password" name="password" placeholder="סיסמא" />
-        <input type="password" id="passwordVerification" name="password2" placeholder="סיסמא חוזרת" />
 
-        <input type="submit" name="signup_submit" id="submitbutton" value="הירשם" onclick="submitRegisterationFunction()" />
+
+    <div class="container" id="main-text">
+        <div class = "title">
+            הרשמה
+        </div>
+        <label><b>שם מלא</b></label>
+        <input type="text" id="FullName" placeholder="רשום שם מלא" name="name">
+
+        <label><b>כתובת מייל</b></label>
+        <input type="text" id="email" placeholder="רשום כתובת מייל" name="display_name">
+
+        <label><b>סיסמא</b></label>
+        <input type="password" id="password" placeholder="רשום סיסמא" name="password">
+
+        <label><b>סיסמא חוזרת</b></label>
+        <input type="password" id="passwordVerification" placeholder="רשום סיסמא חוזרת" name="password-repeat" required>
+        <br>
+        <br>
+        <div class="clearfix">
+            <button type="button"  class="cancelbtn"  onclick="window.location.href='login.html'">ביטול</button>
+            <button type="submit" class="signupbtn" onclick="submitRegisterationFunction()" >הירשם</button>
+
+        </div>
     </div>
+<link rel="stylesheet" href="CSS/registerStyle.css">
+<script src="JS/scriptFileForRegisteration.js"></script>
 
-    <div class="right">
-        <span class="loginwith">Sign in with<br />social network</span>
 
-        <button class="social-signin facebook">הרשמה בעזרת facebook</button>
-        <button class="social-signin twitter">הרשמה בעזרת Twitter</button>
-        <button class="social-signin google">הרשמה בעזרת Google+</button>
-    </div>
-    <div class="or">או</div>
-</div>
 </body>
 </html>
+
