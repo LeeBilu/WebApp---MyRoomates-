@@ -1,4 +1,4 @@
-function printAllDataFunc() {
+function onCouponsSubmission() {
 
         console.log("Begin");
         let url = 'http://localhost:8081/ideas';
