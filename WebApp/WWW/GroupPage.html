@@ -1,39 +1,123 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-
-    <meta charset="UTF-8">
     <title>Group page</title>
-    <script src="JS/scriptFile.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/GroupPageCSSFile.css">
+    <script src="JS/bootstrap.js"></script>
+    <script src="JS/npm.js"></script>
+    <script src="JS/groupScript.js"></script>
 </head>
-<body>
 
-<div class="container text-center">
-    <h1 id = "FirstObject">Ideas</h1>
-    <div class="well">
-        <div id="contactsListID">
-            <div class="row" id="bilu12">
-            <table class="table table-hover table-striped table-condensed tasks-table">
-                <tr>
-                    <th>index</th>
-                    <th>idea</th>
-                    <th>Rename Idea</th>
-                    <th>Remove Idea</th>
-                </tr>
-            </table>
+<body class="bg-light" dir="rtl" >
+
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item active">
+                <a class="nav-link" href=""> הפרופיל האישי <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">התראות</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="PaymentMethod.html">תשלום</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>
+            </li>
+            <li>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="חיפוש" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">חיפוש</button>
+        </form>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+        <div class="lh-100">
+        </div>
+    </div>
+
+    <div class="my-3 p-3 bg-white rounded box-shadow" id="notification-div" align="right">
+        <h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>
+        <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">אופיר</strong>
+                הוסיף חלב תנובה 5 אחוז.
+            </p>
+        </div>
+        <div class="media text-muted pt-3">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">דניאל</strong>
+                הסירה מהרשימה שני סוכר לבן
+            </p>
+        </div>
+        <small class="d-block text-right mt-3">
+            <a href="#">לכל עדכוני הקבוצה</a>
+        </small>
+    </div>
+
+    <div class="my-3 p-3 bg-white rounded box-shadow" id="group members" align="right">
+        <div class = "text-left">
+            <button type="button" class="btn btn-primary" >להוספת שותף לרשימה</button>
+        </div>
+        <h6 class="border-bottom border-gray pb-2 mb-0">חברי הקבוצה</h6>
+        <div class="media text-muted pt-3">
+            <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <strong class="text-gray-dark">אופיר לפיד</strong>
+                    <button type="button" class="btn btn-danger deleteButtons">להסרה</button>
+                </div>
+                <span class="d-block">ofiriro3@gmail.com</span>
             </div>
         </div>
+        <div class="media text-muted pt-3">
+            <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <strong class="text-gray-dark">דניאל כהן</strong>
+                    <button type="button" class="btn btn-danger deleteButtons">להסרה</button>
+                </div>
+                <span class="d-block">danielCohen@gmail.com</span>
+            </div>
+        </div>
+        <div class="media text-muted pt-3">
+            <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+            <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <strong class="text-gray-dark">לי בילו</strong>
+                    <button type="button" class="btn btn-danger deleteButtons">להסרה</button>
+                </div>
+                <span class="d-block">leeBilu@gmail.com</span>
+            </div>
+        </div>
+        <small class="d-block text-right mt-3" id="forAllGroupMembers" >
+            <a href="#" onclick="getAllGroupMembers()">לכל חברי הקבוצה</a>
 
-            <button class="btn btn-success" id="buttonForAddNewIdea" onclick="addNewIdeaFunc()" >Add new Idea</button>
-
-            <button class="btn btn-primary" id="PrintDataButtonID" onclick="printAllDataFunc()" >Print All Ideas</button>
-
-
+        </small>
     </div>
-</div>
 
+</main>
 </body>
 </html>
