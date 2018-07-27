@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile Page</title>
+    <script src="JS/scriptProfilePage.js"></script>
+    <link rel="stylesheet" href="CSS/profilePageStyle.css">
+</head>
+<body dir="rtl">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar">
+                <!--<div class="profile-userpic">-->
+                    <!--<img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">-->
+                <!--</div>-->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+                        <!--FullName-->
+                    </div>
+                </div>
+                <div class="profile-userbuttons">
+                    <button type="button" class="btn btn-danger btn-sm">Message</button>
+                </div>
+                <div class="profile-usermenu">
+                    <ul class="nav">
+
+                        <li>
+                            <div class="details" onclick="showUserDetails()">
+                                <i class="glyphicon glyphicon-user"></i>
+                                פרטי משתמש
+                            </div>
+
+                        </li>
+                        <li>
+                            <div class="details" onclick="showAllGroups()">
+                                <i class="glyphicon glyphicon-tasks"></i>
+                                    הקבוצות שלי
+                            </div>
+
+
+                        </li>
+                        <li>
+                            <div class="details" onclick="createNewGroup()"> <i class="glyphicon glyphicon-flag"></i>
+                                צור קבוצה חדשה </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div id="profile-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+</body>
+</html>
