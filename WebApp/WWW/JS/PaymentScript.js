@@ -45,7 +45,18 @@ function onCouponsSubmission() {
 
     }
 }
+function getPaymentMethod(value){
 
+    let visaDetailsDiv = document.getElementById("PayByVisa");
+    if(value == "credit")
+    {
+        visaDetailsDiv.style.display = "block";
+    }
+    else
+    {
+        visaDetailsDiv.style.display = "none";
+    }
+}
 function OnSubmitPayment() {
 
         let approve = true;
