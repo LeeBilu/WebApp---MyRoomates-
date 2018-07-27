@@ -14,65 +14,65 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // set a cookie
-// app.use(function (req, res, next) {
-//     // check if client sent cookie
-//     loadIdeaDataFromFile();
-//     let cookie = req.cookies;
-//     console.log(req.cookies);
-//     let notAValidCookie = false;
-//     if(cookie != undefined)
-//     {
-//         // In case that the user sent a cookie , make sure it is a valid one
-//         notAValidCookie = !(mappingRandToCookieNumber.hasOwnProperty(cookie.cookieName)) ;
-//     }
-//
-//
-//     if (cookie === undefined || notAValidCookie)
-//     {
-//         //In case there is no cookie and the user trying to get into an unpermitted place
-//         if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
-//             req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
-//               req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register")
-//         {
-//
-//             next();
-//             return;
-//         }
-//         res.redirect('/static/register.html');
-//         return;
-//     }
-//     else
-//     {
-//         loadIdeaDataFromFile();
-//         // yes, cookie was already presented
-//         let cookie = req.cookies.cookieName;
-//         console.log('cookie exists', cookie);
-//         let user = mappingRandToCookieNumber[cookie];
-//         if(user != null)
-//         {
-//             console.log("user was read from table")
-//             console.log("the user name is : " + user);
-//             //sync with writing
-//             array = loadUserIdeasByName(user);
-//             if(array === undefined)
-//             {
-//                 console.log("here");
-//                 array = [];
-//             }
-//             next();
-//             updateUserIdeasByName(user);
-//             userData[user] = array ;
-//             //sync with writing
-//             updateUserFile(user);
-//
-//
-//         }
-//         else {
-//             console.log("user not found in system");
-//             next();
-//         }
-//     }
-// });
+app.use(function (req, res, next) {
+    // check if client sent cookie
+    loadIdeaDataFromFile();
+    let cookie = req.cookies;
+    console.log(req.cookies);
+    let notAValidCookie = false;
+    if(cookie != undefined)
+    {
+        // In case that the user sent a cookie , make sure it is a valid one
+        notAValidCookie = !(mappingRandToCookieNumber.hasOwnProperty(cookie.cookieName)) ;
+    }
+
+
+    if (cookie === undefined || notAValidCookie)
+    {
+        //In case there is no cookie and the user trying to get into an unpermitted place
+        if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
+            req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
+              req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register")
+        {
+
+            next();
+            return;
+        }
+        res.redirect('/static/register.html');
+        return;
+    }
+    else
+    {
+        loadIdeaDataFromFile();
+        // yes, cookie was already presented
+        let cookie = req.cookies.cookieName;
+        console.log('cookie exists', cookie);
+        let user = mappingRandToCookieNumber[cookie];
+        if(user != null)
+        {
+            console.log("user was read from table")
+            console.log("the user name is : " + user);
+            //sync with writing
+            array = loadUserIdeasByName(user);
+            if(array === undefined)
+            {
+                console.log("here");
+                array = [];
+            }
+            next();
+            updateUserIdeasByName(user);
+            userData[user] = array ;
+            //sync with writing
+            updateUserFile(user);
+
+
+        }
+        else {
+            console.log("user not found in system");
+            next();
+        }
+    }
+});
 
 app.use('/static', express.static('WWW'));
 
