@@ -1,11 +1,61 @@
 function showUserDetails(){
-
+    let profilePage = `<h1>פרופיל אישי</h1> <br>`
+    document.getElementById("profile-content").innerHTML = profilePage;
 
 }
 
 function showAllGroups(){
-    
+    let myGroups = `<h1>הקבוצות שלי</h1> <br>`
+    document.getElementById("profile-content").innerHTML = myGroups;
+    let url = 'http://localhost:8081/users/profilePage';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "GET",
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data){
+            let i;
+            myGroups += `<ol>`;
+            for(i in data){
+                myGroups += `<li>${data[i]}</li> <button id="group${i}" class="btn btn-danger btn-sm groups" data-pos="${i}">העבור לדף הקבוצה</button>`
+            }
+
+            document.getElementById("profile-content").innerHTML = myGroups;
+            for(i in data) {
+                let chooseGroup = document.getElementById("group" + i);
+                chooseGroup.addEventListener('click', function(){
+
+                    let i = this.dataset.pos;
+                    console.log(i);
+                    let url = 'http://localhost:8081/users/groupPage';
+                    let data = {"groupNum": i};
+                    fetch(url,
+                        {
+                            credentials: "same-origin",
+                            method: "POST",
+                            body: JSON.stringify(data),
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })  .then(function (response) {
+                        return response.json();
+                    }).then(function (data) {
+                        if(data){
+                            window.location.replace(data.url);
+                        }
+                    });
+                });
+            }
+        }
+
+    });
+
+
 }
+
+
 
 
 function createNewGroup() {
