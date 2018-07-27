@@ -1,9 +1,9 @@
-function getAllGroupMembers(url = "www.youtube.com", title = "my title", w = "300", h = "250")
+function getAllGroupMembers(url = "http://localhost:63342/WebApp/WWW/AllMyGroupMembers.html" , title = "my title", w = "600", h = "500")
 {
 
 
         var left = (screen.width/2)-(w/2);
-        var top = (screen.he    ight/2)-(h/2);
+        var top = (screen.height/2)-(h/2);
         window.open(url, title, 'toolbar=no, ' +
             'location=no, directories=no, status=no, menubar=no, ' +
             'scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
