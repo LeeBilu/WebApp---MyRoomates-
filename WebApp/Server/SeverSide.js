@@ -31,7 +31,7 @@ app.use(function (req, res, next) {
     {
         //In case there is no cookie and the user trying to get into an unpermitted place
         if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
-            req.originalUrl.endsWith(".css") || req.originalUrl.endsWith(".js") ||
+            req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
               req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register")
         {
 
@@ -150,6 +150,7 @@ app.post('/users/login', function (req, res) {
     res.json({approve :approval});
 })
 
+
 let server = app.listen(8081, function () {
     let host = server.address().address
     let port = server.address().port
@@ -157,6 +158,7 @@ let server = app.listen(8081, function () {
     UpdateUserFromFile();
     console.log("Example app listening at http://%s:%s", host, port)
 })
+
 
 function RegisterNewUserToFileSystem(userData)
 {
@@ -382,3 +384,6 @@ function updateUserFile(user)
 
 
 }
+
+
+
