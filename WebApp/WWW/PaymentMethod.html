@@ -60,7 +60,7 @@
                 <span class="text-muted">העגלה שלך</span>
                 <span class="badge badge-secondary badge-pill">3</span>
             </h4>
-            <ul class="list-group mb-3" style=" overflow: auto">
+            <ul class="list-group mb-3" id="my-cart" style="overflow: auto">
                 <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
                     <div>
                         <h6 class="my-0 text-right">מוצר א'</h6>
@@ -92,6 +92,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="מספר קופון" id="CouponNumber">
                     <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary" onclick="loadCartFromJSON(1)">בדיקת JSON</button>
                         <button type="submit" class="btn btn-secondary" onclick="onCouponsSubmission()">הכנס קוד קופון</button>
                     </div>
                 </div>
@@ -158,7 +159,7 @@
                 <h4 class="mb-3">צורת תשלום</h4>
 
                 <div class="d-block my-3">
-                    <div class="custom-control custom-radio">
+                    <div class="custom-control custom-radio" id="paymentMethodDiv">
                         <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value ="credit" onclick="getPaymentMethod(value)"  checked >
                         <label class="custom-control-label" for="credit">כרטיס אשראי</label>
                     </div>
