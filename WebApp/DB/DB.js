@@ -57,7 +57,7 @@ app.post('/users/register', function (req, res) {
             }
         }
 
-        users[users_id] = {"id":users_id, "email":body.email, password:body.password, "fullname": body.username, "phone": body.phone, "groups_id" : []};
+        users[users_id] = {"id":users_id, "email":body.email, password: body.password, "fullname": body.username, "phone": body.phone, "groups_id" : []};
         if(!insertToFile(users, "users", users_id)){
             res.json({"type" : 0});
             return;
@@ -83,7 +83,10 @@ app.post('/users/user', function (req, res) {
         res.json({"type" : 0});
         return;
     }
-    res.json({"type" : 1, "data" : users[body.id]});
+    let user =  users[body.id];
+    delete user.password;
+    delete user.groups_id;
+    res.json({"type" : 1, "data" : user});
 });
 /**
  * New group
@@ -136,7 +139,6 @@ app.post('/groups/update', function (req, res) {
         return;
     }
     res.json({"type" : 1});
-    return;
 });
 /**
  * Get group data by group id
@@ -215,7 +217,9 @@ app.post('/products/get', function (req, res) {
 });
 
 
-app.post('/orders/newcart', function (req, res) {
+app.post('/coupons/checkandset', function (req, res) {
+    let body = req.body;
+
 
 });
 
@@ -236,7 +240,7 @@ let loadDBData = function () {
 
 let updateDBData = function(){
     let data = {"users_id" : users_id, "group_id" : group_id};
-    fs.writeFileSync("DBdata", data, 'utf8', function (err) {
+    fs.writeFileSync("DBdata", JSON.stringify(data), 'utf8', function (err) {
         if(err){
             return false;
         }
@@ -246,7 +250,7 @@ let updateDBData = function(){
 
 
 let insertToFile = function(data, filename, counter) {
-    fs.writeFileSync(filename, data, 'utf8', function (err) {
+    fs.writeFileSync(filename,  JSON.stringify(data), 'utf8', function (err) {
         if(err){
             return false;
         }
