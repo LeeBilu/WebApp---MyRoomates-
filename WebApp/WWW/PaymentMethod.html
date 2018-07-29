@@ -15,21 +15,27 @@
 </head>
 
 <body class="bg-light" >
+
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
-        <ul class="navbar-nav navbar-right ">
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8081/static/profilePage.html"> הפרופיל האישי </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8081/static/GroupPage.html">הקבוצה הנוכחית</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8081/static/My-Cart.html">העגלה שלי</a>
+            </li>
             <li class="nav-item active">
-                <a class="nav-link" href=""> הפרופיל האישי <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="http://localhost:8081/static/PaymentMethod.html">תשלום</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">התראות</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="PaymentMethod.html">תשלום</a>
-            </li>
-
         </ul>
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8081/static/login.html" onclick="disconnectFromSite()">התנתקות</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>
@@ -48,6 +54,7 @@
         </form>
     </div>
 </nav>
+
 <div class="container" dir="rtl">
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
@@ -92,12 +99,13 @@
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="מספר קופון" id="CouponNumber">
                     <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary" onclick="loadCartFromJSON(1)">בדיקת JSON</button>
                         <button type="submit" class="btn btn-secondary" onclick="onCouponsSubmission()">הכנס קוד קופון</button>
                     </div>
                 </div>
             </div>
+            <button type="submit" class="btn btn-secondary" onclick="loadCartFromJSON(1)">בדיקת JSON</button>
         </div>
+
         <div class="col-md-8 order-md-1" align="right">
             <h4 class="mb-3">פרטי משלוח</h4>
             <div class="needs-validation" novalidate>
@@ -182,8 +190,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-5 mb-3">
-                            <label for="cc-number">מספר הכרטיס</label>
-                            <input type="text" class="form-control" id="cc-number" placeholder="">
+                            <label for="VisaNumber">מספר הכרטיס</label>
+                            <input type="text" class="form-control" id="VisaNumber" placeholder="">
                             <div class="my-invalid-feedback">
                                 אנא הכנס מספר כרטיס אשראי
                             </div>
