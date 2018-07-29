@@ -1,13 +1,40 @@
 function showUserDetails(){
     let profilePage = `<h1>פרופיל אישי</h1> <br>`
     document.getElementById("profile-content").innerHTML = profilePage;
+    let url = 'http://localhost:8081/users/myDetails';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "GET",
+        })  .then(function (response) {
+             return response.json();
+        }).then(function (data){
+            profilePage +=`  <div class=" col-md-9 col-lg-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                        </tr>
+                        <td>שם מלא</td>
+                        <td>${data.fullname}
+                        </td>
+                           
+                      </tr>
+                      <tr>
+                        <td>כתובת מייל</td>
+                        <td>${data.email}</td>
+                      
+                     
+                    </tbody>
+                  </table>
+                  `
+        document.getElementById("profile-content").innerHTML = profilePage;
+    });
 
 }
 
 function showAllGroups(){
     let myGroups = `<h1>הקבוצות שלי</h1> <br>`
     document.getElementById("profile-content").innerHTML = myGroups;
-    let url = 'http://localhost:8081/users/profilePage';
+    let url = 'http://localhost:8081/users/allGroups';
     fetch(url,
         {
             credentials: "same-origin",
@@ -86,7 +113,10 @@ function addNewGroup() {
         {
             credentials: "same-origin",
             method: "POST",
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })  .then(function (response) {
         return response.json();
         }).then(function (data) {

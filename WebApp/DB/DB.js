@@ -9,14 +9,8 @@ let app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(bodyParser.json());
 
-let server = app.listen(3000, function () {
-    let host = server.address().address;
-    let port = server.address().port;
-    loadDBData();
-    console.log(users_id);
-    console.log("DB listening at http://%s:%s", host, port)
-});
 /**
  * Login
  * params: email , password
@@ -95,6 +89,7 @@ app.post('/users/user', function (req, res) {
 
 app.post('/groups/add', function (req, res) {
     let body = req.body;
+        console.log(body);
     let groups = getFromFile("groups");
     let users = getFromFile("users");
     if(!groups){
@@ -232,7 +227,7 @@ let loadDBData = function () {
         users_id = db_data.users_id;
         group_id = db_data.group_id;
     }
-    catch{
+    catch(e){
         return false;
     }
 
@@ -266,7 +261,14 @@ let getFromFile = function (filename) {
     try{
         let data = fs.readFileSync(filename).toString();
         return JSON.parse(data);
-    } catch{
+    } catch(e){
         return false;
     }
 };
+
+let server = app.listen(3000, function () {
+    let host = server.address().address;
+    let port = server.address().port;
+    loadDBData();
+    console.log("DB listening at http://%s:%s", host, port)
+});
