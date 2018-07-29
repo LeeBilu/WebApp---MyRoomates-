@@ -15,7 +15,39 @@
 </head>
 
 <body class="bg-light" >
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
+        <ul class="navbar-nav navbar-right ">
+            <li class="nav-item active">
+                <a class="nav-link" href=""> הפרופיל האישי <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">התראות</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="PaymentMethod.html">תשלום</a>
+            </li>
 
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>
+            </li>
+            <li>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="חיפוש" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">חיפוש</button>
+        </form>
+    </div>
+</nav>
 <div class="container" dir="rtl">
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
@@ -28,15 +60,15 @@
                 <span class="text-muted">העגלה שלך</span>
                 <span class="badge badge-secondary badge-pill">3</span>
             </h4>
-            <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <ul class="list-group mb-3" id="my-cart" style="overflow: auto">
+                <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
                     <div>
-                        <h6 class="my-0">מוצר א'</h6>
+                        <h6 class="my-0 text-right">מוצר א'</h6>
                         <small class="text-muted">תיאור מוצר א'</small>
                     </div>
                     <span class="text-muted">12 &#8362</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <li class="list-group-item d-flex justify-content-between lh-condensed .list-item-css">
                     <div>
                         <h6 class="my-0">מוצר ב'</h6>
                         <small class="text-muted">תיאור מוצר ב'</small>
@@ -60,6 +92,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="מספר קופון" id="CouponNumber">
                     <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary" onclick="loadCartFromJSON(1)">בדיקת JSON</button>
                         <button type="submit" class="btn btn-secondary" onclick="onCouponsSubmission()">הכנס קוד קופון</button>
                     </div>
                 </div>
@@ -102,7 +135,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-5 mb-3">
+                    <div class="col-md-6 mb-3">
                         <label for="partOrFullPayment">תשלום מלא/חלקי</label>
                         <select class="custom-select d-block w-100 form-control" id="partOrFullPayment">
                             <option value="" >בחר תשלום חלקי או מלא</option>
@@ -111,34 +144,6 @@
                         </select>
                         <div class="my-invalid-feedback">
                             בבקשה בחר צורת תשלום
-                        </div>
-                    </div>
-
-                </div>
-                <hr class="mb-4">
-                <h4 class="mb-3">צורת תשלום</h4>
-
-                <div class="d-block my-3">
-                    <div class="custom-control custom-radio">
-                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked >
-                        <label class="custom-control-label" for="credit">כרטיס אשראי</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input id="payBox" name="paymentMethod" type="radio" class="custom-control-input">
-                        <label class="custom-control-label" for="debit">פייבוקס</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input">
-                        <label class="custom-control-label" for="paypal">PayPal</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="VisaOwner">שם בעל הכרטיס</label>
-                        <input type="text" class="form-control" id="VisaOwner" placeholder="">
-                        <small class="text-muted">שם מלא של בעל הכרטיס כפי שמופיע עליו</small>
-                        <div class="my-invalid-feedback">
-                            נחוץ שם בעל הכרטיס
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -150,56 +155,82 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-5 mb-3">
-                        <label for="cc-number">מספר הכרטיס</label>
-                        <input type="text" class="form-control" id="cc-number" placeholder="">
-                        <div class="my-invalid-feedback">
-                            אנא הכנס מספר כרטיס אשראי
-                        </div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="monthOfExpiration">חודש</label>
-                        <select id="monthOfExpiration" class="form-control">
-                            <option value=""> חודש</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                        </select>
-                        <div class="my-invalid-feedback">
-                            הזן חודש
-                        </div>
-                    </div>
+                <hr class="mb-4">
+                <h4 class="mb-3">צורת תשלום</h4>
 
-                    <div class="form-group col-md-2">
-                        <label for="YearOfExpiration">שנה</label>
-                        <select id="YearOfExpiration" class="form-control">
-                            <option value=""> שנה</option>
-                            <option>18</option>
-                            <option>19</option>
-                            <option>20</option>
-                            <option>21</option>
-                            <option>22</option>
-                        </select>
-                        <div class="my-invalid-feedback">
-                            הזן שנה
-                        </div>
+                <div class="d-block my-3">
+                    <div class="custom-control custom-radio" id="paymentMethodDiv">
+                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value ="credit" onclick="getPaymentMethod(value)"  checked >
+                        <label class="custom-control-label" for="credit">כרטיס אשראי</label>
                     </div>
+                    <div class="custom-control custom-radio">
+                        <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" value ="cash" onclick="getPaymentMethod(value)">
+                        <label class="custom-control-label" for="cash">מזומן</label>
+                    </div>
+                </div >
+                <div id="PayByVisa">
+                    <div class="row">
+                        <div class="col-md-6 mb-3" >
+                            <label for="VisaOwner">שם בעל הכרטיס</label>
+                            <input type="text" class="form-control" id="VisaOwner" placeholder="">
+                            <small class="text-muted">שם מלא של בעל הכרטיס כפי שמופיע עליו</small>
+                            <div class="my-invalid-feedback">
+                                נחוץ שם בעל הכרטיס
+                            </div>
+                        </div>
 
-                    <div class="col-md-3 mb-3">
-                        <label for="cc-cvv">CVV</label>
-                        <input type="text" class="form-control" id="cc-cvv" placeholder="" >
-                        <div class="my-invalid-feedback">
-                            Security code required
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="cc-number">מספר הכרטיס</label>
+                            <input type="text" class="form-control" id="cc-number" placeholder="">
+                            <div class="my-invalid-feedback">
+                                אנא הכנס מספר כרטיס אשראי
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="monthOfExpiration">חודש</label>
+                            <select id="monthOfExpiration" class="form-control">
+                                <option value=""> חודש</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                                <option>11</option>
+                                <option>12</option>
+                            </select>
+                            <div class="my-invalid-feedback">
+                                הזן חודש
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="YearOfExpiration">שנה</label>
+                            <select id="YearOfExpiration" class="form-control">
+                                <option value=""> שנה</option>
+                                <option>18</option>
+                                <option>19</option>
+                                <option>20</option>
+                                <option>21</option>
+                                <option>22</option>
+                            </select>
+                            <div class="my-invalid-feedback">
+                                הזן שנה
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="cc-cvv">CVV</label>
+                            <input type="text" class="form-control" id="cc-cvv" placeholder="" >
+                            <div class="my-invalid-feedback">
+                                Security code required
+                            </div>
                         </div>
                     </div>
                 </div>

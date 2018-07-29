@@ -3,6 +3,7 @@ let array = [];
 let usersAndPasswords =[];
 let userData = {};
 let mappingRandToCookieNumber = {};
+require("isomorphic-fetch");
 
 let express = require('express');
 let cookieParser = require('cookie-parser');
@@ -149,6 +150,105 @@ app.post('/users/login', function (req, res) {
     res.status(302);
     res.json({approve :approval});
 })
+
+app.post('/users/newGroup', function (req, res) {
+    let groupName = req.body.groupName;
+    let data = {};
+    data.name = groupName;
+    data.user_id = 1;
+    let url = 'http://localhost:3000/groups/add';
+    console.log(data)
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        if(data.type == "1"){
+            console.log("hi")
+            return res.send(JSON.stringify({'url': "/static/GroupPage.html"}));
+        }
+    });
+
+});
+
+app.get('/users/allGroups', function (req, res) {
+    let url = 'http://localhost:3000/groups/getall';
+    let data = {"user_id": 1};
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        if(data.type == "1"){
+            return res.send(data.data);
+        }
+    });
+
+});
+
+app.post('/users/groupPage', function (req, res) {
+    let group_id = req.body.groupNum;
+    let data = {};
+    data.group_id = group_id;
+    let url = 'http://localhost:3000/groups/get';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        if(data.type == "1"){
+            return res.send(JSON.stringify({'url': "/static/GroupPage.html"}));
+        }
+    });
+
+});
+let data = {
+    "email" : "daniel",
+    "fullname" : "daniel cohen"
+}
+app.get('/users/myDetails', function (req, res) {
+    let url = 'http://localhost:3000/users/user';
+    let data = {"id": 1};
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        if(data.type == "1"){
+            return res.send(data.data);
+        }
+    });
+    // console.log(data);
+    // return res.send(data);
+});
 
 
 let server = app.listen(8081, function () {
