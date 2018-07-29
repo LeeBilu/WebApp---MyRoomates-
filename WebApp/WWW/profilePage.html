@@ -13,21 +13,27 @@
 </head>
 <body dir="rtl">
 
+
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
-        <ul class="navbar-nav navbar-right ">
-            <li class="nav-item active">
-                <a class="nav-link" href=""> הפרופיל האישי <span class="sr-only">(current)</span></a>
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link active" href="http://localhost:8081/static/profilePage.html"> הפרופיל האישי <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">התראות</a>
+                <a class="nav-link" href="http://localhost:8081/static/GroupPage.html">הקבוצה הנוכחית</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="PaymentMethod.html">תשלום</a>
+                <a class="nav-link" href="http://localhost:8081/static/My-Cart.html">העגלה שלי</a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8081/static/PaymentMethod.html">תשלום</a>
+            </li>
         </ul>
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:8081/static/login.html" onclick="disconnectFromSite()">התנתקות</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>

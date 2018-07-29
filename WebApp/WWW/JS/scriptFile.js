@@ -120,9 +120,8 @@ function printAllDataFunc() {
                     credentials: "same-origin",
                     method: "PUT",
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        addTextID: value
-                    })
+
+
                 })
                 .then(function (response) {
 
