@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -9,69 +8,90 @@
     <title>Profile Page</title>
     <script src="JS/scriptProfilePage.js"></script>
     <link rel="stylesheet" href="CSS/profilePageStyle.css">
-    <!--<link rel="stylesheet" href="CSS/bootstrap.min.css">-->
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 </head>
 <body dir="rtl">
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
+        <ul class="navbar-nav navbar-right ">
+            <li class="nav-item active">
+                <a class="nav-link" href=""> הפרופיל האישי <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">התראות</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="PaymentMethod.html">תשלום</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>
+            </li>
+            <li>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="חיפוש" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">חיפוש</button>
+        </form>
+    </div>
+</nav>
 
 <main role="main" class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
         <div class="lh-100">
         </div>
     </div>
-<div class="container">
+
     <div class="row profile">
-        <div class="col-md-3">
-            <div class="profile-sidebar">
-                <!--<div class="profile-userpic">-->
-                    <!--<img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">-->
-                <!--</div>-->
-                <div class="profile-usertitle">
-                    <div class="profile-usertitle-name">
-                        <!--FullName-->
-                    </div>
+    <div class="my-3 p-3 bg-white rounded box-shadow" id="notification-div" align="right">
+            <button type="button" class="btn btn-danger btn-sm groups">Message</button>
+        <ul >
+
+            <li>
+                <div class="media text-muted pt-3" onclick="showUserDetails()">
+                    <i class="glyphicon glyphicon-user"></i>
+                   פרטי משתמש
                 </div>
-                <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-danger btn-sm">Message</button>
+
+            </li>
+            <li>
+                <div class="media text-muted pt-3" onclick="showAllGroups()">
+                    <i class="glyphicon glyphicon-tasks"></i>
+                  הקבוצות שלי
                 </div>
-                <div class="profile-usermenu">
-                    <ul class="nav">
-
-                        <li>
-                            <div class="details" onclick="showUserDetails()">
-                                <i class="glyphicon glyphicon-user"></i>
-                                פרטי משתמש
-                            </div>
-
-                        </li>
-                        <li>
-                            <div class="details" onclick="showAllGroups()">
-                                <i class="glyphicon glyphicon-tasks"></i>
-                                    הקבוצות שלי
-                            </div>
 
 
-                        </li>
-                        <li>
-                            <div class="details" onclick="createNewGroup()"> <i class="glyphicon glyphicon-flag"></i>
-                                צור קבוצה חדשה </div>
+            </li>
+            <li>
+                <div class="media text-muted pt-3" onclick="createNewGroup()"> <i class="glyphicon glyphicon-flag"></i>
+                    צור קבוצה חדשה </div>
 
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-9">
+            </li>
+        </ul>
+    </div>
+        <div class="col-md-9 my-3 p-3 bg-white rounded box-shadow media text-muted pt-3" align="right">
             <div id="profile-content">
 
             </div>
         </div>
     </div>
-</div>
 </main>
+
+
 
 </body>
 </html>

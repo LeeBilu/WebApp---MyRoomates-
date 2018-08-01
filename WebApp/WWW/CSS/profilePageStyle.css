@@ -111,3 +111,9 @@ body {
     background: #fff;
     min-height: 460px;
 }
+
+ul {
+    padding: 0;
+    margin-bottom: 10px;
+    position: static;
+}

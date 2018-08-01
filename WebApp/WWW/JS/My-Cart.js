@@ -185,3 +185,52 @@ ExampleForProductArray = {
     }
 }
 
+function searchInProductList() {
+    // Declare variables
+    let input, filter, product_list, products_Divs,  i;
+    input = document.getElementById("InputOfTheSearchBox");
+    filter = input.value.toUpperCase();
+    product_list = document.getElementById("list_Of_Products");
+    products_Divs = product_list.getElementsByClassName("Product");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < products_Divs.length; i++) {
+
+        let product_Name = products_Divs[i].getElementsByTagName("h6")[0].textContent;
+        if (product_Name.toUpperCase().indexOf(filter) > -1) {
+            products_Divs[i].style.display = "";
+            } else {
+            products_Divs[i].style.display = "none";
+            }
+    }
+}
+
+function onChoosingProduct(button, DivToDisplay)
+{
+    replacingBetweenVisbleDivs(button, DivToDisplay);
+}
+
+function onApprovingProduct(button, DivToDisplay, Product_ID )
+{
+    replacingBetweenVisbleDivs(button, DivToDisplay);
+    let quantity = button.parentElement.getElementsByClassName("quantity_input")[0];
+    addNewProductToCart(Product_ID, quantity);
+}
+
+function onCancelingProduct(button, DivToDisplay)
+{
+    replacingBetweenVisbleDivs(button, DivToDisplay);
+}
+
+function replacingBetweenVisbleDivs(button, DivToDisplay)
+{
+    button.parentElement.parentElement.style.display = "none";
+    let b_parent = button.parentElement.parentElement.parentElement;
+    let quantity_div = b_parent.getElementsByClassName(DivToDisplay);
+    quantity_div[0].style.display = "inline";
+}
+
+function addNewProductToCart(Product_ID)
+{
+    //TODO - add new product to the current cart and update the serer
+}
