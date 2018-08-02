@@ -121,13 +121,19 @@ app.post('/groups/add', function (req, res) {
  */
 app.post('/groups/update', function (req, res) {
     let body = req.body;
+    console.log(body);
     let users = getFromFile("users");
     if(!users){
         res.json({"type" : 0});
     }
     for(let id in users){
-        if(body.emails.includes(users[id].email)){
-            users[id].groups.push(body.group_id);
+
+        for(let i =0; i<body.emails.length; i++){
+
+            if(body.emails[i] == users[id].email){
+
+               users[id].groups_id.push(body.group_id);
+            }
         }
     }
     if(!insertToFile(users,"users", false)){
@@ -164,15 +170,15 @@ app.post('/groups/get', function (req, res) {
                 user.name = users[id].fullname;
                 user.phone = users[id].phone;
                 user.email = users[id].email;
+                if(id == admin_id){
+                    user.is_admin = 1;
+                } else{
+                    user.is_admin = 0;
+                }
+                users_to_send.push(user);
             }
-        }
 
-        if(id == admin_id){
-            user.is_admin = 1;
-        } else{
-            user.is_admin = 0;
         }
-        users_to_send.push(user);
     }
 
     res.json({"type" : 1, "data": users_to_send});

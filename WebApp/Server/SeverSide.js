@@ -218,8 +218,6 @@ app.post('/users/groupPage', function (req, res) {
     let group_id = req.body.groupNum;
     let data = {};
     data.group_id = group_id;
-    console.log(data);
-
     let url = 'http://localhost:3000/groups/get';
     fetch(url,
         {
@@ -232,17 +230,13 @@ app.post('/users/groupPage', function (req, res) {
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         if(data.type == "1"){
             return res.send(JSON.stringify({'url': "/static/GroupPage.html"}));
         }
     });
 
 });
-let data = {
-    "email" : "daniel",
-    "fullname" : "daniel cohen"
-}
+
 app.get('/users/myDetails', function (req, res) {
     let url = 'http://localhost:3000/users/user';
     let data = {"id": 1};
@@ -257,13 +251,59 @@ app.get('/users/myDetails', function (req, res) {
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         if(data.type == "1"){
             return res.send(data.data);
         }
     });
-    // console.log(data);
-    // return res.send(data);
+});
+
+app.get('/group/allMembers', function (req, res) {
+    let url = 'http://localhost:3000/groups/get';
+    let data = {"group_id": 1};
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+            return res.send(data.data);
+        }
+    });
+
+});
+
+app.post('/group/newMember', function (req, res) {
+    let group_id = 1;
+    let emails = [];
+    emails.push(req.body.email);
+    console.log(emails);
+    let data = {};
+    data.group_id = group_id;
+    data.emails = emails;
+    let url = 'http://localhost:3000/groups/update';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        if(data.type == "1"){
+            return res.end();
+        }
+    });
+
 });
 
 
