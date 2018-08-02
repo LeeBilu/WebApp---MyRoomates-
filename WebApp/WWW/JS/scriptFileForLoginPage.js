@@ -30,14 +30,12 @@ function submitLogIn() {
         })
         .then(function (myJson) {
             console.log(myJson);
-            if (myJson.approve != 1) {
+            if (myJson.approve == 1) {
 
-                window.location.replace("http://localhost:8081/static/ideas.html");
+                window.location.replace(myJson.url);
             }
             else {
-                console.log(myJson.approve);
-                console.log('Wrong User');
-                    window.location.replace("http://localhost:8081/static/register.html"+'?variable=value');
+                window.location.replace("http://localhost:8081/static/register.html"+'?variable=value');
             }
         })
         .catch(function (err) {

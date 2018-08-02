@@ -117,8 +117,12 @@ html {
 }
 #invalid-email{
     color: red;
+}#invalid-phone{
+    color: red;
 }
 #invalid-name{
+    color: red;
+}#exist-email{
     color: red;
 }
 

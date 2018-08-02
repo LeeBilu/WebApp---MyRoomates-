@@ -1,35 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>Register to WebSite</title>-->
-    <!--<link rel="stylesheet" href="CSS/cssForLoginAndRegisteration.css">-->
-    <!--<script src="JS/scriptFileForRegisteration.js"></script>-->
-<!--</head>-->
-<!--<body dir="rtl">-->
-<!--<div id="login-box">-->
-    <!--<div class="left">-->
-        <!--<h1>הרשמה</h1>-->
-        <!--<p id="loginStatus" style="display: none;"> Login failed - Wrong user name or password</p>-->
-        <!--<input type="text" id="FullName" name="fullName" placeholder="שם מלא" />-->
-        <!--<input type="text" id="email" name="email" placeholder="כתובת מייל" />-->
-        <!--<input type="password" id="password" name="password" placeholder="סיסמא" />-->
-        <!--<input type="password" id="passwordVerification" name="password2" placeholder="סיסמא חוזרת" />-->
 
-        <!--<input type="submit" name="signup_submit" id="submitbutton" value="הירשם" onclick="submitRegisterationFunction()" />-->
-    <!--</div>-->
-
-    <!--<div class="right">-->
-        <!--<span class="loginwith">Sign in with<br />social network</span>-->
-
-        <!--<button class="social-signin facebook">הרשמה בעזרת facebook</button>-->
-        <!--<button class="social-signin twitter">הרשמה בעזרת Twitter</button>-->
-        <!--<button class="social-signin google">הרשמה בעזרת Google+</button>-->
-    <!--</div>-->
-    <!--<div class="or">או</div>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,6 +41,15 @@
                     <input class="form-control" id="email" placeholder="כתובת מייל" name="email" type="text">
                     <div id="invalid-email" style="display: none">
                        דרושה כתובת מייל חוקית
+                    </div>
+                    <div id="exist-email" style="display: none">
+                        כתובת המייל קיימת
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="phone" placeholder="מספר פלאפון" name="phone" type="text">
+                    <div id="invalid-phone" style="display: none">
+                        דרוש מספר פלאפון חוקי
                     </div>
                 </div>
                 <div class="form-group">

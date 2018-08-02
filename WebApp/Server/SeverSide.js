@@ -19,7 +19,6 @@ app.use(function (req, res, next) {
     // check if client sent cookie
     loadIdeaDataFromFile();
     let cookie = req.cookies;
-    console.log(req.cookies);
     let notAValidCookie = false;
     if(cookie != undefined)
     {
@@ -47,17 +46,14 @@ app.use(function (req, res, next) {
         loadIdeaDataFromFile();
         // yes, cookie was already presented
         let cookie = req.cookies.cookieName;
-        console.log('cookie exists', cookie);
         let user = mappingRandToCookieNumber[cookie];
         if(user != null)
         {
-            console.log("user was read from table")
-            console.log("the user name is : " + user);
+
             //sync with writing
             array = loadUserIdeasByName(user);
             if(array === undefined)
             {
-                console.log("here");
                 array = [];
             }
             next();
@@ -69,7 +65,6 @@ app.use(function (req, res, next) {
 
         }
         else {
-            console.log("user not found in system");
             next();
         }
     }
@@ -87,8 +82,6 @@ app.get('/ideas', function (req, res) {
 app.put('/idea', function (req, res) {
 
     let newValue = req.body.addTextID;
-    console.log("body" + req.body );
-    console.log("new value is" + newValue);
     let responseFromAdditionFunc = addObjectAttribute(array, newValue);
     res.json({ideaIndex: responseFromAdditionFunc});
 })
@@ -113,42 +106,67 @@ app.delete('/idea/:id', function (req, res) {
 
 app.post('/users/register', function (req, res) {
 
-    console.log("starting registeration");
-    console.log(JSON.stringify(req.body, null, 2));
+    let url = 'http://localhost:3000/users/register';
+    let data = {};
+    data.email = req.body.user;
+    data.password = req.body.password;
+    data.username = req.body.name;
+    data.phone = req.body.phone;
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+            array = [];
+            return res.send(JSON.stringify({'url': "/static/login.html", 'approve' : 1}));
+        } else if(!data.type){
+            if(data.data =="USER_EXISTS"){
+                return res.send(JSON.stringify({'error': "USER_EXISTS", 'approve' : 0}));
+            } else {
+                return res.send(JSON.stringify({'error': "ERROR", 'approve' : 0}));
+
+            }
+        }
+    })
     //TODO CHANGE 'A' TO THE USER LOGIN NAME
-    console.log("This cookie name " +req.cookies.cookieName);
-    let name = req.body.user;
-    console.log("name is" + name);
-    array = [];
-    RegisterNewUserToFileSystem(req.body);
-    updateUserFile(name);
-    res.json({approve :0});
 })
 
 app.post('/users/login', function (req, res) {
+    let url = 'http://localhost:3000/users/login';
+    let data = {};
+    data.email = req.body.user;
+    data.password = req.body.password;
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+            let randomNumber=Math.random().toString();
+            randomNumber=randomNumber.substring(2,randomNumber.length);
+            let options = {
+                maxAge: 1000 * 60 * 30, // would expire after 30 minutes
+                httpOnly: true, // The cookie only accessible by the web server
+            }
 
-    console.log("try to logIn");
-    console.log("this is the login body" ,JSON.stringify(req.body, null, 2));
-    let approval = ValidateUser(req.body);
-    if(approval == 0)
-    {
-        let randomNumber=Math.random().toString();
-        randomNumber=randomNumber.substring(2,randomNumber.length);
-        let options = {
-            maxAge: 1000 * 60 * 30, // would expire after 30 minutes
-            httpOnly: true, // The cookie only accessible by the web server
+            res.cookie('cookieName',randomNumber, options);
+            mappingRandToCookieNumber[randomNumber] = req.body.user;
+            return res.send(JSON.stringify({'url': "/static/profilePage.html", 'approve' : 1}));
         }
-
-        res.cookie('cookieName',randomNumber, options);
-        console.log("---------------------------------------");
-        mappingRandToCookieNumber[randomNumber] = req.body.user;
-        console.log("Random number" + randomNumber)
-        console.log(mappingRandToCookieNumber[randomNumber]);
-        console.log('cookie created successfully');
-    }
-    console.log("approval is" + approval);
-    res.status(302);
-    res.json({approve :approval});
+    })
 })
 
 app.post('/users/newGroup', function (req, res) {
@@ -157,7 +175,6 @@ app.post('/users/newGroup', function (req, res) {
     data.name = groupName;
     data.user_id = 1;
     let url = 'http://localhost:3000/groups/add';
-    console.log(data)
     fetch(url,
         {
             credentials: "same-origin",
@@ -169,9 +186,7 @@ app.post('/users/newGroup', function (req, res) {
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         if(data.type == "1"){
-            console.log("hi")
             return res.send(JSON.stringify({'url': "/static/GroupPage.html"}));
         }
     });
@@ -192,8 +207,7 @@ app.get('/users/allGroups', function (req, res) {
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
-        if(data.type == "1"){
+        if(data.type){
             return res.send(data.data);
         }
     });
@@ -204,6 +218,8 @@ app.post('/users/groupPage', function (req, res) {
     let group_id = req.body.groupNum;
     let data = {};
     data.group_id = group_id;
+    console.log(data);
+
     let url = 'http://localhost:3000/groups/get';
     fetch(url,
         {
@@ -266,15 +282,15 @@ function RegisterNewUserToFileSystem(userData)
 
         //TODO ADD NEW INFORMATION TO USERDATA
         const fs = require('fs');
-        console.log("write new user to file");
+
        let data = JSON.stringify(userData);
-       console.log("data variable" +  data);
+
         usersAndPasswords.push(data);
         let dataToSave = JSON.stringify(usersAndPasswords);
-        console.log("trying to save" + dataToSave);
+
         fs.writeFile("output.json", dataToSave, 'utf8', function (err) {
             if (err) {
-                console.log("An error occured while register new user to the system.");
+
                 console.log(err);
             }
 
@@ -293,20 +309,16 @@ function ValidateUser(UserLogin)
     let returnVal = 1;
     usersAndPasswords.forEach(function(currentUser) {
 
-        console.log("Current user is " + currentUser);
+
         let obj = currentUser;
-        console.log(currentUser.name + " is my name")
         if(IsJsonString(currentUser) == false)
         {
-            console.log("not a json");
             obj = JSON.parse(currentUser);
         }
 
-        console.log("obj is " +obj);
         if(obj.user === UserLogin.user && obj.password === UserLogin.password)
         {
 
-            console.log("here");
             returnVal = 0;
         }
 
@@ -335,10 +347,8 @@ function createNewCookie(req, res)
 function UpdateUserFromFile()
 {
         const fs = require('fs');
-        console.log("here");
         fs.readFile("output.json", function (err, data) {
             if (err) {
-                console.log("An error occured while writing JSON Object to File");
                 return;
             }
             else {
@@ -347,10 +357,8 @@ function UpdateUserFromFile()
                     usersAndPasswords = dataFromFile;
                     /*let dataFormFile = JSON.parse(data);
                     usersAndPasswords.push(dataFormFile);*/
-                    console.log(usersAndPasswords);
                 }
                 catch (err) {
-                    console.log('ofir');
                 }
 
 
@@ -375,8 +383,6 @@ function updateAnIdea(array, indexOfProperty, newValue)
 {
     if(indexOfProperty >= 0 && indexOfProperty <= array.length)
     {
-        console.log(indexOfProperty);
-        console.log(array.length);
 
         array[indexOfProperty] = newValue;
         return 0;
@@ -391,7 +397,6 @@ function deleteAnIdea(array, indexOfProperty)
     if( indexOfProperty >=0 && indexOfProperty < array.length)
     {
         array.splice(indexOfProperty,1);
-        console.log(array.toString());
         return 0;
     }
 
@@ -408,7 +413,6 @@ function IsJsonString(str) {
 function loadIdeaDataFromFile()
 {
 
-        console.log("begin to load idea data file");
         const fs = require('fs');
         fs.exists("Userdata.json", function(exists) {
         if (exists) {
@@ -424,13 +428,11 @@ function loadIdeaDataFromFile()
                     try{
 
                         userData = JSON.parse(data);
-                        console.log("data read from server");
                     }
                     catch(err)
                     {
                         // //try
                         // userData = data;
-                        // console.log("can't parse user idea file to JSON format")
                     }
                 }
 
@@ -464,22 +466,17 @@ function updateUserIdeasByName(id)
 function updateUserFile(user)
 {
         const fs = require('fs');
-        console.log(array);
         if(array === undefined)
         {
             array = [];
         }
         userData[user] = array;
-        console.log("userData is ", userData);
         let dataToSave = JSON.stringify(userData);
-        console.log("data users in stringify mode", dataToSave);
         fs.writeFile("Userdata.json", dataToSave, 'utf8', function (err) {
             if (err) {
-                console.log("An error occured while writing the user idea array into the system");
                 return console.log(err);
             }
 
-            console.log("User idea was saved sucssesfully");
         });
 
 
