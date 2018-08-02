@@ -90,27 +90,22 @@
     <div class="my-3 p-3 bg-white rounded box-shadow" id="group members" align="right">
         <div class = "text-left">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newMemberModal" >להוספת שותף לרשימה</button>
-            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>-->
-
             <div class="modal fade" id="newMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">הוסף משתמש חדש לקבוצה</h5>
+                        <div class="modal-header" align="right">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
+                            <h5 class="modal-title" id="exampleModalLabel"  align="center">הוסף משתמש חדש לקבוצה</h5>
+
                         </div>
                         <div class="modal-body">
                             <form>
-                                <div class="form-group">
-                                    <label for="newMemberEmail" class="col-form-label">כתובת מייל של המשתמש החדש:</label>
+                                <div class="form-group"align="right">
+                                    <label for="newMemberEmail" class="col-form-label" >כתובת מייל של המשתמש החדש:</label>
                                     <input type="text" class="form-control" id="newMemberEmail">
                                 </div>
-                                <!--<div class="form-group">-->
-                                    <!--<label for="message-text" class="col-form-label">Message:</label>-->
-                                    <!--<textarea class="form-control" id="message-text"></textarea>-->
-                                <!--</div>-->
                             </form>
                         </div>
                         <div class="modal-footer">

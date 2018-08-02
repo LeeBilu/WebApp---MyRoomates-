@@ -282,7 +282,6 @@ app.post('/group/newMember', function (req, res) {
     let group_id = 1;
     let emails = [];
     emails.push(req.body.email);
-    console.log(emails);
     let data = {};
     data.group_id = group_id;
     data.emails = emails;
@@ -298,7 +297,6 @@ app.post('/group/newMember', function (req, res) {
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         if(data.type == "1"){
             return res.end();
         }
