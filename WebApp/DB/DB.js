@@ -127,11 +127,8 @@ app.post('/groups/update', function (req, res) {
         res.json({"type" : 0});
     }
     for(let id in users){
-
         for(let i =0; i<body.emails.length; i++){
-
             if(body.emails[i] == users[id].email){
-
                users[id].groups_id.push(body.group_id);
             }
         }
@@ -214,6 +211,35 @@ app.post('/groups/getall', function (req, res) {
 });
 
 /**
+ * Exit from group
+ * params: user_id, group_id
+ */
+app.post('/groups/remove', function (req, res) {
+    let body = req.body;
+    let users = getFromFile("users");
+    let groups = getFromFile("groups");
+    if(!users || ! groups){
+        res.json({"type" : 0});
+        return;
+    }
+
+    if(!users[body.user_id]){
+        res.json({"type" : 0});
+        return;
+    }
+    if(users[body.user_id].groups[body.group_id]){
+        delete users[body.user_id].groups[body.group_id];
+    }
+
+    if(insertToFile(users, "users", false) === false){
+        res.json({"type" : 0});
+        return;
+    }
+
+    res.json({"type": 1});
+});
+
+/**
  * Get all products
  * params:
  */
@@ -234,6 +260,107 @@ app.post('/coupons/checkandset', function (req, res) {
 });
 
 
+/**
+ * create new cart
+ * params: group_id
+ */
+app.post('/cart/create', function (req, res) {
+    let carts = getFromFile("carts");
+    let body = req.body;
+    for(let id in carts){
+        if(carts[id].group_id == body.group_id && carts.status == 1){
+            res.json({"type" : 0, "data" : "OPEN_CART"})
+        }
+    }
+
+    carts[ids.carts_id] = {"id": ids.carts_id, "status" : 1, "products" : [], "group_id" : body.group_id};
+    if(!insertToFile(carts, "carts", "carts_id")){
+        res.json({"type" : 0, "data" : "DB_ERROR"})
+    }
+    res.json(carts[ids.carts_id -1]);
+});
+
+/**
+ * get the cart
+ * params: cart_id
+ */
+app.post('/cart/get', function (req, res) {
+    let carts = getFromFile("carts");
+    if(!carts){
+        res.json({"type" : 0, "data" : "CARTS_NOT_FOUND"});
+        return;
+    }
+    let body = req.body;
+    if(!carts[body.cart_id]){
+        res.json({"type" : 0, "data" : "CART_NOT_FOUND"});
+        return;
+    }
+    let cart = carts[body.cart_id];
+    let amount = 0;
+    for(let i = 0; i < cart.products.length; i++){
+        amount += cart.products[i].product.price * cart.products[i].amount;
+    }
+    cart.total_amount = amount;
+    res.json(cart);
+});
+
+/**
+ * delete product from the cart
+ * params: cart_id product_id
+ */
+
+app.post('/cart/deleteProduct', function (req, res) {
+    let carts = getFromFile("carts");
+    let body = req.body;
+    if(!body.cart_id){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    if(carts === false ){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    if(!carts[body.cart_id] || !carts[body.cart_id].products[product_id]){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    delete carts[body.cart_id].products[body.product_id];
+    if(insertToFile(carts, "carts", false) === false){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    res.json({"type" : 1, "data" : 1});
+});
+
+/**
+ * edit product in the cart
+ * params: cart_id product_id, amount
+ */
+
+app.post('/cart/editProduct', function (req, res) {
+    let carts = getFromFile("carts");
+    let products = getFromFile("products");
+    let body = req.body;
+    if(!body.cart_id || !body.product_id || !body.amount){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    if(carts === false || products === false){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    if(!carts[body.cart_id] || !products[product_id]){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    carts[body.cart_id].products[body.product_id] = {"product" : products[body.product_id], "amount"  : body.amount};
+    if(insertToFile(carts, "carts", false) === false){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    res.json({"type" : 1, "data" : 1});
+
+});
 
 let loadDBData = function () {
     try{
@@ -241,6 +368,7 @@ let loadDBData = function () {
         let db_data = JSON.parse(data);
         ids.users_id = db_data.users_id;
         ids.group_id = db_data.group_id;
+        ids.carts_id = db_data.carts_id;
     }
     catch(e){
         return false;
@@ -249,7 +377,7 @@ let loadDBData = function () {
 };
 
 let updateDBData = function(){
-    let data = {"users_id" : ids.users_id, "group_id" : ids.group_id};
+    let data = {"users_id" : ids.users_id, "group_id" : ids.group_id, "carts_id" : ids.carts_id};
     try{
         fs.writeFileSync("DBdata", JSON.stringify(data), 'utf8');
         return true;
