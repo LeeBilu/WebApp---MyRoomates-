@@ -1,3 +1,9 @@
+function initPage()
+{
+    someMembersInGroup();
+}
+
+
 function getAllGroupMembers(url = "AllMyGroupMembers.html" , title = "my title", w = "600", h = "500")
 {
 
