@@ -227,8 +227,10 @@ app.post('/groups/remove', function (req, res) {
         res.json({"type" : 0});
         return;
     }
-    if(users[body.user_id].groups[body.group_id]){
-        delete users[body.user_id].groups[body.group_id];
+    for(let i =0; i< users[body.user_id].groups_id.length; i++) {
+        if (body.group_id == users[body.user_id].groups_id[i]) {
+            users[body.user_id].groups_id.splice(i,1);
+        }
     }
 
     if(insertToFile(users, "users", false) === false){

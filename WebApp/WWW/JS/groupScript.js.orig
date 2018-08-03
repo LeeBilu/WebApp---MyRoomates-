@@ -1,18 +1,22 @@
+<<<<<<< HEAD
+function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetParameter("group_id") , title = "my title", w = "600", h = "500")
+=======
 function initPage()
 {
     someMembersInGroup();
 }
 
-function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetParameter("group_id") , title = "my title", w = "600", h = "500")
 
+function getAllGroupMembers(url = "AllMyGroupMembers.html" , title = "my title", w = "600", h = "500")
+>>>>>>> 2d2c34df60042c6e0a254357bd91746193d65f21
 {
 
 
-    let left = (screen.width/2)-(w/2);
-    let top = (screen.height/2)-(h/2);
-    window.open(url, title, 'toolbar=no, ' +
-        'location=no, directories=no, status=no, menubar=no, ' +
-        'scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+        let left = (screen.width/2)-(w/2);
+        let top = (screen.height/2)-(h/2);
+        window.open(url, title, 'toolbar=no, ' +
+            'location=no, directories=no, status=no, menubar=no, ' +
+            'scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 
     // //let coupon = document.getElementById("CouponNumber");
     // if(coupon.value != null)
@@ -125,10 +129,7 @@ function showMember(data, amount) {
            </div>
            </div>`
     }
-    if(document.getElementById("allMemberGroup")){
-        document.getElementById("allMemberGroup").innerHTML = members;
-    }
-
+    document.getElementById("allMemberGroup").innerHTML = members;
 }
 
 function findGetParameter(parameterName) {
@@ -176,12 +177,9 @@ function leftGroup(){
             headers: {
                 "Content-Type": "application/json"
             }
-        })  .then(function (response) {
-        return response.json();
-    }).then(function (data){
-        if(data){
-            window.location.replace(data.url);
-        }
+        })  .then(function () {
+
+        someMembersInGroup();
     });
 }
 

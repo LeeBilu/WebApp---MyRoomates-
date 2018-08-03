@@ -323,7 +323,7 @@ app.post('/group/leftGroup', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            return res.end();
+            return res.send(JSON.stringify({'url': ("/static/profilePage.html")}));
         }
     });
 
