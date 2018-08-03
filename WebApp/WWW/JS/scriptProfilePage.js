@@ -60,7 +60,6 @@ function showAllGroups(){
                 chooseGroup.addEventListener('click', function(){
 
                     let i = this.dataset.pos;
-                    console.log(i);
                     let url = 'http://localhost:8081/users/groupPage';
                     let data = {"groupNum": i};
                     fetch(url,

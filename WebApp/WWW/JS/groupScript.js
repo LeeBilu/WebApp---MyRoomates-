@@ -1,4 +1,4 @@
-function getAllGroupMembers(url = "AllMyGroupMembers.html" , title = "my title", w = "600", h = "500")
+function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetParameter("group_id") , title = "my title", w = "600", h = "500")
 {
 
 
@@ -87,10 +87,16 @@ function getAllGroupMembers(url = "AllMyGroupMembers.html" , title = "my title",
 
 function someMembersInGroup() {
     let url = 'http://localhost:8081/group/allMembers';
+    data = {};
+    data.group_id = findGetParameter("group_id");
     fetch(url,
         {
             credentials: "same-origin",
-            method: "GET",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })  .then(function (response) {
         return response.json();
     }).then(function (data){
@@ -107,7 +113,7 @@ function showMember(data, amount) {
                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                <div class="d-flex justify-content-between align-items-center w-100">
                <strong class="text-gray-dark">${data[id].name}</strong>
-           <button type="button" class="btn btn-danger deleteButtons">להסרה</button>
+           <!--<button type="button" class="btn btn-danger deleteButtons">להסרה</button>-->
                </div>
                <span class="d-block">${data[id].email}</span>
            </div>
@@ -116,11 +122,43 @@ function showMember(data, amount) {
     document.getElementById("allMemberGroup").innerHTML = members;
 }
 
+function findGetParameter(parameterName) {
+    let result = null,
+        tmp = [];
+    let items = location.search.substr(1).split("&");
+    for (let index = 0; index < items.length; index++) {
+        tmp = items[index].split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+}
+
 function addNewMember(){
     let newMemberEmail = document.getElementById("newMemberEmail").value;
     let url = 'http://localhost:8081/group/newMember';
     let data = {};
     data.email = newMemberEmail;
+    data.group_id = findGetParameter("group_id");
+
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function () {
+
+        someMembersInGroup();
+    });
+}
+
+function leftGroup(){
+    let url = 'http://localhost:8081/group/leftGroup';
+    let data = {};
+    data.group_id = findGetParameter("group_id");
+
     fetch(url,
         {
             credentials: "same-origin",

@@ -121,7 +121,6 @@ app.post('/groups/add', function (req, res) {
  */
 app.post('/groups/update', function (req, res) {
     let body = req.body;
-    console.log(body);
     let users = getFromFile("users");
     if(!users){
         res.json({"type" : 0});
@@ -160,6 +159,7 @@ app.post('/groups/get', function (req, res) {
         res.json({"type" : 0});
         return;
     }
+
     group_data['name'] = groups[body.group_id].name;
     let admin_id =groups[body.group_id].admin_id;
     let users_to_send = [];
