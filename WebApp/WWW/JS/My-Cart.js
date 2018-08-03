@@ -1,15 +1,24 @@
 function onLoadingPage() {
 
-    // let url = 'http://localhost:8081/RequestForCart/';
+    LoadProductsListAndPrices();
+    RequestCart();
+}
+
+function LoadProductsListAndPrices()
+{
+// let url = 'http://localhost:8081/RequestForProductListAndPrices/';
     // fetch(url,
     //     {
     //         redirect: 'follow',
     //         credentials: "same-origin",
     //         method: "POST",
     //         headers: { 'Content-Type': 'application/json' },
-    //TODO - CHECK IF JSONTOSEND WAS SENT IN A PROPER MANNER
-    //         body:
-    // JSON.stringify(JSONTOSEND)})
+    //         body: JSON.stringify({
+    //             "Coupon" : coupon.value,
+    //               "Cart_id": cart.id
+
+    //
+    //         })})
     //     .then(function (response) {
     //
     //         if(response.redirected)
@@ -23,7 +32,7 @@ function onLoadingPage() {
     //
     //         if(myJson.approve != 1)
     //         {
-    //             LoadCartFromJSON(myJson.order);
+    //             RequestNewCartList();
     //         }
     //         else
     //         {
@@ -34,138 +43,16 @@ function onLoadingPage() {
     //         console.log(err.toString());
     //     })
 
+
+    BuildProductListFromJson(ExampleForProductArray);
 }
-
-
-
-
-jsonFile = {
-    "CartID": "1",
-    "cart": {
-        "0":
-            {
-                "product":
-                    {
-                        "productName": "מלפפון",
-                        "price": "5",
-                        "description": "מה שבילו אוהב"
-
-                    },
-                "amount": "3"
-            },
-        "1":
-            {
-                "product":
-                    {
-                        "productName": "עגבנייה",
-                        "price": "4.80",
-                        "description": "מה שדניאל אוהבת"
-
-                    },
-                "amount": "1"
-            }
-    },
-    "coupon" : {
-
-        "productName": "הנחת סטודנט",
-        "price": "1",
-        "description": "לבינתחומי יש רק שקל הנחה מצטערים"
-
-    },
-    "total sum": "18.80",
-    "total amount paid": "300"
-}
-
-function loadCartFromJSON(cartJSON)
-{
-    //let CART = cartJSON.cart
-    let CART = jsonFile.cart;
-    let my_cart = document.getElementById("my-cart");
-    //firstObject.innerHTML ="";
-    let element ="";
-    for(let i in CART)
-    {
-        let product = CART[i].product;
-        let amount = CART[i].amount;
-        element += `<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
-                    <div>
-                        <h6 class="my-0 text-right">${product.productName}</h6>
-                        <small class="text-muted">${product.description}</small>
-                    </div>
-                    <span class="text-muted"> ${product.price} &#8362  * ${amount} = ${amount * product.price} &#8362</span>
-                </li>`;
-    }
-
-    let Coupon = jsonFile.coupon;
-    element+= `<li class="list-group-item d-flex justify-content-between bg-light">
-                    <div class="text-success">
-                    <h6 class="my-0">${Coupon.productName}</h6>
-                <small>${Coupon.description}</small>
-                </div>
-                <span class="text-success">${Coupon.price}- &#8362</span>
-                </li>`;
-
-    element+=`<li class="list-group-item d-flex justify-content-between">
-                <span>סכום כולל</span>
-                <strong>${jsonFile["total sum"]} &#8362   </strong>
-                </li>`
-    my_cart.innerHTML = element;
-}
-
-function onCouponsSubmission() {
-
-    let coupon = document.getElementById("CouponNumber");
-    if(coupon.value != null)
-    {
-        // let url = 'http://localhost:8081/RequestForCoupon/';
-        // fetch(url,
-        //     {
-        //         redirect: 'follow',
-        //         credentials: "same-origin",
-        //         method: "POST",
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify({
-        //             "Coupon" : coupon.value,
-        //               "Cart_id": cart.id
-
-        //
-        //         })})
-        //     .then(function (response) {
-        //
-        //         if(response.redirected)
-        //         {
-        //             window.location.replace(response.url);
-        //         }
-        //         console.log("success");
-        //         return response.json();
-        //     })
-        //     .then(function (myJson) {
-        //
-        //         if(myJson.approve != 1)
-        //         {
-        //             RequestNewCartList();
-        //         }
-        //         else
-        //         {
-        //             console.log('Not a valid coupon');
-        //         }
-        //     })
-        //     .catch(function (err) {
-        //         console.log(err.toString());
-        //     })
-
-        coupon = "";
-
-
-    }
-}
-
 ExampleForProductArray = {
      "Product_List": {
         "0":
             {
                 "product":
                     {
+                        "productID" : "1",
                         "productName": "מלפפון",
                         "price": "5",
                         "description": "מה שבילו אוהב"
@@ -181,8 +68,71 @@ ExampleForProductArray = {
                         "description": "מה שדניאל אוהבת"
 
                     }
-            }
+            },
+         "2":
+             {
+                 "product":
+                     {
+                         "productName": "תפוא",
+                         "price": "5.80",
+                         "description": "מה שדניאל אוהבת"
+
+                     }
+             },
+         "3":
+             {
+                 "product":
+                     {
+                         "productName": "חציל",
+                         "price": "4.80",
+                         "description": "מה שדניאל אוהבת"
+
+                     }
+             },
+         "4":
+             {
+                 "product":
+                     {
+                         "productName": "מלפפון",
+                         "price": "4.80",
+                         "description": "מה שדניאל אוהבת"
+
+                     }
+             }
     }
+};
+
+function BuildProductListFromJson(jsonFile)
+{
+    let Products = jsonFile.Product_List;
+    let Products_list = document.getElementById("list_Of_Products");
+    //firstObject.innerHTML ="";
+    let newElement="";
+    for(let i in Products)
+    {
+        let product = Products[i].product;
+        newElement +=
+    `<div class="Product">
+        <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
+            <div>
+                <h6 class="my-0 text-right">${product.productName}</h6>
+                <small class="text-muted">>${product.description}</small>
+            </div>
+            <div class="addingToCartOption_div">
+                <small class="text-muted">
+                <button class="btn-primary cart_buttons" onclick="onChoosingProduct(this,'quantity_div')" >להוספה לסל</button></small>
+            </div>
+            <div class="quantity_div">
+                <small class="text-muted">
+                <input type="number small" placeholder="כמות" class="quantity_input" maxlength="4" size="4">
+                <button class="btn-primary cart_buttons" onclick="onApprovingProduct(this,'addingToCartOption_div',1)" > לאישור</button>
+                <button class="btn-danger cart_buttons" onclick="onCancelingProduct(this,'addingToCartOption_div')" > לביטול</button></small>
+            </div>
+            <span class="text-muted">12 &#8362</span>
+        </li>
+    </div>`
+    }
+    Products_list.innerHTML = newElement;
 }
 
 function searchInProductList() {
@@ -230,7 +180,32 @@ function replacingBetweenVisbleDivs(button, DivToDisplay)
     quantity_div[0].style.display = "inline";
 }
 
-function addNewProductToCart(Product_ID)
+function addNewProductToCart(Product_ID, quantity)
 {
-    //TODO - add new product to the current cart and update the serer
+    if(quantity != undefined && Product_ID != undefined && quantity > 0)
+    {
+        let url = 'http://localhost:8081/Cart/AddProduct';
+        let data = {
+            "product_ID": Product_ID,
+            "quantity" : quantity
+        };
+
+        fetch(url,
+            {
+                credentials: "same-origin",
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })  .then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if(data.type == "1"){
+                RequestCart();
+            }
+        });
+
+    }
+
 }

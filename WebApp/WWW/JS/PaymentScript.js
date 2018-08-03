@@ -1,44 +1,3 @@
-function onLoadingPage() {
-
-    // let url = 'http://localhost:8081/RequestForCart/';
-    // fetch(url,
-    //     {
-    //         redirect: 'follow',
-    //         credentials: "same-origin",
-    //         method: "POST",
-    //         headers: { 'Content-Type': 'application/json' },
-    //TODO - CHECK IF JSONTOSEND WAS SENT IN A PROPER MANNER
-    //         body:
-    // JSON.stringify(JSONTOSEND)})
-    //     .then(function (response) {
-    //
-    //         if(response.redirected)
-    //         {
-    //             window.location.replace(response.url);
-    //         }
-    //         console.log("success");
-    //         return response.json();
-    //     })
-    //     .then(function (myJson) {
-    //
-    //         if(myJson.approve != 1)
-    //         {
-    //             LoadCartFromJSON(myJson.order);
-    //         }
-    //         else
-    //         {
-    //             console.log('Not a valid coupon');
-    //         }
-    //     })
-    //     .catch(function (err) {
-    //         console.log(err.toString());
-    //     })
-
-}
-
-
-
-
 
 function onCouponsSubmission() {
 
@@ -54,7 +13,7 @@ function onCouponsSubmission() {
         //         headers: { 'Content-Type': 'application/json' },
         //         body: JSON.stringify({
         //             "Coupon" : coupon.value,
-        //               "Cart_id": cart.id
+        //             "Order_id": order.id
 
         //
         //         })})
@@ -84,9 +43,9 @@ function onCouponsSubmission() {
 
         coupon = "";
 
-
     }
 }
+
 function getPaymentMethod(value){
 
     let visaDetailsDiv = document.getElementById("PayByVisa");
