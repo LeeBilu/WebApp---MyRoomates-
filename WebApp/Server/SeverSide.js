@@ -231,7 +231,7 @@ app.post('/users/groupPage', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            return res.send(JSON.stringify({'url': ("/static/GroupPage.html?group_id=" + group_id)}));
+            return res.send(JSON.stringify({'url': "/static/GroupPage.html"}));
         }
     });
 
@@ -257,10 +257,9 @@ app.get('/users/myDetails', function (req, res) {
     });
 });
 
-app.post('/group/allMembers', function (req, res) {
+app.get('/group/allMembers', function (req, res) {
     let url = 'http://localhost:3000/groups/get';
-    let body = req.body;
-    let data = {"group_id": body.group_id};
+    let data = {"group_id": 1};
     fetch(url,
         {
             credentials: "same-origin",
@@ -280,7 +279,7 @@ app.post('/group/allMembers', function (req, res) {
 });
 
 app.post('/group/newMember', function (req, res) {
-    let group_id = req.body.group_id;
+    let group_id = 1;
     let emails = [];
     emails.push(req.body.email);
     let data = {};
@@ -300,30 +299,6 @@ app.post('/group/newMember', function (req, res) {
     }).then(function (data) {
         if(data.type == "1"){
             return res.end();
-        }
-    });
-
-});
-
-app.post('/group/leftGroup', function (req, res) {
-    let group_id = req.body.group_id;
-    let data = {};
-    data.group_id = group_id;
-    data.user_id = 1;
-    let url = 'http://localhost:3000/groups/remove';
-    fetch(url,
-        {
-            credentials: "same-origin",
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })  .then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        if(data.type == "1"){
-            return res.send(JSON.stringify({'url': ("/static/profilePage.html")}));
         }
     });
 
