@@ -32,7 +32,7 @@ ExampleForProductArray = {
             {
                 "product":
                     {
-                        "productID" : "1",
+                        "product_ID" : "1",
                         "productName": "מלפפון",
                         "price": "5",
                         "description": "מה שבילו אוהב"
@@ -43,6 +43,7 @@ ExampleForProductArray = {
             {
                 "product":
                     {
+                        "product_ID" : "2",
                         "productName": "עגבנייה",
                         "price": "4.80",
                         "description": "מה שדניאל אוהבת"
@@ -53,6 +54,7 @@ ExampleForProductArray = {
              {
                  "product":
                      {
+                         "product_ID" : "3",
                          "productName": "תפוא",
                          "price": "5.80",
                          "description": "מה שדניאל אוהבת"
@@ -63,6 +65,7 @@ ExampleForProductArray = {
              {
                  "product":
                      {
+                         "product_ID" : "4",
                          "productName": "חציל",
                          "price": "4.80",
                          "description": "מה שדניאל אוהבת"
@@ -73,6 +76,7 @@ ExampleForProductArray = {
              {
                  "product":
                      {
+                         "product_ID" : "5",
                          "productName": "מלפפון",
                          "price": "4.80",
                          "description": "מה שדניאל אוהבת"
@@ -105,9 +109,9 @@ function BuildProductListFromJson(jsonFile)
             <div class="quantity_div">
                 <small class="text-muted">
                 <input type="number small" placeholder="כמות" class="quantity_input" maxlength="4" size="4">
-                <button class="btn-primary cart_buttons" onclick="onApprovingProduct(this,'addingToCartOption_div',1)" > לאישור</button>
+                <button class="btn-primary cart_buttons" onclick="onApprovingProduct(this,'addingToCartOption_div',${product.product_ID})" > לאישור</button>
                 <button class="btn-danger cart_buttons" onclick="onCancelingProduct(this,'addingToCartOption_div')" > לביטול</button></small>
-            </div>
+            </div>  
             <span class="text-muted">12 &#8362</span>
         </li>
     </div>`
@@ -144,7 +148,7 @@ function onChoosingProduct(button, DivToDisplay)
 function onApprovingProduct(button, DivToDisplay, Product_ID )
 {
     replacingBetweenVisbleDivs(button, DivToDisplay);
-    let quantity = button.parentElement.getElementsByClassName("quantity_input")[0];
+    let quantity = button.parentElement.getElementsByClassName("quantity_input")[0].value;
     addNewProductToCart(Product_ID, quantity);
 }
 
@@ -163,30 +167,30 @@ function replacingBetweenVisbleDivs(button, DivToDisplay)
 
 function addNewProductToCart(Product_ID, quantity)
 {
-    if(quantity != undefined && Product_ID != undefined && quantity > 0)
-    {
-        let url = 'http://localhost:8081/Cart/AddProduct';
-        let data = {
-            "product_ID": Product_ID,
-            "quantity" : quantity
-        };
+    /* if(isNaN(quantity) == false && isNaN(Product_ID) == false  && Number.parseInt(quantity) > 0)
+     {
+         let url = 'http://localhost:8081/Cart/AddProduct';
+         let data = {
+             "product_ID": Product_ID,
+             "quantity" : quantity
+         };
 
-        fetch(url,
-            {
-                credentials: "same-origin",
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })  .then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            if(data.type == "1"){
-                RequestCart();
-            }
-        });
+         fetch(url,
+             {
+                 credentials: "same-origin",
+                 method: "POST",
+                 body: JSON.stringify(data),
+                 headers: {
+                     "Content-Type": "application/json"
+                 }
+             })  .then(function (response) {
+             return response.json();
+         }).then(function (data) {
+             if(data.type == "1"){
+                 RequestCart();
+             }
+         });
 
-    }
-
+     }
+ */
 }
