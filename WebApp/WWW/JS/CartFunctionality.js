@@ -1,5 +1,5 @@
 jsonFile = {
-    "CartID": "1",
+    "Cart_ID": "1",
     "cart": {
         "0":
             {
@@ -76,41 +76,24 @@ jsonFile = {
 
 function RequestCart() {
 
-    // let url = 'http://localhost:8081/RequestForCart/';
-    // fetch(url,
-    //     {
-    //         redirect: 'follow',
-    //         credentials: "same-origin",
-    //         method: "POST",
-    //         headers: { 'Content-Type': 'application/json' },
-    //TODO - CHECK IF JSONTOSEND WAS SENT IN A PROPER MANNER
-    //         body:
-    // JSON.stringify(JSONTOSEND)})
-    //     .then(function (response) {
-    //
-    //         if(response.redirected)
-    //         {
-    //             window.location.replace(response.url);
-    //         }
-    //         console.log("success");
-    //         return response.json();
-    //     })
-    //     .then(function (myJson) {
-    //
-    //         if(myJson.approve != 1)
-    //         {
-    //             LoadCartFromJSON(myJson.order);
-    //         }
-    //         else
-    //         {
-    //             console.log('Not a valid coupon');
-    //         }
-    //     })
-    //     .catch(function (err) {
-    //         console.log(err.toString());
-    //     })
+   /* let url = 'http://localhost:8081/Cart/RequestCart';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+            loadCartFromJSON(jsonFile.cart);
+        }
+    });
+*/
 
-    loadCartFromJSON(jsonFile);
+    loadCartFromJSON(jsonFile); //comment
 }
 
 function loadCartFromJSON(jsonFile)
@@ -153,6 +136,7 @@ function loadCartFromJSON(jsonFile)
                 <span>סכום כולל</span>
                 <strong>${jsonFile["total sum"]} &#8362   </strong>
                 </li></div>`
+    element+=`<input type="hidden" id="Cart_ID" name="Cart_ID" value=${jsonFile.Cart_ID}>`
     my_cart.innerHTML = element;
 
     let numberOfProducts = document.getElementById("numberOfProducts");
@@ -162,7 +146,7 @@ function loadCartFromJSON(jsonFile)
 
 function deleteProductFromCart(Product_ID, quantity)
 {
-    if(quantity != undefined && Product_ID != undefined && quantity > 0)
+    /*if(isNaN(quantity) == false && isNaN(Product_ID) == false  && Number.parseInt(quantity) > 0)
     {
         let url = 'http://localhost:8081/Cart/DeleteProduct';
         let data = {
@@ -185,5 +169,5 @@ function deleteProductFromCart(Product_ID, quantity)
                 RequestCart();
             }
         });
-    }
+    }*/
 }

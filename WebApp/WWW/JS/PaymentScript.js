@@ -1,49 +1,34 @@
 
 function onCouponsSubmission() {
 
-    let coupon = document.getElementById("CouponNumber");
+    let coupon = document.getElementById("CouponNumber").value;
+    let cart_ID = document.getElementById("Cart_ID").value;
     if(coupon.value != null)
     {
-        // let url = 'http://localhost:8081/RequestForCoupon/';
-        // fetch(url,
-        //     {
-        //         redirect: 'follow',
-        //         credentials: "same-origin",
-        //         method: "POST",
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify({
-        //             "Coupon" : coupon.value,
-        //             "Order_id": order.id
+        let url = 'http://localhost:8081/Cart/RequestForCoupon';
+        let data = {
+            "Coupon_ID": coupon.value,
+            "Cart_ID" : cart_ID
+        };
 
-        //
-        //         })})
-        //     .then(function (response) {
-        //
-        //         if(response.redirected)
-        //         {
-        //             window.location.replace(response.url);
-        //         }
-        //         console.log("success");
-        //         return response.json();
-        //     })
-        //     .then(function (myJson) {
-        //
-        //         if(myJson.approve != 1)
-        //         {
-        //             RequestNewCartList();
-        //         }
-        //         else
-        //         {
-        //             console.log('Not a valid coupon');
-        //         }
-        //     })
-        //     .catch(function (err) {
-        //         console.log(err.toString());
-        //     })
-
+        fetch(url,
+            {
+                credentials: "same-origin",
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })  .then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if(data.type == "1"){
+                RequestCart();
+            }
+        });
+    }
         coupon = "";
 
-    }
 }
 
 function getPaymentMethod(value){
@@ -109,41 +94,23 @@ function CreateJSONFromElements(elements)
 }
 function sendPaymentDetailsToServer(elementsToSend) {
 
-    let JSONTOSend = CreateJSONFromElements(elementsToSend);
+    let data = CreateJSONFromElements(elementsToSend);
 
-    console.log("here");
-
-    // let url = 'http://localhost:8081/RequestToPay/';
-    // fetch(url,
-    //     {
-    //         redirect: 'follow',
-    //         credentials: "same-origin",
-    //         method: "POST",
-    //         headers: { 'Content-Type': 'application/json' },
-                //TODO - CHECK IF JSONTOSEND WAS SENT IN A PROPER MANNER
-    //         body: JSON.stringify(JSONTOSEND)})
-    //     .then(function (response) {
-    //
-    //         if(response.redirected)
-    //         {
-    //             window.location.replace(response.url);
-    //         }
-    //         console.log("success");
-    //         return response.json();
-    //     })
-    //     .then(function (myJson) {
-    //
-    //         if(myJson.approve != 1)
-    //         {
-    //             RequestNewCartList();
-    //         }
-    //         else
-    //         {
-    //             console.log('Not a valid coupon');
-    //         }
-    //     })
-    //     .catch(function (err) {
-    //         console.log(err.toString());
-    //     })
-
+        /*let url = 'http://localhost:8081/RequestToPay/';
+        fetch(url,
+            {
+                credentials: "same-origin",
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })  .then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            if(data.type == "1"){
+                window.location.replace(data.url);
+            }
+        });
+*/
 }
