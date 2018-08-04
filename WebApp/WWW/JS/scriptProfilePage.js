@@ -51,7 +51,7 @@ function showAllGroups(){
             let i;
             myGroups += `<ol>`;
             for(i in data){
-                myGroups += `<li>${data[i].name}</li> <button id="group${i}" class="btn btn-danger btn-sm groups" data-pos="${data[i].id}">העבור לדף הקבוצה</button>`
+                myGroups += `<li>${data[i].name}</li> <button id="group${i}" class="btn btn-danger btn-sm groups" data-pos="${data[i].id}">עבור לדף הקבוצה</button>`
             }
 
             document.getElementById("profile-content").innerHTML = myGroups;
