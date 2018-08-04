@@ -5,13 +5,12 @@ function onLoadingPage() {
 }
 
 function LoadProductsListAndPrices()
-{/*
- let url = 'http://localhost:8081/RequestForProductListAndPrices/';
+{
+ let url = 'http://localhost:8081/Cart/LoadProductsListAndPrices';
     fetch(url,
         {
             credentials: "same-origin",
             method: "POST",
-            body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -20,28 +19,27 @@ function LoadProductsListAndPrices()
     }).then(function (data) {
         if(data.type == '1'){
 
-            BuildProductListFromJson(data.ProductArray);
+            BuildProductListFromJson(data);
         }
-    });*/
+    });
 
-    BuildProductListFromJson(ExampleForProductArray); //comment when server is ready
+     // BuildProductListFromJson(ExampleForProductArray); //comment when server is ready
 }
 ExampleForProductArray = {
-     "Product_List": {
+
+    "Product_List": {
         "0":
             {
-                "product":
-                    {
-                        "product_ID" : "1",
-                        "productName": "מלפפון",
-                        "price": "5",
-                        "description": "מה שבילו אוהב"
 
-                    }
+                "product_ID": "1",
+                "productName": "מלפפון",
+                "price": "5",
+                "description": "מה שבילו אוהב"
             },
+
         "1":
-            {
-                "product":
+
+
                     {
                         "product_ID" : "2",
                         "productName": "עגבנייה",
@@ -49,39 +47,39 @@ ExampleForProductArray = {
                         "description": "מה שדניאל אוהבת"
 
                     }
-            },
+            ,
          "2":
              {
-                 "product":
-                     {
+
+
                          "product_ID" : "3",
                          "productName": "תפוא",
                          "price": "5.80",
                          "description": "מה שדניאל אוהבת"
 
-                     }
+
              },
          "3":
              {
-                 "product":
-                     {
+
+
                          "product_ID" : "4",
                          "productName": "חציל",
                          "price": "4.80",
                          "description": "מה שדניאל אוהבת"
 
-                     }
+
              },
          "4":
              {
-                 "product":
-                     {
+
+
                          "product_ID" : "5",
                          "productName": "מלפפון",
                          "price": "4.80",
                          "description": "מה שדניאל אוהבת"
 
-                     }
+
              }
     }
 };
@@ -94,13 +92,15 @@ function BuildProductListFromJson(jsonFile)
     let newElement="";
     for(let i in Products)
     {
-        let product = Products[i].product;
+        let product = Products[i];
+        let productDescription = product.description.trim();
+
         newElement +=
     `<div class="Product">
         <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
             <div>
                 <h6 class="my-0 text-right">${product.productName}</h6>
-                <small class="text-muted">>${product.description}</small>
+                <small class="text-muted" >${productDescription}</small>
             </div>
             <div class="addingToCartOption_div">
                 <small class="text-muted">

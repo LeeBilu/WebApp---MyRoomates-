@@ -304,6 +304,48 @@ app.post('/group/newMember', function (req, res) {
 
 });
 
+app.post('/Cart/LoadProductsListAndPrices', function (req, res) {
+    let url = 'http://localhost:3000/products/get';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1, "Product_List" : data.data});
+        } else{
+            return res.json({"type" : 0});
+        }
+    });
+
+});
+
+app.post('/Cart/requestCart', function (req, res) {
+    let url = 'http://localhost:3000/products/get';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1, "Product_List" : data.data});
+        } else{
+            return res.json({"type" : 0});
+        }
+    });
+
+});
+
 
 let server = app.listen(8081, function () {
     let host = server.address().address
@@ -312,6 +354,8 @@ let server = app.listen(8081, function () {
     UpdateUserFromFile();
     console.log("Example app listening at http://%s:%s", host, port)
 })
+
+
 
 
 function RegisterNewUserToFileSystem(userData)

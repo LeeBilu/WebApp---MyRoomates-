@@ -76,7 +76,7 @@ jsonFile = {
 
 function RequestCart() {
 
-   /* let url = 'http://localhost:8081/Cart/RequestCart';
+    let url = 'http://localhost:8081/Cart/RequestCart';
     fetch(url,
         {
             credentials: "same-origin",
@@ -91,9 +91,9 @@ function RequestCart() {
             loadCartFromJSON(jsonFile.cart);
         }
     });
-*/
 
-    loadCartFromJSON(jsonFile); //comment
+
+//    loadCartFromJSON(jsonFile); //comment
 }
 
 function loadCartFromJSON(jsonFile)
