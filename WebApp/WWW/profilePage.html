@@ -14,7 +14,7 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 </head>
-<body dir="rtl">
+<body dir="rtl" onload="initPage()" class="bg-light" >
 
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
@@ -54,46 +54,85 @@
         </form>
     </div>
 </nav>
-
 <main role="main" class="container">
+    <div class="container" dir="rtl">
+        <div class="row">
+            <div class="col-md-4 order-md-0 mb-6">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="col-md-0 active-pink-4 mb-4">
+                    <span class="text-muted">הפרופיל האישי</span>
+                    </div>
+                </h4>
+                <ul class="list-group mb-3" id="my-cart" style="overflow: auto">
+                    <div id="profileDetails"></div>
+                </ul>
+                <button type="submit" class="btn btn-secondary" onclick="editProfileDetails">עריכת פרופיל אישי</button>
+            </div>
+            <div class="col-md-4 order-md-2 mb-6">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="col-md-0 active-pink-4 mb-4">
+                            <span class="text-muted">הקבוצות שלי</span>
+                        </div>
+                    </h4>
+                <ul class="list-group mb-4" id="list_Of_Groups" style="max-height: 400px ;overflow: auto">
+                    <div id="myGroups"></div>
+                </ul>
+            </div>
+            <div class="col-md-4 order-md-3 mb-6">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="col-md-0 active-pink-4 mb-4">
+                        <span class="text-muted">צור קבוצה חדשה</span>
+                    </div>
+                </h4>
+                <ul class="list-group mb-4" id="new_group" style="max-height: 200px ;overflow: auto">
+                    <div id="newGroup"></div>
+                </ul>
+                <button class="btn btn-secondary" onclick="addNewGroup()"> אישור </button>
+            </div>
+        </div>
+
+
+    </div>
+
+
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
         <div class="lh-100">
         </div>
     </div>
 
-    <div class="row profile">
-    <div class="my-3 p-3 bg-white rounded box-shadow" id="notification-div" align="right">
-            <button type="button" class="btn btn-danger btn-sm groups">Message</button>
-        <ul >
+    <!--<div class="row profile">-->
+    <!--<div class="my-3 p-3 bg-white rounded box-shadow" id="notification-div" align="right">-->
+            <!--<button type="button" class="btn btn-danger btn-sm groups">Message</button>-->
+        <!--<ul >-->
 
-            <li>
-                <div class="media text-muted pt-3" onclick="showUserDetails()">
-                    <i class="glyphicon glyphicon-user"></i>
-                   פרטי משתמש
-                </div>
+            <!--<li>-->
+                <!--<div class="media text-muted pt-3" onclick="showUserDetails()">-->
+                    <!--<i class="glyphicon glyphicon-user"></i>-->
+                   <!--פרטי משתמש-->
+                <!--</div>-->
 
-            </li>
-            <li>
-                <div class="media text-muted pt-3" onclick="showAllGroups()">
-                    <i class="glyphicon glyphicon-tasks"></i>
-                  הקבוצות שלי
-                </div>
+            <!--</li>-->
+            <!--<li>-->
+                <!--<div class="media text-muted pt-3" onclick="showAllGroups()">-->
+                    <!--<i class="glyphicon glyphicon-tasks"></i>-->
+                  <!--הקבוצות שלי-->
+                <!--</div>-->
 
 
-            </li>
-            <li>
-                <div class="media text-muted pt-3" onclick="createNewGroup()"> <i class="glyphicon glyphicon-flag"></i>
-                    צור קבוצה חדשה </div>
+            <!--</li>-->
+            <!--<li>-->
+                <!--<div class="media text-muted pt-3" onclick="createNewGroup()"> <i class="glyphicon glyphicon-flag"></i>-->
+                    <!--צור קבוצה חדשה </div>-->
 
-            </li>
-        </ul>
-    </div>
-        <div class="col-md-9 my-3 p-3 bg-white rounded box-shadow media text-muted pt-3" align="right">
-            <div id="profile-content">
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+        <!--<div class="col-md-9 my-3 p-3 bg-white rounded box-shadow media text-muted pt-3" align="right">-->
+            <!--<div id="profile-content">-->
 
-            </div>
-        </div>
-    </div>
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 </main>
 
 

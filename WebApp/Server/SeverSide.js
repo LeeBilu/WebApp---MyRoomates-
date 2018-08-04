@@ -189,7 +189,7 @@ app.post('/users/newGroup', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            return res.send(JSON.stringify({'url': ("/static/GroupPage.html?group_id=" + data.data.group_id)}));
+            return res.send(JSON.stringify({'url': ("/static/GroupPage.html?group_id=" + data.data.id)}));
         }
     });
 

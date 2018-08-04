@@ -1,6 +1,6 @@
 function showUserDetails(){
-    let profilePage = `<h1>פרופיל אישי</h1> <br>`
-    document.getElementById("profile-content").innerHTML = profilePage;
+    let profilePage = ` `;
+    document.getElementById("profileDetails").innerHTML = profilePage;
     let url = 'http://localhost:8081/users/myDetails';
     fetch(url,
         {
@@ -9,36 +9,34 @@ function showUserDetails(){
         })  .then(function (response) {
              return response.json();
         }).then(function (data){
-            profilePage +=`  <div class=" col-md-9 col-lg-9 "> 
-                  <table class="table table-user-information">
-                    <tbody>
-                        </tr>
-                        <td>שם מלא</td>
-                        <td>${data.fullname}
-                        </td>
-                           
-                      </tr>
-                      <tr>
-                        <td>כתובת מייל</td>
-                        <td>${data.email}</td></tr>
-                        
-                        </tr>
-                      <tr>
-                        <td>מספר טלפון סלולרי</td>
-                        <td>${data.phone}</td></tr>
-                      
-                     
-                    </tbody>
-                  </table>
-                  `
-        document.getElementById("profile-content").innerHTML = profilePage;
+
+
+            profilePage += `<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
+                        <div>
+                            <h6 class="my-0 text-right"><b>שם מלא</b></h6>
+                        </div>
+                        <span class="text-muted">${data.fullname}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css">
+                        <div>
+                            <h6 class="my-0"><b>כתובת מייל </b></h6>
+                        </div>
+                        <span class="text-muted">${data.email}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
+                        <div>
+                            <h6 class="my-0 text-right"><b>מספר טלפון סלולרי</b></h6>
+                        </div>
+                        <span class="text-muted">${data.phone}</span>
+                    </li>`
+        document.getElementById("profileDetails").innerHTML = profilePage;
     });
 
 }
 
 function showAllGroups(){
-    let myGroups = `<h1>הקבוצות שלי</h1> <br>`
-    document.getElementById("profile-content").innerHTML = myGroups;
+    let myGroups = "";
+    document.getElementById("myGroups").innerHTML = myGroups;
     let url = 'http://localhost:8081/users/allGroups';
     fetch(url,
         {
@@ -49,12 +47,17 @@ function showAllGroups(){
     }).then(function (data) {
         if(data){
             let i;
-            myGroups += `<ol>`;
             for(i in data){
-                myGroups += `<li>${data[i].name}</li> <button id="group${i}" class="btn btn-danger btn-sm groups" data-pos="${data[i].id}">עבור לדף הקבוצה</button>`
+                // if(i%2 == 0){
+                    myGroups += `<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css">
+                            <div>
+                                <h6 class="my-0 text-right"><b>${data[i].name}</b></h6>
+                            </div>
+                            <button class="btn-primary cart_buttons" data-pos="${data[i].id}" id="group${i}"  >עבור לדף הקבוצה</button></small>
+                        </li>`
             }
 
-            document.getElementById("profile-content").innerHTML = myGroups;
+            document.getElementById("myGroups").innerHTML = myGroups;
             for(i in data) {
                 let chooseGroup = document.getElementById("group" + i);
                 chooseGroup.addEventListener('click', function(){
@@ -90,15 +93,14 @@ function showAllGroups(){
 
 
 function createNewGroup() {
-    let newGroup = `<h1>צור קבוצה חדשה</h1> <br>  <label><b>שם הקבוצה</b></label> \n
-        <br> <input class="form-control" id="groupName" placeholder="שם הקבוצה" name="groupName" type="text">\n
+    let newGroup =`<input class="form-control" id="groupName" placeholder="שם הקבוצה" name="groupName" type="text">\n
         <div id="invalid-groupName" style="display: none; color: red"  >
                       דרוש שם קבוצה
                                      </div>
-                                     <br>
-        <button class="btn btn-danger btn-sm" onclick="addNewGroup()"> אישור </button>`;
+                                     
+        `;
 
-    document.getElementById("profile-content").innerHTML = newGroup;
+    document.getElementById("newGroup").innerHTML = newGroup;
 
 }
 
@@ -131,4 +133,9 @@ function addNewGroup() {
 }
 
 
-
+function initPage()
+{
+    showUserDetails();
+    showAllGroups();
+    createNewGroup()
+}
