@@ -106,6 +106,7 @@ function someMembersInGroup() {
         })  .then(function (response) {
         return response.json();
     }).then(function (data){
+        console.log(data);
         showMember(data, 3);
     });
 }
@@ -148,7 +149,6 @@ function addNewMember(){
     let data = {};
     data.email = newMemberEmail;
     data.group_id = findGetParameter("group_id");
-
     fetch(url,
         {
             credentials: "same-origin",
@@ -157,8 +157,7 @@ function addNewMember(){
             headers: {
                 "Content-Type": "application/json"
             }
-        })  .then(function () {
-
+        }).then(function () {
         someMembersInGroup();
     });
 }

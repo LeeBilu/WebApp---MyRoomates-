@@ -165,6 +165,8 @@ app.post('/users/login', function (req, res) {
             res.cookie('cookieName',randomNumber, options);
             mappingRandToCookieNumber[randomNumber] = req.body.user;
             return res.send(JSON.stringify({'url': "/static/profilePage.html", 'approve' : 1}));
+        }else{
+            return res.send(JSON.stringify({'approve' : 0}));
         }
     })
 })
@@ -187,7 +189,7 @@ app.post('/users/newGroup', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            return res.send(JSON.stringify({'url': "/static/GroupPage.html"}));
+            return res.send(JSON.stringify({'url': ("/static/GroupPage.html?group_id=" + data.data.group_id)}));
         }
     });
 
@@ -295,10 +297,11 @@ app.post('/group/newMember', function (req, res) {
             headers: {
                 "Content-Type": "application/json"
             }
-        })  .then(function (response) {
+        }).then(function (response) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
+
             return res.end();
         }
     });

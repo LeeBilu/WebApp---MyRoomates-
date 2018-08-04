@@ -14,20 +14,59 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="My-Cart.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WWW/My-Cart.html">
+      <file leaf-file-name="DB.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DB/DB.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="112" column="54" lean-forward="true" selection-start-line="112" selection-start-column="54" selection-end-line="112" selection-end-column="54" />
+            <state relative-caret-position="199">
+              <caret line="106" column="96" lean-forward="true" selection-start-line="106" selection-start-column="96" selection-end-line="106" selection-end-column="96" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="My-Cart.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/WWW/JS/My-Cart.js">
+      <file leaf-file-name="profilePage.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WWW/profilePage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="133" column="52" lean-forward="true" selection-start-line="133" selection-start-column="52" selection-end-line="133" selection-end-column="52" />
+            <state relative-caret-position="263">
+              <caret line="85" column="41" lean-forward="true" selection-start-line="85" selection-start-column="41" selection-end-line="85" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WWW/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="54" column="110" selection-start-line="54" selection-start-column="110" selection-end-line="54" selection-end-column="110" />
+              <folding>
+                <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GroupPage.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WWW/GroupPage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="111" column="95" selection-start-line="111" selection-start-column="83" selection-end-line="111" selection-end-column="95" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="groupScript.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WWW/JS/groupScript.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="159" column="29" selection-start-line="159" selection-start-column="29" selection-end-line="159" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeverSide.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="191" column="94" selection-start-line="191" selection-start-column="94" selection-end-line="191" selection-end-column="94" />
             </state>
           </provider>
         </entry>
@@ -35,8 +74,11 @@
       <file leaf-file-name="scriptProfilePage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WWW/JS/scriptProfilePage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="130" column="1" lean-forward="true" selection-start-line="115" selection-start-column="4" selection-end-line="130" selection-end-column="1" />
+            <state relative-caret-position="141">
+              <caret line="112" column="51" selection-start-line="112" selection-start-column="43" selection-end-line="112" selection-end-column="51" />
+              <folding>
+                <marker date="1533307292872" expanded="true" signature="2036:3037" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -54,8 +96,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>wind</find>
-      <find>0000</find>
       <find>.name</find>
       <find>resp</find>
       <find>create</find>
@@ -84,6 +124,8 @@
       <find>remo</find>
       <find>6</find>
       <find>lee1</find>
+      <find>DOMco</find>
+      <find>getQueryVariable</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -109,24 +151,24 @@
         <option value="$PROJECT_DIR$/WWW/CSS/GroupPageCSSFile.css" />
         <option value="$PROJECT_DIR$/AllMyGroupMembers.html" />
         <option value="$PROJECT_DIR$/WWW/finishPage.html" />
-        <option value="$PROJECT_DIR$/WWW/login.html" />
         <option value="$PROJECT_DIR$/WWW/CSS/profilePageStyle.css" />
         <option value="$PROJECT_DIR$/WWW/profilePage.html" />
         <option value="$PROJECT_DIR$/DB/DBdata" />
-        <option value="$PROJECT_DIR$/WWW/JS/scriptFileForLoginPage.js" />
         <option value="$PROJECT_DIR$/WWW/register.html" />
         <option value="$PROJECT_DIR$/WWW/CSS/registerStyle.css" />
         <option value="$PROJECT_DIR$/WWW/JS/scriptProfilePage.js" />
-        <option value="$PROJECT_DIR$/WWW/JS/scriptFileForRegisteration.js" />
         <option value="$PROJECT_DIR$/WWW/AllMyGroupMembers.html" />
-        <option value="$PROJECT_DIR$/DB/groups" />
         <option value="$PROJECT_DIR$/WWW/JS/allMyGroupMembersJS.js" />
         <option value="$PROJECT_DIR$/WWW/GroupPage.html" />
-        <option value="$PROJECT_DIR$/DB/DB.js" />
-        <option value="$PROJECT_DIR$/Server/SeverSide.js" />
-        <option value="$PROJECT_DIR$/WWW/JS/groupScript.js" />
         <option value="$PROJECT_DIR$/DB/users" />
         <option value="$PROJECT_DIR$/WWW/JS/My-Cart.js" />
+        <option value="$PROJECT_DIR$/WWW/login.html" />
+        <option value="$PROJECT_DIR$/WWW/JS/scriptFileForRegisteration.js" />
+        <option value="$PROJECT_DIR$/WWW/JS/scriptFileForLoginPage.js" />
+        <option value="$PROJECT_DIR$/DB/groups" />
+        <option value="$PROJECT_DIR$/WWW/JS/groupScript.js" />
+        <option value="$PROJECT_DIR$/DB/DB.js" />
+        <option value="$PROJECT_DIR$/Server/SeverSide.js" />
       </list>
     </option>
   </component>
@@ -151,16 +193,16 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="18" />
     <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="823" />
+    <option name="height" value="817" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -176,18 +218,7 @@
             <path>
               <item name="WebApp" type="b2602c69:ProjectViewProjectNode" />
               <item name="WebApp" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WebApp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WebApp" type="462c0819:PsiDirectoryNode" />
               <item name="WWW" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WebApp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WebApp" type="462c0819:PsiDirectoryNode" />
-              <item name="WWW" type="462c0819:PsiDirectoryNode" />
-              <item name="CSS" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WebApp" type="b2602c69:ProjectViewProjectNode" />
@@ -199,6 +230,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -296,29 +328,39 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="260412000" />
+    <option name="totallyTimeSpent" value="266684000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="817" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11493412" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.115574345" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3290938" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.36248013" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3625" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.31906077" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.22083333" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11493412" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.36248013" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.22083333" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3290938" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.31906077" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -329,7 +371,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="35" />
+      <option name="time" value="36" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="NodeJSConfigurationType">
@@ -450,13 +492,6 @@
     <entry file="file://$PROJECT_DIR$/WWW/CSS/Login2.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/scriptFileForRegisteration.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WWW/CSS/registerStyle.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
@@ -490,88 +525,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/WWW/JS/allMyGroupMembersJS.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="21" column="9" lean-forward="true" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/profilePage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="85" column="102" selection-start-line="85" selection-start-column="89" selection-end-line="85" selection-end-column="102" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="70" column="7" lean-forward="true" selection-start-line="70" selection-start-column="7" selection-end-line="70" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/scriptFileForLoginPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+        <state relative-caret-position="240">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Userdata.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/GroupPage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2652">
-          <caret line="160" column="7" selection-start-line="160" selection-start-column="7" selection-end-line="160" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/node-fetch/lib/body.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="799">
           <caret line="47" column="39" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DB/DB.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4403">
-          <caret line="259" selection-start-line="259" selection-end-line="259" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5525">
-          <caret line="350" column="37" selection-start-line="350" selection-start-column="37" selection-end-line="350" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/groupScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2448">
-          <caret line="188" lean-forward="true" selection-start-line="188" selection-end-line="188" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DB/groups">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="140" lean-forward="true" selection-start-column="140" selection-end-column="140" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DB/users">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="94" selection-start-column="94" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/scriptProfilePage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="130" column="1" lean-forward="true" selection-start-line="115" selection-start-column="4" selection-end-line="130" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -586,6 +551,89 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
           <caret line="133" column="52" lean-forward="true" selection-start-line="133" selection-start-column="52" selection-end-line="133" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="54" column="110" selection-start-line="54" selection-start-column="110" selection-end-line="54" selection-end-column="110" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/JS/scriptFileForRegisteration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1523">
+          <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/JS/scriptFileForLoginPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/users">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="92" selection-start-column="92" selection-end-column="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/groups">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="486" selection-start-column="486" selection-end-column="486" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/GroupPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="111" column="95" selection-start-line="111" selection-start-column="83" selection-end-line="111" selection-end-column="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/JS/groupScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="159" column="29" selection-start-line="159" selection-start-column="29" selection-end-line="159" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/profilePage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="85" column="41" lean-forward="true" selection-start-line="85" selection-start-column="41" selection-end-line="85" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/JS/scriptProfilePage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="112" column="51" selection-start-line="112" selection-start-column="43" selection-end-line="112" selection-end-column="51" />
+          <folding>
+            <marker date="1533307292872" expanded="true" signature="2036:3037" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/DB.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="106" column="96" lean-forward="true" selection-start-line="106" selection-start-column="96" selection-end-line="106" selection-end-column="96" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="191" column="94" selection-start-line="191" selection-start-column="94" selection-end-line="191" selection-end-column="94" />
         </state>
       </provider>
     </entry>
