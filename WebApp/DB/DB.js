@@ -80,7 +80,6 @@ app.post('/users/user', function (req, res) {
     }
     let user =  users[body.id];
     delete user.password;
-    delete user.groups_id;
     res.json({"type" : 1, "data" : user});
 });
 /**
@@ -113,7 +112,7 @@ app.post('/groups/add', function (req, res) {
     users[body.user_id].groups_id.push(ids.group_id - 1);
     insertToFile(users, "users", false);
     updateDBData();
-    res.json({"type" : 1});
+    res.json({"type" : 1, "data" :  groups[ids.group_id- 1]});
 });
 /**
  * Update group users
@@ -364,6 +363,37 @@ app.post('/cart/editProduct', function (req, res) {
 
 });
 
+
+/**
+ * edit product in the cart
+ * params: cart_id product_id, amount
+ */
+
+app.post('/order/place', function (req, res) {
+    let carts = getFromFile("carts");
+    let products = getFromFile("products");
+    let body = req.body;
+    if(!body.cart_id || !body.product_id || !body.amount){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    if(carts === false || products === false){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    if(!carts[body.cart_id] || !products[product_id]){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    carts[body.cart_id].products[body.product_id] = {"product" : products[body.product_id], "amount"  : body.amount};
+    if(insertToFile(carts, "carts", false) === false){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    res.json({"type" : 1, "data" : 1});
+
+});
+
 let loadDBData = function () {
     try{
         let data = fs.readFileSync("DBdata").toString();
@@ -371,6 +401,7 @@ let loadDBData = function () {
         ids.users_id = db_data.users_id;
         ids.group_id = db_data.group_id;
         ids.carts_id = db_data.carts_id;
+        ids.orders_id = db_data.orders_id
     }
     catch(e){
         return false;
@@ -379,7 +410,7 @@ let loadDBData = function () {
 };
 
 let updateDBData = function(){
-    let data = {"users_id" : ids.users_id, "group_id" : ids.group_id, "carts_id" : ids.carts_id};
+    let data = {"users_id" : ids.users_id, "group_id" : ids.group_id, "carts_id" : ids.carts_id, "orders_id" : ids.orders_id};
     try{
         fs.writeFileSync("DBdata", JSON.stringify(data), 'utf8');
         return true;
