@@ -5,46 +5,26 @@ function onLoadingPage() {
 }
 
 function LoadProductsListAndPrices()
-{
-// let url = 'http://localhost:8081/RequestForProductListAndPrices/';
-    // fetch(url,
-    //     {
-    //         redirect: 'follow',
-    //         credentials: "same-origin",
-    //         method: "POST",
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({
-    //             "Coupon" : coupon.value,
-    //               "Cart_id": cart.id
+{/*
+ let url = 'http://localhost:8081/RequestForProductListAndPrices/';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type == '1'){
 
-    //
-    //         })})
-    //     .then(function (response) {
-    //
-    //         if(response.redirected)
-    //         {
-    //             window.location.replace(response.url);
-    //         }
-    //         console.log("success");
-    //         return response.json();
-    //     })
-    //     .then(function (myJson) {
-    //
-    //         if(myJson.approve != 1)
-    //         {
-    //             RequestNewCartList();
-    //         }
-    //         else
-    //         {
-    //             console.log('Not a valid coupon');
-    //         }
-    //     })
-    //     .catch(function (err) {
-    //         console.log(err.toString());
-    //     })
+            BuildProductListFromJson(data.ProductArray);
+        }
+    });*/
 
-
-    BuildProductListFromJson(ExampleForProductArray);
+    BuildProductListFromJson(ExampleForProductArray); //comment when server is ready
 }
 ExampleForProductArray = {
      "Product_List": {
@@ -147,7 +127,8 @@ function searchInProductList() {
     for (i = 0; i < products_Divs.length; i++) {
 
         let product_Name = products_Divs[i].getElementsByTagName("h6")[0].textContent;
-        if (product_Name.toUpperCase().indexOf(filter) > -1) {
+        let product_Description = products_Divs[i].getElementsByTagName("small")[0].textContent;
+        if ((product_Name.toUpperCase().indexOf(filter) > -1) || (product_Description.toUpperCase().indexOf(filter) > -1)) {
             products_Divs[i].style.display = "";
             } else {
             products_Divs[i].style.display = "none";
