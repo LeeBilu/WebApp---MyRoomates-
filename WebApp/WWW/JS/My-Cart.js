@@ -167,12 +167,15 @@ function replacingBetweenVisbleDivs(button, DivToDisplay)
 
 function addNewProductToCart(Product_ID, quantity)
 {
-    /* if(isNaN(quantity) == false && isNaN(Product_ID) == false  && Number.parseInt(quantity) > 0)
+     if(isNaN(quantity) == false && isNaN(Product_ID) == false  && Number.parseInt(quantity) > 0)
      {
+         let cart_ID = document.getElementById("Cart_ID").value;
+
          let url = 'http://localhost:8081/Cart/AddProduct';
          let data = {
-             "product_ID": Product_ID,
-             "quantity" : quantity
+             "product_id": Product_ID,
+             "amount" : quantity,
+             "cart_id" :cart_ID
          };
 
          fetch(url,
@@ -188,9 +191,11 @@ function addNewProductToCart(Product_ID, quantity)
          }).then(function (data) {
              if(data.type == "1"){
                  RequestCart();
+             } else{
+                 //TODO: error
              }
          });
 
      }
- */
+
 }

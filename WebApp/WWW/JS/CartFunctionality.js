@@ -70,17 +70,22 @@ jsonFile = {
         "description": "לבינתחומי יש רק שקל הנחה מצטערים"
 
     },
-    "total sum": "18.80",
-    "total amount paid": "300"
+    "total_amount": "18.80",
+    "total_amount_paid": "300"
 }
 
 function RequestCart() {
 
     let url = 'http://localhost:8081/Cart/RequestCart';
+    //TODO - get the group ID out of the URL
+    let data_to_send = {
+        "group_id" : "1"
+    };
     fetch(url,
         {
             credentials: "same-origin",
             method: "POST",
+            body: JSON.stringify(data_to_send),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -88,7 +93,9 @@ function RequestCart() {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            loadCartFromJSON(jsonFile.cart);
+            loadCartFromJSON(data.order);
+        } else{
+            //TODO - Problem with cart request
         }
     });
 
@@ -134,8 +141,18 @@ function loadCartFromJSON(jsonFile)
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום כולל</span>
-                <strong>${jsonFile["total sum"]} &#8362   </strong>
+                <strong>${jsonFile["total_amount"]} &#8362   </strong>
                 </li></div>`
+
+    element+=`<div><li class="list-group-item d-flex justify-content-between">
+                <span>סכום ששולם</span>
+                <strong>${jsonFile["total_amount_paid"]} &#8362   </strong>
+                </li></div>`
+    element+=`<div><li class="list-group-item d-flex justify-content-between">
+                <span>סכום שנשאר</span>
+                <strong>${jsonFile["total_amount"] - jsonFile["total_amount_paid"]} &#8362   </strong>
+                </li></div>`
+
     element+=`<input type="hidden" id="Cart_ID" name="Cart_ID" value=${jsonFile.Cart_ID}>`
     my_cart.innerHTML = element;
 
@@ -146,12 +163,14 @@ function loadCartFromJSON(jsonFile)
 
 function deleteProductFromCart(Product_ID, quantity)
 {
-    /*if(isNaN(quantity) == false && isNaN(Product_ID) == false  && Number.parseInt(quantity) > 0)
+    if(isNaN(quantity) == false && isNaN(Product_ID) == false  && Number.parseInt(quantity) > 0)
     {
         let url = 'http://localhost:8081/Cart/DeleteProduct';
+        let cart_ID = document.getElementById("Cart_ID").value;
         let data = {
             "product_ID": Product_ID,
-            "quantity" : quantity
+            "quantity" : quantity,
+            "cart_id" : cart_ID
         };
 
         fetch(url,
@@ -167,7 +186,9 @@ function deleteProductFromCart(Product_ID, quantity)
         }).then(function (data) {
             if(data.type == "1"){
                 RequestCart();
+            } else{
+                //TODO: error
             }
         });
-    }*/
+    }
 }

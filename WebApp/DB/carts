@@ -1,0 +1,2 @@
+{"1" : {"Cart_ID" : "1", status" : 1, "cart" : {{"1" , {"product": {"product_ID": "0", "productName": "מלפפון", "price": "5", "description": "מה שבילו אוהב"}, "amount": "3"}}}, "coupon" : {"product_ID": "1000", "productName": "הנחת סטודנט", "price": "1", "description": "לבינתחומי יש רק שקל הנחה מצטערים"
+} "group_id" : "1"}}

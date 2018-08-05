@@ -14,6 +14,7 @@ app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 // set a cookie
 app.use(function (req, res, next) {
     // check if client sent cookie
@@ -29,7 +30,7 @@ app.use(function (req, res, next) {
 
     if (cookie === undefined || notAValidCookie)
     {
-        //In case there is no cookie and the user trying to get into an unpermitted place
+        // In case there is no cookie and the user trying to get into an unpermitted place
         if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
             req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
               req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register")
@@ -70,7 +71,7 @@ app.use(function (req, res, next) {
     }
 });
 
-app.use('/static', express.static('WWW'));
+app.use('/static', express.static('../WWW'));
 
 app.get('/ideas', function (req, res) {
 
@@ -325,12 +326,18 @@ app.post('/Cart/LoadProductsListAndPrices', function (req, res) {
 
 });
 
-app.post('/Cart/requestCart', function (req, res) {
-    let url = 'http://localhost:3000/products/get';
+app.post('/Cart/RequestCart', function (req, res) {
+    if(req.body.group_id === "undefined"){
+        res.json({"type" : 0});
+        return;
+    }
+
+    let url = 'http://localhost:3000/cart/get';
     fetch(url,
         {
             credentials: "same-origin",
             method: "POST",
+            body: JSON.stringify(req.body),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -338,7 +345,110 @@ app.post('/Cart/requestCart', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-            return res.send({"type" : 1, "Product_List" : data.data});
+            return res.send({"type" : 1, "order" : data.data});
+        } else{
+            return res.json({"type" : 0});
+        }
+    });
+
+});
+
+app.post('/Cart/DeleteProduct', function (req, res) {
+    if(req.body.product_ID === "undefined"  || req.body.cart_id === "undefined"){
+        res.json({"type" : 0});
+        return;
+    }
+
+    let url = 'http://localhost:3000/Cart/deleteProduct';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(req.body),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1});
+        } else{
+            return res.json({"type" : 0});
+        }
+    });
+
+});
+
+
+app.post('/Cart/AddProduct', function (req, res) {
+    if(req.body.product_id === "undefined"  || req.body.amount  === "undefined"|| req.body.cart_id === "undefined"){
+        res.json({"type" : 0});
+        return;
+    }
+
+    let url = 'http://localhost:3000/Cart/editProduct';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(req.body),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1});
+        } else{
+            return res.json({"type" : 0});
+        }
+    });
+
+});
+
+
+app.post('/Cart/RequestToPay', function (req, res) {
+
+    if(req.body.product_id === "undefined"  || req.body.amount  === "undefined"|| req.body.cart_id === "undefined"){
+        res.json({"type" : 0});
+        return;
+    }
+    let paymant_data ={
+        "firstName" : req.body.firstName,
+        "lastName" : req.body.lastName,
+        "email" : req.body.email,
+        "partOrFullPayment" : req.body.partOrFullPayment
+    };
+    if(req.body.paymentMethod === "credit"){
+        paymant_data.VisaNumber = req.body.VisaNumber,
+        paymant_data.VisaOwner = req.body.VisaOwner,
+        paymant_data.cc_cvv = req.body.cc_cvv,
+        paymant_data.monthOfExpiration = req.body.monthOfExpiration
+
+    }
+    let data = {
+        "cart_id" : req.body.cart_id,
+        "amount" : req.body.AmountOfMoney,
+        "type" : req.body.paymentMethod,
+        "payment_data" : paymant_data
+
+    };
+    let url = 'http://localhost:3000/order/place';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1});
         } else{
             return res.json({"type" : 0});
         }
@@ -348,8 +458,8 @@ app.post('/Cart/requestCart', function (req, res) {
 
 
 let server = app.listen(8081, function () {
-    let host = server.address().address
-    let port = server.address().port
+    let host = server.address().address;
+    let port = server.address().port;
 
     UpdateUserFromFile();
     console.log("Example app listening at http://%s:%s", host, port)

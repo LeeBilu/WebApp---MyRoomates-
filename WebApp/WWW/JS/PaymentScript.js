@@ -76,10 +76,12 @@ function OnSubmitPayment() {
 function CreateJSONFromElements(elements)
 {
     let newJSON = {};
+
+    //TODO - CHANGE TO REGULAR FOR
     Array.prototype.forEach.call(elements, function(element) {
 
         newJSON[element.id] = element.value;
-1
+
     });
     //gets the radio button val
     let paymentMethod = document.getElementsByName('paymentMethod');
@@ -90,13 +92,15 @@ function CreateJSONFromElements(elements)
         }
     }
     newJSON["paymentMethod"] = paymentMethod_value;
+    //TODO get group_id from url
+    newJSON["cart_id"] = document.getElementById("Cart_ID").value;
 
 }
 function sendPaymentDetailsToServer(elementsToSend) {
 
     let data = CreateJSONFromElements(elementsToSend);
 
-        /*let url = 'http://localhost:8081/RequestToPay/';
+        let url = 'http://localhost:8081/Cart/RequestToPay';
         fetch(url,
             {
                 credentials: "same-origin",
@@ -112,5 +116,5 @@ function sendPaymentDetailsToServer(elementsToSend) {
                 window.location.replace(data.url);
             }
         });
-*/
+
 }

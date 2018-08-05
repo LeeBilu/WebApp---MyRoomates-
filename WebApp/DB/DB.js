@@ -274,7 +274,7 @@ app.post('/cart/create', function (req, res) {
         }
     }
 
-    carts[ids.carts_id] = {"id": ids.carts_id, "status" : 1, "products" : [], "group_id" : body.group_id};
+    carts[ids.carts_id] = {"Cart_ID": ids.carts_id, "status" : 1, "cart" : {}, "group_id" : body.group_id};
     if(!insertToFile(carts, "carts", "carts_id")){
         res.json({"type" : 0, "data" : "DB_ERROR"})
     }
@@ -283,7 +283,7 @@ app.post('/cart/create', function (req, res) {
 
 /**
  * get the cart
- * params: cart_id
+ * params: group_id
  */
 app.post('/cart/get', function (req, res) {
     let carts = getFromFile("carts");
@@ -293,22 +293,36 @@ app.post('/cart/get', function (req, res) {
         return;
     }
     let body = req.body;
-    if(!carts[body.cart_id]){
+    if(body.group_id === "undefined"){
+        res.json({"type" : 0, "data" : "BODY_ERROR"});
+        return;
+    }
+    let cart = false;
+    for(let i in carts ){
+        if(carts[i].group_id === body.group_id && carts[i].status === 1){
+            cart = carts[i];
+            break;
+        }
+    }
+    if(cart === false){
         res.json({"type" : 0, "data" : "CART_NOT_FOUND"});
         return;
     }
-    let cart = carts[body.cart_id];
+
     let amount = 0;
-    for(let i = 0; i < cart.products.length; i++){
-        amount += cart.products[i].product.price * cart.products[i].amount;
+    for(let i = 0; i < cart.cart.length; i++){
+        amount += cart.cart[i].product.price * cart.cart[i].amount;
     }
     cart.total_amount = amount;
+    let paid = 0;
     cart.payments = [];
     for(let i in orders){
         if(orders[i].cart_id == body.cart_id){
             cart.payments.push(orders[i]);
+            paid += orders[i].amount;
         }
     }
+    cart.total_amount_paid = paid;
     res.json({"type" : 1, "data" : cart});
 });
 
@@ -320,7 +334,7 @@ app.post('/cart/get', function (req, res) {
 app.post('/cart/deleteProduct', function (req, res) {
     let carts = getFromFile("carts");
     let body = req.body;
-    if(!body.cart_id){
+    if(body.cart_id === "undefined" || body.product_ID === "undefined"){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
@@ -328,15 +342,15 @@ app.post('/cart/deleteProduct', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    if(!carts[body.cart_id] || !carts[body.cart_id].products[product_id]){
+    if(carts[body.cart_id] === "undefined" || carts[body.cart_id].cart[body.product_ID] === "undefined"){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    if(carts[body.cart_id].status == 0){
+    if(carts[body.cart_id].status === 0){
         res.json({"type" : 0, "data" : "CART_STATUS_INVALID"});
         return
     }
-    delete carts[body.cart_id].products[body.product_id];
+    delete carts[body.cart_id].cart[body.product_ID];
     if(insertToFile(carts, "carts", false) === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
@@ -353,7 +367,7 @@ app.post('/cart/editProduct', function (req, res) {
     let carts = getFromFile("carts");
     let products = getFromFile("products");
     let body = req.body;
-    if(!body.cart_id || !body.product_id || !body.amount){
+    if(body.cart_id  === "undefined" || body.product_id  === "undefined" || body.amount === "undefined" ){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
@@ -361,15 +375,15 @@ app.post('/cart/editProduct', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    if(!carts[body.cart_id] || !products[product_id]){
+    if(carts[body.cart_id]  === "undefined"  || products[body.product_id]  === "undefined" ){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    if(carts[body.cart_id].status == 0){
+    if(carts[body.cart_id].status === 0){
         res.json({"type" : 0, "data" : "CART_STATUS_INVALID"});
         return
     }
-    carts[body.cart_id].products[body.product_id] = {"product" : products[body.product_id], "amount"  : body.amount};
+    carts[body.cart_id].cart[body.product_id] = {"product" : products[body.product_id], "amount"  : body.amount};
     if(insertToFile(carts, "carts", false) === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
@@ -388,21 +402,23 @@ app.post('/order/place', function (req, res) {
     let carts = getFromFile("carts");
     let orders = getFromFile("orders");
     let body = req.body;
-    if(!body.cart_id || !body.type || !body.amount || !body.type){
+    //TODO change validation;
+    if(!body.group_id || !body.type || !body.amount || !body.type){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    if(carts === false || orders == false){
+    if(carts === false || orders === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    if(!carts[body.cart_id]){
+
+    if(carts[body.cart_id] === "undefined"){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
     let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount};
     orders[ids.orders_id] = order;
-    if(insertToFile(order, "order", false) === false){
+    if(insertToFile(order, "order", "orders_id") === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
