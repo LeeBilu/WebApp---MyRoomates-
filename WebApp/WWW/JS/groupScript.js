@@ -93,7 +93,7 @@ function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetPa
 
 function someMembersInGroup() {
     let url = 'http://localhost:8081/group/allMembers';
-    data = {};
+    let data = {};
     data.group_id = findGetParameter("group_id");
     fetch(url,
         {

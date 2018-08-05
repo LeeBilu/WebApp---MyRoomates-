@@ -117,3 +117,9 @@ ul {
     margin-bottom: 10px;
     position: static;
 }
+
+#invalid-email{
+    color: red;
+}#invalid-phone{
+     color: red;
+ }
