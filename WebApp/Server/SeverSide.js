@@ -166,6 +166,8 @@ app.post('/users/login', function (req, res) {
             res.cookie('cookieName',randomNumber, options);
             mappingRandToCookieNumber[randomNumber] = req.body.user;
             return res.send(JSON.stringify({'url': "/static/profilePage.html", 'approve' : 1}));
+        }else{
+            return res.send(JSON.stringify({'approve' : 0}));
         }
     })
 })
@@ -188,7 +190,7 @@ app.post('/users/newGroup', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            return res.send(JSON.stringify({'url': "/static/GroupPage.html"}));
+            return res.send(JSON.stringify({'url': ("/static/GroupPage.html?group_id=" + data.data.id)}));
         }
     });
 
@@ -219,6 +221,7 @@ app.post('/users/groupPage', function (req, res) {
     let group_id = req.body.groupNum;
     let data = {};
     data.group_id = group_id;
+    console.log(group_id);
     let url = 'http://localhost:3000/groups/get';
     fetch(url,
         {
@@ -232,7 +235,7 @@ app.post('/users/groupPage', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            return res.send(JSON.stringify({'url': "/static/GroupPage.html"}));
+            return res.send(JSON.stringify({'url': "/static/GroupPage.html?group_id=" + group_id}));
         }
     });
 
@@ -258,9 +261,9 @@ app.get('/users/myDetails', function (req, res) {
     });
 });
 
-app.get('/group/allMembers', function (req, res) {
+app.post('/group/allMembers', function (req, res) {
     let url = 'http://localhost:3000/groups/get';
-    let data = {"group_id": 1};
+    let data = {"group_id": req.body.group_id};
     fetch(url,
         {
             credentials: "same-origin",
@@ -273,6 +276,7 @@ app.get('/group/allMembers', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
+
             return res.send(data.data);
         }
     });
@@ -280,7 +284,7 @@ app.get('/group/allMembers', function (req, res) {
 });
 
 app.post('/group/newMember', function (req, res) {
-    let group_id = 1;
+    let group_id = req.body.group_id;
     let emails = [];
     emails.push(req.body.email);
     let data = {};
@@ -295,10 +299,11 @@ app.post('/group/newMember', function (req, res) {
             headers: {
                 "Content-Type": "application/json"
             }
-        })  .then(function (response) {
+        }).then(function (response) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
+
             return res.end();
         }
     });
@@ -449,6 +454,39 @@ app.post('/Cart/RequestToPay', function (req, res) {
     }).then(function (data) {
         if(data.type){
             return res.send({"type" : 1});
+        } else{
+            return res.json({"type" : 0});
+        }
+    });
+
+});
+
+app.post('/users/editProfileDetails', function (req, res) {
+    let url = 'http://localhost:3000/users/edit';
+    let body = req.body;
+    let data = {};
+    data.user_id = 1;
+    if(typeof(body.email) !== "undefined"){
+       data.email = body.email;
+    }if(typeof(body.fullname) !== "undefined"){
+        data.fullname = body.fullname;
+    }if(typeof(body.phone) !== "undefined"){
+        data.phone = body.phone;
+    }
+
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1, "url" : "/static/profilePage.html"});
         } else{
             return res.json({"type" : 0});
         }

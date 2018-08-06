@@ -1,5 +1,9 @@
 function getQueryVariable(variable) {
+
+
     let query = window.location.search.substring(1);
+    console.log(query);
+
     let vars = query.split("&");
     for (let i = 0; i < vars.length; i++) {
         let pair = vars[i].split("=");
@@ -10,12 +14,24 @@ function getQueryVariable(variable) {
     return (false);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+function findGetParameter(parameterName) {
+    let result = null,
+        tmp = [];
+    let items = location.search.substr(1).split("&");
+    for (let index = 0; index < items.length; index++) {
+        tmp = items[index].split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+}
 
+document.addEventListener("DOMContentLoaded", function () {
+    console.log(window.location.search);
     let url = window.location.href;
     console.log(url);
-    let c = getQueryVariable("variable");
+    let c = findGetParameter("variable");
     if (c) {
+
         showErrorMessage();
     }
 });

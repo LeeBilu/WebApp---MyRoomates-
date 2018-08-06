@@ -64,6 +64,48 @@ app.post('/users/register', function (req, res) {
 });
 
 /**
+ * Edit
+ * params: email , phone, user_id, password, fullname
+ */
+app.post('/users/edit', function (req, res) {
+    let body = req.body;
+
+    let users = getFromFile("users");
+    if(users === false){
+        res.json({"type" : 0});
+        return;
+    }
+    if(typeof(users[body.user_id]) === "undefined"){
+
+        res.json({"type" : 0});
+        return;
+    }
+
+
+    let user = users[body.user_id];
+    if(typeof(body.email) !== "undefined"){
+        user.email = body.email;
+    }
+    if(typeof(body.password) !== "undefined"){
+        user.password = body.password;
+    }
+    if(typeof(body.phone) !== "undefined"){
+        user.phone = body.phone;
+    }
+    if(typeof(body.fullname) !== "undefined"){
+
+        user.fullname = body.fullname;
+    }
+    users[body.user_id] = user;
+
+    if(!insertToFile(users, "users", false)){
+        res.json({"type" : 0});
+        return;
+    }
+    res.json({"type" : 1});
+});
+
+/**
  * Get user data
  * params: id
  */
@@ -120,6 +162,7 @@ app.post('/groups/add', function (req, res) {
  */
 app.post('/groups/update', function (req, res) {
     let body = req.body;
+
     let users = getFromFile("users");
     if(!users){
         res.json({"type" : 0});
@@ -131,6 +174,7 @@ app.post('/groups/update', function (req, res) {
             }
         }
     }
+
     if(!insertToFile(users,"users", false)){
         res.json({"type" : 0});
         return;
@@ -176,7 +220,6 @@ app.post('/groups/get', function (req, res) {
 
         }
     }
-
     res.json({"type" : 1, "data": users_to_send});
 });
 /**
