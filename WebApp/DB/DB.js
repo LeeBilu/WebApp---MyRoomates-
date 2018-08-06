@@ -162,6 +162,7 @@ app.post('/groups/add', function (req, res) {
  */
 app.post('/groups/update', function (req, res) {
     let body = req.body;
+
     let users = getFromFile("users");
     if(!users){
         res.json({"type" : 0});
@@ -173,6 +174,7 @@ app.post('/groups/update', function (req, res) {
             }
         }
     }
+
     if(!insertToFile(users,"users", false)){
         res.json({"type" : 0});
         return;

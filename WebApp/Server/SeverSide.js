@@ -283,7 +283,7 @@ app.post('/group/allMembers', function (req, res) {
 });
 
 app.post('/group/newMember', function (req, res) {
-    let group_id = 1;
+    let group_id = req.body.group_id;
     let emails = [];
     emails.push(req.body.email);
     let data = {};
