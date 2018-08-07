@@ -221,7 +221,6 @@ app.post('/users/groupPage', function (req, res) {
     let group_id = req.body.groupNum;
     let data = {};
     data.group_id = group_id;
-    console.log(group_id);
     let url = 'http://localhost:3000/groups/get';
     fetch(url,
         {
@@ -336,13 +335,14 @@ app.post('/Cart/RequestCart', function (req, res) {
         res.json({"type" : 0});
         return;
     }
-
+    let data = {group_id : req.body.group_id}
+    console.log(data);
     let url = 'http://localhost:3000/cart/get';
     fetch(url,
         {
             credentials: "same-origin",
             method: "POST",
-            body: JSON.stringify(req.body),
+            body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json"
             }
@@ -350,6 +350,7 @@ app.post('/Cart/RequestCart', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
+            console.log(data.data);
             return res.send({"type" : 1, "order" : data.data});
         } else{
             return res.json({"type" : 0});
@@ -403,7 +404,7 @@ app.post('/Cart/AddProduct', function (req, res) {
             }
         })  .then(function (response) {
         return response.json();
-    }).then(function (data) {
+        }).then(function (data) {
         if(data.type){
             return res.send({"type" : 1});
         } else{

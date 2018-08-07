@@ -335,6 +335,7 @@ app.post('/cart/get', function (req, res) {
         res.json({"type" : 0, "data" : "CARTS_NOT_FOUND"});
         return;
     }
+
     let body = req.body;
     if(body.group_id === "undefined"){
         res.json({"type" : 0, "data" : "BODY_ERROR"});
@@ -342,7 +343,7 @@ app.post('/cart/get', function (req, res) {
     }
     let cart = false;
     for(let i in carts ){
-        if(carts[i].group_id === body.group_id && carts[i].status === 1){
+        if(carts[i].group_id == body.group_id && carts[i].status == 1){
             cart = carts[i];
             break;
         }
@@ -353,10 +354,10 @@ app.post('/cart/get', function (req, res) {
     }
 
     let amount = 0;
-    for(let i = 0; i < cart.cart.length; i++){
+    for(let i  in cart.cart){
         amount += cart.cart[i].product.price * cart.cart[i].amount;
     }
-    cart.total_amount = amount;
+    cart.total_amount = Math.round(amount * 100) / 100;
     let paid = 0;
     cart.payments = [];
     for(let i in orders){
@@ -366,6 +367,7 @@ app.post('/cart/get', function (req, res) {
         }
     }
     cart.total_amount_paid = paid;
+    console.log(cart);
     res.json({"type" : 1, "data" : cart});
 });
 
@@ -450,11 +452,11 @@ app.post('/order/place', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
+
     if(carts === false || orders === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-
     if(carts[body.cart_id] === "undefined"){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
@@ -515,6 +517,7 @@ let getFromFile = function (filename) {
         let data = fs.readFileSync(filename).toString();
         return JSON.parse(data);
     } catch(e){
+        console.log(filename);
         console.log(e);
         return false;
     }

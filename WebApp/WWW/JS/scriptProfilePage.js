@@ -158,20 +158,19 @@ function editProfileDetails(){
                                     <h6 class="my-0"><b>כתובת מייל </b></h6>
                                 
                                     <input type="text" id="InputEmail" placeholder=${data.email}>
-                                    </div>
-                                    <div id="invalid-email" style="display: none">
-                       דרושה כתובת מייל חוקית
-                    </div>
+                                </div>
+                                <div id="invalid-email" style="display: none">
+                                   דרושה כתובת מייל חוקית
+                                </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between lh-condensed list-item-css">
                                     <h6 class="my-0 text-right"><b>מספר טלפון סלולרי</b></h6>
-                                
                                     <input type="text" id="InputPhoneNumber" placeholder=${data.phone}>
-                                    </div>
-                                    <div id="invalid-phone" style="display: none">
-                        דרוש מספר פלאפון חוקי
-                    </div>
+                                 </div>
+                                <div id="invalid-phone" style="display: none">
+                                    דרוש מספר פלאפון חוקי
+                                </div>
                             </li> </ul>
         <button type="submit" class="btn btn-secondary" onclick="changeDetails()">אישור</button>`
         document.getElementById("profileDetails").innerHTML = profilePage;

@@ -106,6 +106,7 @@ function RequestCart() {
 function loadCartFromJSON(jsonFile)
 {
     //let CART = cartJSON.cart
+    console.log(jsonFile);
     let CART = jsonFile.cart;
     let my_cart = document.getElementById("my-cart");
     //firstObject.innerHTML ="";
@@ -113,35 +114,42 @@ function loadCartFromJSON(jsonFile)
     let numberOfTotalProducts = 0;
     for(let i in CART)
     {
-        numberOfTotalProducts++;
-        let product = CART[i].product;
-        let amount = CART[i].amount;
-        element += `<div><li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
-                        <div>
-                            <h6 class="my-0 text-right">${product.productName}</h6>
-                            <small class="text-muted">${product.description}</small>
-                        </div>
-                        <small class="text-muted">
-                        <button class="btn-danger cart_buttons" onclick="deleteProductFromCart(${product.product_ID},${amount})" >  X </button>
-                        </small>
-                    
-                     <span class="text-muted"> ${product.price} &#8362  * ${amount} = ${amount * product.price} &#8362</span>
-                </li>
-                </div>`;
-    }
+        if(CART[i] !== "undefined"){
+            numberOfTotalProducts++;
+            let product = CART[i].product;
+            let amount = CART[i].amount;
+            element += `<div><li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
 
+                            <button type="button" class="close" aria-label="Close" onclick="deleteProductFromCart(${product.product_ID},${amount})">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div class=" text-right col-7">
+                                <h6 class="my-0 ">${product.productName}</h6>
+                                <small class="text-muted">${product.description}</small>
+                            </div>
+                            <!--<small class="text-muted">
+                            <button class="btn-danger cart_buttons" onclick="deleteProductFromCart(${product.product_ID},${amount})" >  X </button>
+                            </small>-->
+                        
+                         <span class="text-muted"> ${roundPrice(amount * product.price)} &#8362 =  ${amount} * ${product.price} &#8362    </span>
+                    </li>
+                    </div>`;
+
+        }
+    }
     let Coupon = jsonFile.coupon;
-    element+= `<div><li class="list-group-item d-flex justify-content-between bg-light">
+    if(Coupon === "undefined") {
+        element += `<div><li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-success">
                     <h6 class="my-0">${Coupon.productName}</h6>
                 <small>${Coupon.description}</small>
                 </div>
                 <span class="text-success">${Coupon.price}- &#8362</span>
                 </li></div>`;
-
+    }
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום כולל</span>
-                <strong>${jsonFile["total_amount"]} &#8362   </strong>
+                <strong>${jsonFile.total_amount} &#8362   </strong>
                 </li></div>`
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
@@ -158,6 +166,10 @@ function loadCartFromJSON(jsonFile)
 
     let numberOfProducts = document.getElementById("numberOfProducts");
     numberOfProducts.innerText = numberOfTotalProducts.toString();
+}
+
+function roundPrice(totalPriceProduct){
+    return Math.round(totalPriceProduct * 100) / 100;
 }
 
 
