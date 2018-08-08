@@ -336,7 +336,6 @@ app.post('/Cart/RequestCart', function (req, res) {
         return;
     }
     let data = {group_id : req.body.group_id}
-    console.log(data);
     let url = 'http://localhost:3000/cart/get';
     fetch(url,
         {
@@ -350,7 +349,6 @@ app.post('/Cart/RequestCart', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-            console.log(data.data);
             return res.send({"type" : 1, "order" : data.data});
         } else{
             return res.json({"type" : 0});
@@ -416,7 +414,6 @@ app.post('/Cart/AddProduct', function (req, res) {
 
 
 app.post('/Cart/RequestToPay', function (req, res) {
-
     if(req.body.product_id === "undefined"  || req.body.amount  === "undefined"|| req.body.cart_id === "undefined"){
         res.json({"type" : 0});
         return;
@@ -435,6 +432,7 @@ app.post('/Cart/RequestToPay', function (req, res) {
 
     }
     let data = {
+        "group_id" : 1,
         "cart_id" : req.body.cart_id,
         "amount" : req.body.AmountOfMoney,
         "type" : req.body.paymentMethod,
@@ -454,7 +452,7 @@ app.post('/Cart/RequestToPay', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-            return res.send({"type" : 1});
+            return res.send({"type" : 1, "url" : "/static/PaymentMethod.html"});
         } else{
             return res.json({"type" : 0});
         }

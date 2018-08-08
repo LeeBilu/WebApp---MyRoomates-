@@ -367,7 +367,6 @@ app.post('/cart/get', function (req, res) {
         }
     }
     cart.total_amount_paid = paid;
-    console.log(cart);
     res.json({"type" : 1, "data" : cart});
 });
 
@@ -440,7 +439,7 @@ app.post('/cart/editProduct', function (req, res) {
 
 /**
  * place an order with certain amount
- * params: cart_id, type, payment_data, amount
+ * params: cart_id, type, payment_data, amount, group_id
  */
 
 app.post('/order/place', function (req, res) {
@@ -448,6 +447,7 @@ app.post('/order/place', function (req, res) {
     let orders = getFromFile("orders");
     let body = req.body;
     //TODO change validation;
+
     if(!body.group_id || !body.type || !body.amount || !body.type){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
@@ -461,12 +461,15 @@ app.post('/order/place', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
+    console.log(ids);
     let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount};
     orders[ids.orders_id] = order;
     if(insertToFile(order, "order", "orders_id") === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
+
+    console.log(order)
     res.json({"type" : 1, "data" : order});
 
 });

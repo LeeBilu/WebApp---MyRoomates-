@@ -94,12 +94,10 @@ function CreateJSONFromElements(elements)
     newJSON["paymentMethod"] = paymentMethod_value;
     //TODO get group_id from url
     newJSON["cart_id"] = document.getElementById("Cart_ID").value;
-
+    return newJSON;
 }
 function sendPaymentDetailsToServer(elementsToSend) {
-
     let data = CreateJSONFromElements(elementsToSend);
-
         let url = 'http://localhost:8081/Cart/RequestToPay';
         fetch(url,
             {
