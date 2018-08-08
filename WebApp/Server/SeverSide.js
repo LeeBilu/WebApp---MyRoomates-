@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 // set a cookie
 app.use(function (req, res, next) {
     // check if client sent cookie
-    loadIdeaDataFromFile();
+    // loadIdeaDataFromFile();
     let cookie = req.cookies;
     let notAValidCookie = false;
     if(cookie != undefined)
@@ -44,32 +44,93 @@ app.use(function (req, res, next) {
     }
     else
     {
-        loadIdeaDataFromFile();
-        // yes, cookie was already presented
-        let cookie = req.cookies.cookieName;
-        let user = mappingRandToCookieNumber[cookie];
-        if(user != null)
-        {
-
-            //sync with writing
-            array = loadUserIdeasByName(user);
-            if(array === undefined)
-            {
-                array = [];
-            }
-            next();
-            updateUserIdeasByName(user);
-            userData[user] = array ;
-            //sync with writing
-            updateUserFile(user);
-
+        // loadIdeaDataFromFile();
+        // // yes, cookie was already presented
+        // let cookie = req.cookies.cookieName;
+        // let user = mappingRandToCookieNumber[cookie];
+        // if(user != null)
+        // {
+        //
+        //     //sync with writing
+        //     array = loadUserIdeasByName(user);
+        //     if(array === undefined)
+        //     {
+        //         array = [];
+        //     }
+        //     next();
+        //     updateUserIdeasByName(user);
+        //     userData[user] = array ;
+        //     //sync with writing
+        //     // updateUserFile(user);
+            let d = new Date();
+            if (d.getTime() < mappingRandToCookieNumber[cookie.cookieName].date) {
+                let randomNum = Math.random().toString();
+                randomNum = randomNum.substring(2, randomNum.length);
+                let username = mappingRandToCookieNumber[cookie.cookieName].username;
+                let options = {
+                    maxAge: 1000 * 60 * 30, // would expire after 30 minutes
+                    httpOnly: true, // The cookie only accessible by the web server
+                }
+                mappingRandToCookieNumber[randomNum] = {"username": username, "date": d.getTime() + options.maxAge};
+                res.cookie('cookieName',randomNum, options);
 
         }
-        else {
+        // else {
             next();
-        }
+        // }
     }
 });
+
+// app.use(function (req, res, next) {
+//     let cookie = req.cookies.ranNum;
+//     let url = req.url;
+//     if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
+//                     req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
+//                       req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register"){
+//         next();
+//         return;
+//     }
+//     if (cookie === undefined)
+//     {
+//         if(url.includes("/static/ideas.html")){
+//             res.redirect("/static/register.html");
+//             return;
+//         }
+//         else if(url.includes("idea")){
+//             res.status(302);
+//             return res.send(JSON.stringify({'url': "/static/register.html"}));
+//         }
+//
+//     }
+//     else
+//     {
+//
+//         if(cookiesNum[cookie]) {
+//             let d = new Date();
+//             if (d.getTime() < cookiesNum[cookie].date) {
+//                 let randomNum = Math.random().toString();
+//                 randomNum = randomNum.substring(2, randomNum.length);
+//                 let username = cookiesNum[cookie].username;
+//                 cookiesNum[randomNum] = {"username": username, "date": d.getTime() + maxAge};
+//                 res.cookie('ranNum', randomNum, {maxAge: maxAge, httpOnly:true});
+//             } else {
+//                 res.status(302);
+//                 return res.send(JSON.stringify({'url': "/static/register.html"}));
+//             }
+//         }else{
+//             if(url.includes("/static/ideas.html")){
+//                 res.redirect("/static/register.html");
+//                 return;
+//             }
+//             else if(url.includes("idea")) {
+//                 res.status(302);
+//                 return res.send(JSON.stringify({'url': "/static/register.html"}));
+//             }
+//         }
+//     }
+//     next();
+//     return;
+// });
 
 app.use('/static', express.static('../WWW'));
 
@@ -162,9 +223,9 @@ app.post('/users/login', function (req, res) {
                 maxAge: 1000 * 60 * 30, // would expire after 30 minutes
                 httpOnly: true, // The cookie only accessible by the web server
             }
-
+            let d = new Date();
             res.cookie('cookieName',randomNumber, options);
-            mappingRandToCookieNumber[randomNumber] = req.body.user;
+            mappingRandToCookieNumber[randomNumber] = {"username" : data.data.id, "date" : d.getTime()+options.maxAge};
             return res.send(JSON.stringify({'url': "/static/profilePage.html", 'approve' : 1}));
         }else{
             return res.send(JSON.stringify({'approve' : 0}));
@@ -175,8 +236,10 @@ app.post('/users/login', function (req, res) {
 app.post('/users/newGroup', function (req, res) {
     let groupName = req.body.groupName;
     let data = {};
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     data.name = groupName;
-    data.user_id = 1;
+    console.log(username)
+    data.user_id = username;
     let url = 'http://localhost:3000/groups/add';
     fetch(url,
         {
@@ -198,7 +261,8 @@ app.post('/users/newGroup', function (req, res) {
 
 app.get('/users/allGroups', function (req, res) {
     let url = 'http://localhost:3000/groups/getall';
-    let data = {"user_id": 1};
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let data = {"user_id": username};
     fetch(url,
         {
             credentials: "same-origin",
@@ -242,7 +306,8 @@ app.post('/users/groupPage', function (req, res) {
 
 app.get('/users/myDetails', function (req, res) {
     let url = 'http://localhost:3000/users/user';
-    let data = {"id": 1};
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let data = {"id": username};
     fetch(url,
         {
             credentials: "same-origin",
@@ -464,7 +529,8 @@ app.post('/users/editProfileDetails', function (req, res) {
     let url = 'http://localhost:3000/users/edit';
     let body = req.body;
     let data = {};
-    data.user_id = 1;
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    data.user_id = username;
     if(typeof(body.email) !== "undefined"){
        data.email = body.email;
     }if(typeof(body.fullname) !== "undefined"){

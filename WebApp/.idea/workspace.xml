@@ -33,80 +33,29 @@
       <file leaf-file-name="DB.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DB/DB.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="148" column="20" selection-start-line="148" selection-start-column="8" selection-end-line="148" selection-end-column="20" />
+            <state relative-caret-position="2100">
+              <caret line="146" column="5" lean-forward="true" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DBdata" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DB/DBdata">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="42" selection-start-column="42" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="carts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DB/carts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="53" selection-start-column="49" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="orders" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DB/orders">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="2" selection-start-column="2" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PaymentScript.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WWW/JS/PaymentScript.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="109" column="43" lean-forward="true" selection-start-line="109" selection-start-column="43" selection-end-line="109" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="users" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DB/users">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="960" selection-start-column="956" selection-end-column="960" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PaymentMethod.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WWW/PaymentMethod.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1617">
-              <caret line="238" column="103" selection-start-line="238" selection-start-column="88" selection-end-line="238" selection-end-column="103" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="products" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DB/products">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="109" lean-forward="true" selection-start-column="1" selection-end-column="109" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SeverSide.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SeverSide.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6735">
-              <caret line="449" column="13" lean-forward="true" selection-start-line="449" selection-start-column="13" selection-end-line="449" selection-end-column="13" />
+            <state relative-caret-position="-3968">
+              <caret line="309" column="30" selection-start-line="309" selection-start-column="30" selection-end-line="309" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scriptProfilePage.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/WWW/JS/scriptProfilePage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="118">
+              <caret line="162" column="22" lean-forward="true" selection-start-line="162" selection-start-column="22" selection-end-line="162" selection-end-column="22" />
+              <folding>
+                <marker date="1533724616112" expanded="true" signature="2764:3801" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,8 +64,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>addpro</find>
-      <find>delete</find>
       <find>addpr</find>
       <find>1</find>
       <find>8080</find>
@@ -144,7 +91,9 @@
       <find>ids.or</find>
       <find>sendPaymentDetailsToServer</find>
       <find>RequestToPay</find>
+      <find>user</find>
       <find>ids.user</find>
+      <find>user_id</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -159,13 +108,15 @@
         <option value="$PROJECT_DIR$/DB/carts" />
         <option value="$PROJECT_DIR$/WWW/GroupPage.html" />
         <option value="$PROJECT_DIR$/WWW/My-Cart.html" />
-        <option value="$PROJECT_DIR$/WWW/JS/scriptProfilePage.js" />
         <option value="$PROJECT_DIR$/WWW/JS/CartFunctionality.js" />
         <option value="$PROJECT_DIR$/WWW/JS/My-Cart.js" />
         <option value="$PROJECT_DIR$/WWW/JS/PaymentScript.js" />
         <option value="$PROJECT_DIR$/DB/DBdata" />
         <option value="$PROJECT_DIR$/DB/DB.js" />
+        <option value="$PROJECT_DIR$/WWW/JS/scriptProfilePage.js" />
+        <option value="$PROJECT_DIR$/DB/groups" />
         <option value="$PROJECT_DIR$/Server/SeverSide.js" />
+        <option value="$PROJECT_DIR$/DB/users" />
       </list>
     </option>
   </component>
@@ -293,19 +244,19 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38256000" />
+    <option name="totallyTimeSpent" value="43013000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="26" width="1440" height="817" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="815" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.115574345" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.115574345" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290938" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3625" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.36350974" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.31805557" />
       <window_info id="Favorites" order="5" side_tool="true" />
@@ -458,26 +409,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="41" column="20" selection-start-line="41" selection-start-column="20" selection-end-line="43" selection-end-column="26" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/profilePage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="50" column="13" lean-forward="true" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
-          <folding>
-            <element signature="n#style#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DB/DB.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -557,13 +488,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SeverSide2.js" />
-    <entry file="file://$PROJECT_DIR$/DB/groups">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="69" selection-start-column="69" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WWW/JS/groupScript.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-274">
@@ -619,23 +543,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/scriptProfilePage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="160" column="38" lean-forward="true" selection-start-line="160" selection-start-column="38" selection-end-line="160" selection-end-column="38" />
-          <folding>
-            <marker date="1533632259014" expanded="true" signature="2764:3801" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DB/users">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="960" selection-start-column="956" selection-end-column="960" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DB/carts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -671,17 +578,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="68" column="122" selection-start-line="68" selection-start-column="87" selection-end-line="68" selection-end-column="122" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/profilePage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-69">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+          <folding>
+            <element signature="n#style#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DB/DB.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="148" column="20" selection-start-line="148" selection-start-column="8" selection-end-line="148" selection-end-column="20" />
+        <state relative-caret-position="2100">
+          <caret line="146" column="5" lean-forward="true" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/users">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/groups">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="780" selection-start-column="780" selection-end-column="780" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6735">
-          <caret line="449" column="13" lean-forward="true" selection-start-line="449" selection-start-column="13" selection-end-line="449" selection-end-column="13" />
+        <state relative-caret-position="-3968">
+          <caret line="309" column="30" selection-start-line="309" selection-start-column="30" selection-end-line="309" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/JS/scriptProfilePage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="162" column="22" lean-forward="true" selection-start-line="162" selection-start-column="22" selection-end-line="162" selection-end-column="22" />
+          <folding>
+            <marker date="1533724616112" expanded="true" signature="2764:3801" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

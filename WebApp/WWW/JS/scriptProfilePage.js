@@ -172,7 +172,8 @@ function editProfileDetails(){
                                     דרוש מספר פלאפון חוקי
                                 </div>
                             </li> </ul>
-        <button type="submit" class="btn btn-secondary" onclick="changeDetails()">אישור</button>`
+        <button type="submit" class="btn btn-secondary" onclick="changeDetails()">אישור</button>
+            <button type="submit" class="btn btn-secondary" onclick="window.location.href='profilePage.html'">ביטול</button>`
         document.getElementById("profileDetails").innerHTML = profilePage;
     })
 }
