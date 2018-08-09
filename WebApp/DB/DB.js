@@ -464,7 +464,7 @@ app.post('/order/place', function (req, res) {
     console.log(ids);
     let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount};
     orders[ids.orders_id] = order;
-    if(insertToFile(order, "order", "orders_id") === false){
+    if(insertToFile(order, "orders", "orders_id") === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
