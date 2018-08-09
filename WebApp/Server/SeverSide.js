@@ -81,56 +81,6 @@ app.use(function (req, res, next) {
     }
 });
 
-// app.use(function (req, res, next) {
-//     let cookie = req.cookies.ranNum;
-//     let url = req.url;
-//     if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
-//                     req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
-//                       req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register"){
-//         next();
-//         return;
-//     }
-//     if (cookie === undefined)
-//     {
-//         if(url.includes("/static/ideas.html")){
-//             res.redirect("/static/register.html");
-//             return;
-//         }
-//         else if(url.includes("idea")){
-//             res.status(302);
-//             return res.send(JSON.stringify({'url': "/static/register.html"}));
-//         }
-//
-//     }
-//     else
-//     {
-//
-//         if(cookiesNum[cookie]) {
-//             let d = new Date();
-//             if (d.getTime() < cookiesNum[cookie].date) {
-//                 let randomNum = Math.random().toString();
-//                 randomNum = randomNum.substring(2, randomNum.length);
-//                 let username = cookiesNum[cookie].username;
-//                 cookiesNum[randomNum] = {"username": username, "date": d.getTime() + maxAge};
-//                 res.cookie('ranNum', randomNum, {maxAge: maxAge, httpOnly:true});
-//             } else {
-//                 res.status(302);
-//                 return res.send(JSON.stringify({'url': "/static/register.html"}));
-//             }
-//         }else{
-//             if(url.includes("/static/ideas.html")){
-//                 res.redirect("/static/register.html");
-//                 return;
-//             }
-//             else if(url.includes("idea")) {
-//                 res.status(302);
-//                 return res.send(JSON.stringify({'url': "/static/register.html"}));
-//             }
-//         }
-//     }
-//     next();
-//     return;
-// });
 
 app.use('/static', express.static('../WWW'));
 
