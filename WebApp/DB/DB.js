@@ -146,15 +146,17 @@ app.post('/groups/add', function (req, res) {
         return;
     }
     groups[ids.group_id] = {"id" : ids.group_id, "name" : body.name, "admin_id" : body.user_id};
-    if(!insertToFile(groups, "groups", "group_id")){
+    let group_id = ids.group_id;
+    if(insertToFile(groups, "groups", "group_id") === false){
         res.json({"type" : 0});
         return;
     }
-
-    users[body.user_id].groups_id.push(ids.group_id - 1);
-    insertToFile(users, "users", false);
     updateDBData();
-    res.json({"type" : 1, "data" :  groups[ids.group_id- 1]});
+
+    users[body.user_id].groups_id.push(group_id);
+    insertToFile(users, "users", false);
+    createCart(group_id);
+    res.json({"type" : 1, "data" :  groups[group_id]});
 });
 /**
  * Update group users
@@ -297,13 +299,49 @@ app.post('/products/get', function (req, res) {
 });
 
 
+/**
+ *
+ * cart_id, coupon
+ */
 app.post('/coupons/checkandset', function (req, res) {
     let body = req.body;
-
+    let coupons = getFromFile("coupons");
+    let carts = getFromFile("carts");
+    if(!carts || ! carts[body.cart_id]){
+        return res.json({"type" : 0, "data" : "DB_ERROR"});
+    }
+    if(!coupons || !coupons[body.coupon]){
+        return res.json({"type" : 0, "data" : "DB_ERROR"});
+    }
+    let cart = carts[body.cart_id];
+    if(cart.coupon && cart.coupon.product_ID){
+        return res.json({"type" : 0, "data" : "CART_HAS_COUPON"});
+    }
+    cart.coupon = coupons[body.coupon];
+    carts[body.cart_id] = cart;
+    delete coupons[body.coupon];
+    insertToFile(carts, "carts", false);
+    insertToFile(coupons, "coupons", false);
+    return res.json({"type" : 1, "data" : 1});
 
 });
 
+let createCart = function(group_id){
+    let carts = getFromFile("carts");
+    console.log(group_id);
+    for(let id in carts){
+        if(carts[id].group_id ==group_id && carts.status == 1){
+            return JSON.stringify({"type" : 0, "data" : "OPEN_CART"});
+        }
+    }
 
+    carts[ids.carts_id] = {"Cart_ID": ids.carts_id, "status" : 1, "cart" : {}, "group_id" : group_id, "coupon" : {}};
+    if(!insertToFile(carts, "carts", "carts_id")){
+        return JSON.stringify({"type" : 0, "data" : "DB_ERROR"})
+    }
+    updateDBData();
+    return JSON.stringify({"type" : 1, "data" : carts[ids.carts_id -1]});
+}
 /**
  * create new cart
  * params: group_id
@@ -317,10 +355,11 @@ app.post('/cart/create', function (req, res) {
         }
     }
 
-    carts[ids.carts_id] = {"Cart_ID": ids.carts_id, "status" : 1, "cart" : {}, "group_id" : body.group_id};
+    carts[ids.carts_id] = {"Cart_ID": ids.carts_id, "status" : 1, "cart" : {}, "group_id" : body.group_id, "coupon" : {}};
     if(!insertToFile(carts, "carts", "carts_id")){
         res.json({"type" : 0, "data" : "DB_ERROR"})
     }
+    updateDBData();
     res.json({"type" : 1, "data" : carts[ids.carts_id -1]});
 });
 
@@ -353,22 +392,33 @@ app.post('/cart/get', function (req, res) {
         return;
     }
 
-    let amount = 0;
-    for(let i  in cart.cart){
-        amount += cart.cart[i].product.price * cart.cart[i].amount;
-    }
+    let amount = getTotalAmount(cart);
     cart.total_amount = Math.round(amount * 100) / 100;
-    let paid = 0;
-    cart.payments = [];
-    for(let i in orders){
-        if(orders[i].cart_id == body.cart_id){
-            cart.payments.push(orders[i]);
-            paid += orders[i].amount;
-        }
-    }
+    let paid = getTotalPaid(cart.Cart_ID, orders);
     cart.total_amount_paid = paid;
     res.json({"type" : 1, "data" : cart});
 });
+
+let getTotalAmount = function(cart){
+    let amount = 0.0;
+    for(let i  in cart.cart){
+        amount += parseFloat(cart.cart[i].product.price * cart.cart[i].amount);
+    }
+    if(cart.coupon && cart.coupon.productName){
+        amount -= parseFloat(cart.coupon.price);
+    }
+    return amount;
+}
+
+let getTotalPaid = function(cart_id, orders){
+    let paid = 0.0;
+    for(let i in orders){
+        if(orders[i].cart_id == cart_id){
+            paid += parseFloat( orders[i].amount);
+        }
+    }
+    return paid;
+}
 
 /**
  * delete product from the cart
@@ -448,6 +498,7 @@ app.post('/order/place', function (req, res) {
     let body = req.body;
     //TODO change validation;
 
+
     if(!body.group_id || !body.type || !body.amount || !body.type){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
@@ -461,15 +512,23 @@ app.post('/order/place', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    console.log(ids);
+    let paid = getTotalPaid(body.cart_id, orders);
+    let total =  getTotalAmount(carts[body.cart_id]);
+    if(body.payment_data.partOrFullPayment == "full"){
+        body.amount = total - paid;
+    } else {
+        if(body.amount - paid < 0){
+            body.amount = total - paid;
+        }
+    }
     let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount};
     orders[ids.orders_id] = order;
-    if(insertToFile(order, "orders", "orders_id") === false){
+    if(insertToFile(orders, "orders", "orders_id") === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
+    updateDBData();
 
-    console.log(order)
     res.json({"type" : 1, "data" : order});
 
 });
@@ -520,8 +579,6 @@ let getFromFile = function (filename) {
         let data = fs.readFileSync(filename).toString();
         return JSON.parse(data);
     } catch(e){
-        console.log(filename);
-        console.log(e);
         return false;
     }
 };
