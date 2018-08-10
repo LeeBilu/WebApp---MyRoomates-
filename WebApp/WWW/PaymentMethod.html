@@ -138,16 +138,16 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="partOrFullPayment">תשלום מלא/חלקי</label>
-                        <select class="custom-select d-block w-100 form-control" id="partOrFullPayment">
+                        <select class="custom-select d-block w-100 form-control" id="partOrFullPayment" onchange="getAmount(value)">
                             <option value="" >בחר תשלום חלקי או מלא</option>
-                            <option>תשלום מלא</option>
-                            <option>תשלום חלקי</option>
+                            <option value="full" >תשלום מלא</option>
+                            <option value ="partial" >תשלום חלקי</option>
                         </select>
                         <div class="my-invalid-feedback">
                             בבקשה בחר צורת תשלום
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6 mb-3" id = "AmountOfMoneyDiv" style="display: none" >
                         <label for="AmountOfMoney">הסכום לתשלום</label>
                         <input type="text" class="form-control" id="AmountOfMoney" placeholder="">
                         <small class="text-muted">אנא הכנס סכום לתשלום</small>

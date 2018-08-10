@@ -483,6 +483,7 @@ app.post('/Cart/RequestToPay', function (req, res) {
         res.json({"type" : 0});
         return;
     }
+
     let paymant_data ={
         "firstName" : req.body.firstName,
         "lastName" : req.body.lastName,
@@ -552,6 +553,32 @@ app.post('/users/editProfileDetails', function (req, res) {
     }).then(function (data) {
         if(data.type){
             return res.send({"type" : 1, "url" : "/static/profilePage.html"});
+        } else{
+            return res.json({"type" : 0});
+        }
+    });
+
+});
+app.post('/Cart/RequestForCoupon', function (req, res) {
+    let url = 'http://localhost:3000/coupons/checkandset';
+    let body = req.body;
+    let data = {};
+    data.cart_id = body.Cart_ID;
+    data.coupon = body.Coupon_ID;
+
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1, "data" : 1});
         } else{
             return res.json({"type" : 0});
         }

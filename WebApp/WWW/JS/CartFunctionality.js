@@ -79,7 +79,7 @@ function RequestCart() {
     let url = 'http://localhost:8081/Cart/RequestCart';
     //TODO - get the group ID out of the URL
     let data_to_send = {
-        "group_id" : "26"
+        "group_id" : "33"
     };
     fetch(url,
         {
@@ -137,8 +137,11 @@ function loadCartFromJSON(jsonFile)
 
         }
     }
-    let Coupon = jsonFile.coupon;
-    if(Coupon === "undefined") {
+     let Coupon = jsonFile.coupon;
+    // console.log(jsonFile);
+    // console.log(jsonFile.coupon);
+    // console.log(Coupon);
+    if(Coupon && Coupon.productName) {
         element += `<div><li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-success">
                     <h6 class="my-0">${Coupon.productName}</h6>
