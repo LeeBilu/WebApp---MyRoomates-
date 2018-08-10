@@ -30,20 +30,65 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DB.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DB.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DB/DB.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2100">
-              <caret line="146" column="5" lean-forward="true" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
+            <state relative-caret-position="367">
+              <caret line="328" column="19" selection-start-line="328" selection-start-column="19" selection-end-line="328" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SeverSide.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
+      <file leaf-file-name="PaymentScript.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WWW/JS/PaymentScript.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6">
-              <caret line="12" column="24" lean-forward="true" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+            <state relative-caret-position="1500">
+              <caret line="100" column="58" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="58" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="groups" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DB/groups">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="780" selection-start-column="780" selection-end-column="780" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="users" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DB/users">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="12" selection-start-column="12" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBdata" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DB/DBdata">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="42" selection-start-column="42" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="orders" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DB/orders">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="222" selection-start-column="222" selection-end-column="222" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="carts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DB/carts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="53" selection-start-column="49" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -51,11 +96,29 @@
       <file leaf-file-name="scriptProfilePage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WWW/JS/scriptProfilePage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
+            <state relative-caret-position="682">
               <caret line="162" column="22" lean-forward="true" selection-start-line="162" selection-start-column="22" selection-end-line="162" selection-end-column="22" />
               <folding>
                 <marker date="1533724616112" expanded="true" signature="2764:3801" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeverSide.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="205">
+              <caret line="353" column="45" selection-start-line="353" selection-start-column="36" selection-end-line="353" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CartFunctionality.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WWW/JS/CartFunctionality.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="156" column="53" lean-forward="true" selection-start-line="156" selection-start-column="36" selection-end-line="156" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -80,20 +143,20 @@
       <find>console.</find>
       <find>loadCartFromJSON</find>
       <find>deleteProductFromCart</find>
-      <find>RequestCart</find>
       <find>LoadProductsListAndPrices</find>
       <find>BuildProductListFromJson</find>
       <find>console</find>
-      <find>/cart/get</find>
       <find>co</find>
       <find>consol</find>
       <find>ids.or</find>
       <find>sendPaymentDetailsToServer</find>
-      <find>RequestToPay</find>
       <find>user</find>
-      <find>ids.user</find>
       <find>user_id</find>
       <find>loadIdeaDataFromFile</find>
+      <find>RequestToPay</find>
+      <find>ids.user</find>
+      <find>RequestCart</find>
+      <find>/cart/get</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -104,7 +167,6 @@
       <list>
         <option value="$PROJECT_DIR$/WWW/PaymentMethod.html" />
         <option value="$PROJECT_DIR$/DB/coupons" />
-        <option value="$PROJECT_DIR$/DB/orders" />
         <option value="$PROJECT_DIR$/DB/carts" />
         <option value="$PROJECT_DIR$/WWW/GroupPage.html" />
         <option value="$PROJECT_DIR$/WWW/My-Cart.html" />
@@ -112,11 +174,12 @@
         <option value="$PROJECT_DIR$/WWW/JS/My-Cart.js" />
         <option value="$PROJECT_DIR$/WWW/JS/PaymentScript.js" />
         <option value="$PROJECT_DIR$/DB/DBdata" />
-        <option value="$PROJECT_DIR$/DB/DB.js" />
         <option value="$PROJECT_DIR$/WWW/JS/scriptProfilePage.js" />
         <option value="$PROJECT_DIR$/DB/groups" />
         <option value="$PROJECT_DIR$/DB/users" />
         <option value="$PROJECT_DIR$/Server/SeverSide.js" />
+        <option value="$PROJECT_DIR$/DB/orders" />
+        <option value="$PROJECT_DIR$/DB/DB.js" />
       </list>
     </option>
   </component>
@@ -209,7 +272,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.SeverSide.js">
+  <component name="RunManager" selected="Node.js.DB.js">
     <configuration name="DB.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="DB.js" working-dir="$PROJECT_DIR$/DB" />
     <configuration name="SeverSide2.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="SeverSide2.js" working-dir="$PROJECT_DIR$" />
     <configuration name="SeverSide.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="SeverSide.js" working-dir="$PROJECT_DIR$/Server" />
@@ -220,8 +283,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.SeverSide.js" />
         <item itemvalue="Node.js.DB.js" />
+        <item itemvalue="Node.js.SeverSide.js" />
         <item itemvalue="Node.js.SeverSide2.js" />
       </list>
     </recent_temporary>
@@ -244,7 +307,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43561000" />
+    <option name="totallyTimeSpent" value="46200000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="815" extended-state="6" />
@@ -293,13 +356,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/WWW/CSS/GroupPageCSSFile.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="4" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WWW/CSS/Login2.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -505,13 +561,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DB/products">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="109" lean-forward="true" selection-start-column="1" selection-end-column="109" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WWW/CSS/profilePageStyle.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="382">
@@ -526,55 +575,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/My-Cart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-107">
-          <caret line="100" column="64" selection-start-line="100" selection-start-column="64" selection-end-line="100" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/CartFunctionality.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="125" column="57" selection-start-line="125" selection-start-column="57" selection-end-line="125" selection-end-column="57" />
-          <folding>
-            <element signature="e#176#183#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DB/carts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="53" selection-start-column="49" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DB/DBdata">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="42" selection-start-column="42" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DB/orders">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="2" selection-start-column="2" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WWW/PaymentMethod.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1617">
           <caret line="238" column="103" selection-start-line="238" selection-start-column="88" selection-end-line="238" selection-end-column="103" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/PaymentScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="109" column="43" lean-forward="true" selection-start-line="109" selection-start-column="43" selection-end-line="109" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -598,17 +602,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DB/DB.js">
+    <entry file="file://$PROJECT_DIR$/DB/order">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/products">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2100">
-          <caret line="146" column="5" lean-forward="true" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
+        <state>
+          <caret column="109" lean-forward="true" selection-start-column="1" selection-end-column="109" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DB/users">
+    <entry file="file://$PROJECT_DIR$/WWW/JS/My-Cart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="100" column="64" selection-start-line="100" selection-start-column="64" selection-end-line="100" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/JS/CartFunctionality.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="156" column="53" lean-forward="true" selection-start-line="156" selection-start-column="36" selection-end-line="156" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/carts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
+          <caret column="53" selection-start-column="49" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/JS/PaymentScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1500">
+          <caret line="100" column="58" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="58" />
         </state>
       </provider>
     </entry>
@@ -619,9 +647,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DB/DBdata">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="42" selection-start-column="42" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/users">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="353" column="45" selection-start-line="353" selection-start-column="36" selection-end-line="353" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB/orders">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="222" selection-start-column="222" selection-end-column="222" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/WWW/JS/scriptProfilePage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
+        <state relative-caret-position="682">
           <caret line="162" column="22" lean-forward="true" selection-start-line="162" selection-start-column="22" selection-end-line="162" selection-end-column="22" />
           <folding>
             <marker date="1533724616112" expanded="true" signature="2764:3801" ph="..." />
@@ -629,10 +685,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/SeverSide.js">
+    <entry file="file://$PROJECT_DIR$/DB/DB.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6">
-          <caret line="12" column="24" lean-forward="true" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+        <state relative-caret-position="367">
+          <caret line="328" column="19" selection-start-line="328" selection-start-column="19" selection-end-line="328" selection-end-column="19" />
         </state>
       </provider>
     </entry>
