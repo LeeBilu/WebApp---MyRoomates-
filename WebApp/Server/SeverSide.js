@@ -1,7 +1,5 @@
 // Creating new Array
 let array = [];
-let usersAndPasswords =[];
-let userData = {};
 let mappingRandToCookieNumber = {};
 require("isomorphic-fetch");
 
@@ -18,7 +16,6 @@ app.use(bodyParser.json());
 // set a cookie
 app.use(function (req, res, next) {
     // check if client sent cookie
-    // loadIdeaDataFromFile();
     let cookie = req.cookies;
     let notAValidCookie = false;
     if(cookie != undefined)
@@ -27,7 +24,6 @@ app.use(function (req, res, next) {
         notAValidCookie = !(mappingRandToCookieNumber.hasOwnProperty(cookie.cookieName)) ;
     }
 
-
     if (cookie === undefined || notAValidCookie)
     {
         // In case there is no cookie and the user trying to get into an unpermitted place
@@ -35,7 +31,6 @@ app.use(function (req, res, next) {
             req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
               req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register")
         {
-
             next();
             return;
         }
@@ -44,24 +39,6 @@ app.use(function (req, res, next) {
     }
     else
     {
-        // loadIdeaDataFromFile();
-        // // yes, cookie was already presented
-        // let cookie = req.cookies.cookieName;
-        // let user = mappingRandToCookieNumber[cookie];
-        // if(user != null)
-        // {
-        //
-        //     //sync with writing
-        //     array = loadUserIdeasByName(user);
-        //     if(array === undefined)
-        //     {
-        //         array = [];
-        //     }
-        //     next();
-        //     updateUserIdeasByName(user);
-        //     userData[user] = array ;
-        //     //sync with writing
-        //     // updateUserFile(user);
             let d = new Date();
             if (d.getTime() < mappingRandToCookieNumber[cookie.cookieName].date) {
                 let randomNum = Math.random().toString();
@@ -73,7 +50,6 @@ app.use(function (req, res, next) {
                 }
                 mappingRandToCookieNumber[randomNum] = {"username": username, "date": d.getTime() + options.maxAge};
                 res.cookie('cookieName',randomNum, options);
-
         }
         // else {
             next();
@@ -133,38 +109,6 @@ app.use(function (req, res, next) {
 // });
 
 app.use('/static', express.static('../WWW'));
-
-app.get('/ideas', function (req, res) {
-
-    createNewCookie(req, res);
-    res.json(array);
-
-})
-
-app.put('/idea', function (req, res) {
-
-    let newValue = req.body.addTextID;
-    let responseFromAdditionFunc = addObjectAttribute(array, newValue);
-    res.json({ideaIndex: responseFromAdditionFunc});
-})
-
-app.post('/idea/:id', function (req, res) {
-
-    let id = req.param('id');
-    let newValue = req.body.newValue;
-    let responseValue = updateAnIdea(array, id, newValue);
-    res.json({approve :responseValue});
-})
-
-
-app.delete('/idea/:id', function (req, res) {
-
-    let id = req.param('id');
-    let responseValue = deleteAnIdea(array,id);
-    res.json({approve :responseValue});
-})
-
-//Ex2
 
 app.post('/users/register', function (req, res) {
 
@@ -591,218 +535,8 @@ let server = app.listen(8081, function () {
     let host = server.address().address;
     let port = server.address().port;
 
-    UpdateUserFromFile();
     console.log("Example app listening at http://%s:%s", host, port)
 })
-
-
-
-
-function RegisterNewUserToFileSystem(userData)
-{
-    try{
-
-        //TODO ADD NEW INFORMATION TO USERDATA
-        const fs = require('fs');
-
-       let data = JSON.stringify(userData);
-
-        usersAndPasswords.push(data);
-        let dataToSave = JSON.stringify(usersAndPasswords);
-
-        fs.writeFile("output.json", dataToSave, 'utf8', function (err) {
-            if (err) {
-
-                console.log(err);
-            }
-
-            console.log("User dataBase file has been saved.");
-        });
-    }
-    catch(err)
-    {
-        console.log("Problem with writing new user in the system");
-    }
-
-}
-
-function ValidateUser(UserLogin)
-{
-    let returnVal = 1;
-    usersAndPasswords.forEach(function(currentUser) {
-
-
-        let obj = currentUser;
-        if(IsJsonString(currentUser) == false)
-        {
-            obj = JSON.parse(currentUser);
-        }
-
-        if(obj.user === UserLogin.user && obj.password === UserLogin.password)
-        {
-
-            returnVal = 0;
-        }
-
-    });
-    return  returnVal;
-}
-
-
-function createNewCookie(req, res)
-{
-
-    let cookie = req.cookies.cookieName;
-    let user = mappingRandToCookieNumber[cookie];
-    let randomNumber=Math.random().toString();
-    randomNumber=randomNumber.substring(2,randomNumber.length);
-    let options = {
-        maxAge: 1000 * 60 * 30, // would expire after 30 minutes
-        httpOnly: true, // The cookie only accessible by the web server
-    }
-
-    mappingRandToCookieNumber[randomNumber] = user;
-    res.cookie('cookieName',randomNumber, options);
-}
-
-//TODO
-function UpdateUserFromFile()
-{
-        const fs = require('fs');
-        fs.readFile("output.json", function (err, data) {
-            if (err) {
-                return;
-            }
-            else {
-                try {
-                    let dataFromFile = JSON.parse(data);
-                    usersAndPasswords = dataFromFile;
-                    /*let dataFormFile = JSON.parse(data);
-                    usersAndPasswords.push(dataFormFile);*/
-                }
-                catch (err) {
-                }
-
-
-            }
-        });
-}
-
-function addObjectAttribute(array, value)
-{
-    try{
-        array.push(value);
-        return (array.length - 1)
-    }
-    catch(err)
-    {
-        return -1;
-    }
-
-}
-
-function updateAnIdea(array, indexOfProperty, newValue)
-{
-    if(indexOfProperty >= 0 && indexOfProperty <= array.length)
-    {
-
-        array[indexOfProperty] = newValue;
-        return 0;
-    }
-
-    return 1;
-}
-
-function deleteAnIdea(array, indexOfProperty)
-{
-
-    if( indexOfProperty >=0 && indexOfProperty < array.length)
-    {
-        array.splice(indexOfProperty,1);
-        return 0;
-    }
-
-    return 1;
-}
-
-function IsJsonString(str) {
-
-
-    return str instanceof Object;
-
-}
-
-function loadIdeaDataFromFile()
-{
-
-        const fs = require('fs');
-        fs.exists("Userdata.json", function(exists) {
-        if (exists) {
-
-            fs.readFile("Userdata.json", (err, data) => {
-                if (err) {
-                    console.log("An error occured while trying to read users idea file");
-                }
-                else {
-
-                    //   let dataFormFile = JSON.parse(data);
-                    //userData = data;
-                    try{
-
-                        userData = JSON.parse(data);
-                    }
-                    catch(err)
-                    {
-                        // //try
-                        // userData = data;
-                    }
-                }
-
-
-            });
-
-
-            // Do something
-        }
-        else
-        {
-            console.log('file does not exists');
-        }
-        });
-
-
-
-}
-
-function loadUserIdeasByName(id)
-{
-    loadIdeaDataFromFile();
-    return userData[id];
-}
-
-function updateUserIdeasByName(id)
-{
-    array = userData[id];
-}
-
-function updateUserFile(user)
-{
-        const fs = require('fs');
-        if(array === undefined)
-        {
-            array = [];
-        }
-        userData[user] = array;
-        let dataToSave = JSON.stringify(userData);
-        fs.writeFile("Userdata.json", dataToSave, 'utf8', function (err) {
-            if (err) {
-                return console.log(err);
-            }
-
-        });
-
-
-}
 
 
 
