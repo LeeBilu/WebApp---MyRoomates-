@@ -3,6 +3,8 @@ function initPage()
     someMembersInGroup();
 }
 
+
+
 function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetParameter("group_id") , title = "my title", w = "600", h = "500")
 
 {

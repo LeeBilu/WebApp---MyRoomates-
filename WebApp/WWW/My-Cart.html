@@ -99,8 +99,12 @@
 
         </div>
         <div class="col-md-5 order-md-2 mb-4">
-            <div class="col-md-4 active-pink-4 mb-4">
-                <input type="text" id="InputOfTheSearchBox" onkeyup="searchInProductList()" placeholder="חפש מוצרים...">
+            <div class="input-group search_bar">
+                <div class="input-group-prepend">
+                    <span class="search_bar_icon input-group-text" id="basic-addon1">&#x1F50E</span>
+                </div>
+                <input type="text" id="InputOfTheSearchBox" onkeyup="searchInProductList()"
+                       placeholder="חפש מוצרים" aria-label="Username" aria-describedby="basic-addon1">
             </div>
             <ul class="list-group mb-4" id="list_Of_Products" style="max-height: 200px ;overflow: auto">
                 <div class="Product">

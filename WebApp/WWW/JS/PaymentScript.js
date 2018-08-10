@@ -3,11 +3,11 @@ function onCouponsSubmission() {
 
     let coupon = document.getElementById("CouponNumber").value;
     let cart_ID = document.getElementById("Cart_ID").value;
-    if(coupon.value != null)
+    if(coupon != null)
     {
         let url = 'http://localhost:8081/Cart/RequestForCoupon';
         let data = {
-            "Coupon_ID": coupon.value,
+            "Coupon_ID": coupon,
             "Cart_ID" : cart_ID
         };
 
@@ -114,5 +114,19 @@ function sendPaymentDetailsToServer(elementsToSend) {
                 window.location.replace(data.url);
             }
         });
+
+}
+
+function getAmount(value)
+{
+    let AmountDiv = document.getElementById("AmountOfMoneyDiv");
+    if(value == "partial")
+    {
+        AmountDiv.style.display = "block";
+    }
+    else
+    {
+        AmountDiv.style.display = "none";
+    }
 
 }

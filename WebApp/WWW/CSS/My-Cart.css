@@ -28,3 +28,14 @@
 {
     display: none;
 }
+
+.search_bar
+{
+    margin-bottom: 0.45rem;
+    padding-right: 1px;
+}
+
+.search_bar_icon
+{
+    border-radius: 0px 4px 4px 0px !important;
+}

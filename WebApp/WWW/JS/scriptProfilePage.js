@@ -50,13 +50,12 @@ function showAllGroups(){
         if(data){
             let i;
             for(i in data){
-                // if(i%2 == 0){
                     myGroups += `<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css">
                             <div>
                                 <h6 class="my-0 text-right"><b>${data[i].name}</b></h6>
                             </div>
                             <small class="text-muted">
-                            <button class="btn-primary cart_buttons" data-pos="${data[i].id}" id="group${i}" >עבור לדף הגבוצה</button>
+                            <button class="btn btn-primary  btn-sm cart_buttons" data-pos="${data[i].id}" id="group${i}" >עבור לדף הקבוצה</button>
                             </small>
                         </li>`
             }

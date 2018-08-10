@@ -104,13 +104,13 @@ function BuildProductListFromJson(jsonFile)
             </div>
             <div class="addingToCartOption_div col-md-4 order-md-1 mb-0">
                 <small class="text-muted">
-                <button class="btn-primary cart_buttons" onclick="onChoosingProduct(this,'quantity_div')" >להוספה לסל</button></small>
+                <button class="btn btn-primary btn-sm cart_buttons" onclick="onChoosingProduct(this,'quantity_div')" >להוספה לסל</button></small>
             </div>
             <div class="quantity_div col-md-4 order-md-1 mb-0">
                 <small class="text-muted">
                 <input type="number small" placeholder="כמות" class="quantity_input" maxlength="4" size="4">
-                <button class="btn-primary cart_buttons" onclick="onApprovingProduct(this,'addingToCartOption_div',${product.product_ID})" > לאישור</button>
-                <button class="btn-danger cart_buttons" onclick="onCancelingProduct(this,'addingToCartOption_div')" > לביטול</button></small>
+                <button class="btn btn-primary btn-sm cart_buttons" onclick="onApprovingProduct(this,'addingToCartOption_div',${product.product_ID})" > לאישור</button>
+                <button class="btn btn-danger btn-sm cart_buttons" onclick="onCancelingProduct(this,'addingToCartOption_div')" > לביטול</button></small>
             </div>  
             <span class="text-muted div col-md-3 order-md-1 mb-0">${product.price} &#8362</span>
         </li>
