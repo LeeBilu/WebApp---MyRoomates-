@@ -79,7 +79,7 @@ function RequestCart() {
     let url = 'http://localhost:8081/Cart/RequestCart';
     //TODO - get the group ID out of the URL
     let data_to_send = {
-        "group_id" : "1"
+        "group_id" : "26"
     };
     fetch(url,
         {
@@ -154,11 +154,11 @@ function loadCartFromJSON(jsonFile)
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום ששולם</span>
-                <strong>${jsonFile["total_amount_paid"]} &#8362   </strong>
+                <strong>${jsonFile.total_amount_paid} &#8362   </strong>
                 </li></div>`
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום שנשאר</span>
-                <strong>${jsonFile["total_amount"] - jsonFile["total_amount_paid"]} &#8362   </strong>
+                <strong>${jsonFile.total_amount - jsonFile.total_amount_paid} &#8362   </strong>
                 </li></div>`
 
     element+=`<input type="hidden" id="Cart_ID" name="Cart_ID" value=${jsonFile.Cart_ID}>`

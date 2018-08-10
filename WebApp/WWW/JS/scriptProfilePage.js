@@ -56,7 +56,7 @@ function showAllGroups(){
                                 <h6 class="my-0 text-right"><b>${data[i].name}</b></h6>
                             </div>
                             <small class="text-muted">
-                            <button class="btn-primary cart_buttons" data-pos="${data[i].id}" id="group${i}" >עבור לדף הגבוצה</button>
+                            <button class="btn-primary cart_buttons" data-pos="${data[i].id}" id="group${i}" >עבור לדף הקבוצה</button>
                             </small>
                         </li>`
             }
