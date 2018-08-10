@@ -331,16 +331,16 @@ let createCart = function(group_id){
     console.log(group_id);
     for(let id in carts){
         if(carts[id].group_id ==group_id && carts.status == 1){
-            return json.stringify({"type" : 0, "data" : "OPEN_CART"});
+            return JSON.stringify({"type" : 0, "data" : "OPEN_CART"});
         }
     }
 
     carts[ids.carts_id] = {"Cart_ID": ids.carts_id, "status" : 1, "cart" : {}, "group_id" : group_id, "coupon" : {}};
     if(!insertToFile(carts, "carts", "carts_id")){
-        return json.stringify({"type" : 0, "data" : "DB_ERROR"})
+        return JSON.stringify({"type" : 0, "data" : "DB_ERROR"})
     }
     updateDBData();
-    return json.stringify({"type" : 1, "data" : carts[ids.carts_id -1]});
+    return JSON.stringify({"type" : 1, "data" : carts[ids.carts_id -1]});
 }
 /**
  * create new cart
@@ -402,10 +402,10 @@ app.post('/cart/get', function (req, res) {
 let getTotalAmount = function(cart){
     let amount = 0.0;
     for(let i  in cart.cart){
-        amount += cart.cart[i].product.price * cart.cart[i].amount;
+        amount += parseFloat(cart.cart[i].product.price * cart.cart[i].amount);
     }
     if(cart.coupon && cart.coupon.productName){
-        amount -= cart.coupon.price;
+        amount -= parseFloat(cart.coupon.price);
     }
     return amount;
 }
@@ -414,7 +414,7 @@ let getTotalPaid = function(cart_id, orders){
     let paid = 0.0;
     for(let i in orders){
         if(orders[i].cart_id == cart_id){
-            paid += parseInt(orders[i].amount);
+            paid += parseFloat( orders[i].amount);
         }
     }
     return paid;
@@ -512,10 +512,14 @@ app.post('/order/place', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
+    let paid = getTotalPaid(body.cart_id, orders);
+    let total =  getTotalAmount(carts[body.cart_id]);
     if(body.payment_data.partOrFullPayment == "full"){
-        let amount = getTotalAmount(carts[body.cart_id]) - getTotalPaid(body.cart_id, orders);
-        amount = amount > 0 ? amount : 0;
-        body.amount = amount;
+        body.amount = total - paid;
+    } else {
+        if(body.amount - paid < 0){
+            body.amount = total - paid;
+        }
     }
     let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount};
     orders[ids.orders_id] = order;

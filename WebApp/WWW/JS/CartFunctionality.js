@@ -123,15 +123,16 @@ function loadCartFromJSON(jsonFile)
                             <button type="button" class="close" aria-label="Close" onclick="deleteProductFromCart(${product.product_ID},${amount})">
                               <span aria-hidden="true">&times;</span>
                             </button>
-                            <div class=" text-right col-7">
+                            <div class="col-md-5 order-md-0 mb-2 text-right">
                                 <h6 class="my-0 ">${product.productName}</h6>
                                 <small class="text-muted">${product.description}</small>
                             </div>
                             <!--<small class="text-muted">
                             <button class="btn-danger cart_buttons" onclick="deleteProductFromCart(${product.product_ID},${amount})" >  X </button>
                             </small>-->
-                        
+                        <div class="col-md-5 order-md-1 mb-4">
                          <span class="text-muted"> ${roundPrice(amount * product.price)} &#8362 =  ${amount} * ${product.price} &#8362    </span>
+                         </div>
                     </li>
                     </div>`;
 
