@@ -461,7 +461,7 @@ app.post('/Cart/Close', function (req, res) {
     let data = {};
     //TODO: Validation.
     data.user_id = username;
-    data.cart_id =body.cart.id;
+    data.cart_id =body.cart_id;
     data.shipments_data = {};
     data.shipments_data.city = body.city;
     data.shipments_data.street = body.street;

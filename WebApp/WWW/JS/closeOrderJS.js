@@ -1,9 +1,7 @@
 let cart;
 function init() {
-<<<<<<< HEAD
     RequestCart();
     initNavBar();
-=======
     cart = RequestCart();
 }
 
@@ -58,7 +56,7 @@ function OnSubmitShipments() {
     } if(floor){
         data.floor = floor;
     }
-    data.cart_id = cart.Cart_ID;
+    data.cart_id = document.getElementById("Cart_ID").value;
     let url = 'http://localhost:8081/Cart/Close';
     fetch(url,
         {
@@ -71,9 +69,8 @@ function OnSubmitShipments() {
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        if(data){
+        if(data.type == 1){
             window.location.replace(data.url);
         }
     });
->>>>>>> daniel
 }
