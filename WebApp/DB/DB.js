@@ -19,9 +19,9 @@ app.post('/users/login', function (req, res) {
     let body = req.body;
     for(let id in users) {
         if(users[id].email == body.email && users[id].password==body.password){
-            delete(users[id].password);
-
-            res.json({"type": 1 , "data" :users[id]});
+            let user = clone(users[id]);
+            delete(user.password);
+            res.json({"type": 1 , "data" :user});
             return;
         }
     }
@@ -57,21 +57,17 @@ app.post('/users/edit', function (req, res) {
     if(!body.user_id){
         res.json({"type" : 0});
         return;
-    }
+}
 
 
-    let user = users[body.user_id];
-    if(typeof(body.email) !== "undefined"){
-        user.email = body.email;
-    }
-    if(typeof(body.password) !== "undefined"){
-        user.password = body.password;
-    }
+let user = users[body.user_id];
+if(typeof(body.email) !== "undefined"){
+    user.email = body.email;
+}
     if(typeof(body.phone) !== "undefined"){
         user.phone = body.phone;
     }
     if(typeof(body.fullname) !== "undefined"){
-
         user.fullname = body.fullname;
     }
     users[body.user_id] = user;
@@ -93,7 +89,7 @@ app.post('/users/user', function (req, res) {
         res.json({"type" : 0});
         return;
     }
-    let user =  users[body.id];
+    let user =  clone(users[body.id]);
     delete user.password;
     res.json({"type" : 1, "data" : user});
 });
@@ -305,7 +301,7 @@ app.post('/cart/get', function (req, res) {
     }
     let cart = false;
     for(let i in carts ){
-        if(carts[i].group_id == body.group_id && carts[i].status == 1){
+        if(carts[i].group_id == body.group_id){
             cart = carts[i];
             break;
         }
@@ -531,6 +527,39 @@ let insertToFile = function(data, filename, counter) {
 //         return false;
 //     }
 // };
+function clone(obj) {
+    var copy;
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj;
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date();
+        copy.setTime(obj.getTime());
+        return copy;
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = [];
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i]);
+        }
+        return copy;
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {};
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+        }
+        return copy;
+    }
+
+    throw new Error("Unable to copy obj! Its type isn't supported.");
+}
 
 let server = app.listen(3000, function () {
     let host = server.address().address;

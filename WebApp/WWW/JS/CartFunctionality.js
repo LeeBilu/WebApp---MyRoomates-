@@ -79,7 +79,7 @@ function RequestCart() {
     let url = 'http://localhost:8081/Cart/RequestCart';
     //TODO - get the group ID out of the URL
     let data_to_send = {
-        "group_id" : "90"
+        "group_id" : "1"
     };
     fetch(url,
         {

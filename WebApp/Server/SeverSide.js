@@ -453,6 +453,46 @@ app.post('/users/editProfileDetails', function (req, res) {
     });
 
 });
+
+app.post('/Cart/Close', function (req, res) {
+    let url = 'http://localhost:3000/order/close';
+    let body = req.body;
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let data = {};
+    //TODO: Validation.
+    data.user_id = username;
+    data.cart_id =body.cart.id;
+    data.shipments_data = {};
+    data.shipments_data.city = body.city;
+    data.shipments_data.street = body.street;
+    data.shipments_data.numOfHouse = body.numOfHouse;
+    data.shipments_data.phone = body.phone;
+    if(typeof(body.enter) !== "undefined"){
+        data.shipments_data.enter = body.enter;
+    } if(typeof(body.floor) !== "undefined"){
+        data.shipments_data.floor = body.floor;
+    }
+
+
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1, "data" : 1});
+        } else{
+            return res.json({"type" : 0});
+        }
+    });
+
+});
 app.post('/Cart/RequestForCoupon', function (req, res) {
     let url = 'http://localhost:3000/coupons/checkandset';
     let body = req.body;
