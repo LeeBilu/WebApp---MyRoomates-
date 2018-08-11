@@ -3,6 +3,7 @@ let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
 const fs = require('fs');
 let ids = Object;
+let carts , shipments, orders, users, groups, products, coupons;
 
 let app = express();
 app.use(cookieParser());
@@ -16,11 +17,6 @@ app.use(bodyParser.json());
  */
 app.post('/users/login', function (req, res) {
     let body = req.body;
-    let users = getFromFile("users");
-    if(!users){
-        res.json({"type" : 0});
-        return;
-    }
     for(let id in users) {
         if(users[id].email == body.email && users[id].password==body.password){
             delete(users[id].password);
@@ -29,10 +25,7 @@ app.post('/users/login', function (req, res) {
             return;
         }
     }
-
     res.json({"type" : 0});
-    return;
-
 });
 /**
  * Register
@@ -40,11 +33,6 @@ app.post('/users/login', function (req, res) {
  */
 app.post('/users/register', function (req, res) {
     let body = req.body;
-    let users = getFromFile("users");
-    if (!users) {
-        res.json({"type" : 0, "data" : "ERROR"});
-        return;
-    }
     for(let id in users){
         if(users[id].email == body.email){
             res.json({"type" : 0, "data" : "USER_EXISTS"});
@@ -57,10 +45,7 @@ app.post('/users/register', function (req, res) {
         res.json({"type" : 0, "data" : "ERROR"});
         return;
     }
-    updateDBData();
     res.json({"type" : 1});
-    return;
-
 });
 
 /**
@@ -69,14 +54,7 @@ app.post('/users/register', function (req, res) {
  */
 app.post('/users/edit', function (req, res) {
     let body = req.body;
-
-    let users = getFromFile("users");
-    if(users === false){
-        res.json({"type" : 0});
-        return;
-    }
-    if(typeof(users[body.user_id]) === "undefined"){
-
+    if(!body.user_id){
         res.json({"type" : 0});
         return;
     }
@@ -111,11 +89,6 @@ app.post('/users/edit', function (req, res) {
  */
 app.post('/users/user', function (req, res) {
     let body = req.body;
-    let users = getFromFile("users");
-    if(!users){
-        res.json({"type" : 0});
-        return;
-    }
     if(!users[body.id]){
         res.json({"type" : 0});
         return;
@@ -131,16 +104,6 @@ app.post('/users/user', function (req, res) {
 
 app.post('/groups/add', function (req, res) {
     let body = req.body;
-    let groups = getFromFile("groups");
-    let users = getFromFile("users");
-    if(!groups){
-        res.json({"type" : 0});
-        return;
-    }
-    if(!users){
-        res.json({"type" : 0});
-        return;
-    }
     if(!users[body.user_id]){
         res.json({"type" : 0});
         return;
@@ -151,8 +114,6 @@ app.post('/groups/add', function (req, res) {
         res.json({"type" : 0});
         return;
     }
-    updateDBData();
-
     users[body.user_id].groups_id.push(group_id);
     insertToFile(users, "users", false);
     createCart(group_id);
@@ -165,10 +126,6 @@ app.post('/groups/add', function (req, res) {
 app.post('/groups/update', function (req, res) {
     let body = req.body;
 
-    let users = getFromFile("users");
-    if(!users){
-        res.json({"type" : 0});
-    }
     for(let id in users){
         for(let i =0; i<body.emails.length; i++){
             if(body.emails[i] == users[id].email){
@@ -190,12 +147,6 @@ app.post('/groups/update', function (req, res) {
 
 app.post('/groups/get', function (req, res) {
     let body = req.body;
-    let groups = getFromFile("groups");
-    let users = getFromFile("users");
-    if(!groups || ! users){
-        res.json({"type" : 0});
-        return;
-    }
     let group_data = {};
     if(!groups[body.group_id]){
         res.json({"type" : 0});
@@ -230,13 +181,6 @@ app.post('/groups/get', function (req, res) {
  */
 app.post('/groups/getall', function (req, res) {
     let body = req.body;
-    let users = getFromFile("users");
-    let groups = getFromFile("groups");
-    if(!users || ! groups){
-        res.json({"type" : 0});
-        return;
-    }
-
     if(!users[body.user_id]){
         res.json({"type" : 0});
         return;
@@ -260,12 +204,6 @@ app.post('/groups/getall', function (req, res) {
  */
 app.post('/groups/remove', function (req, res) {
     let body = req.body;
-    let users = getFromFile("users");
-    let groups = getFromFile("groups");
-    if(!users || ! groups){
-        res.json({"type" : 0});
-        return;
-    }
 
     if(!users[body.user_id]){
         res.json({"type" : 0});
@@ -290,7 +228,6 @@ app.post('/groups/remove', function (req, res) {
  * params:
  */
 app.post('/products/get', function (req, res) {
-    let products = getFromFile("products");
     if(!products){
         res.json({"type" : 0});
         return
@@ -305,14 +242,11 @@ app.post('/products/get', function (req, res) {
  */
 app.post('/coupons/checkandset', function (req, res) {
     let body = req.body;
-    let coupons = getFromFile("coupons");
-    let carts = getFromFile("carts");
-    if(!carts || ! carts[body.cart_id]){
+
+    if(!carts[body.cart_id] || !coupons[body.coupon] ){
         return res.json({"type" : 0, "data" : "DB_ERROR"});
     }
-    if(!coupons || !coupons[body.coupon]){
-        return res.json({"type" : 0, "data" : "DB_ERROR"});
-    }
+
     let cart = carts[body.cart_id];
     if(cart.coupon && cart.coupon.product_ID){
         return res.json({"type" : 0, "data" : "CART_HAS_COUPON"});
@@ -327,8 +261,6 @@ app.post('/coupons/checkandset', function (req, res) {
 });
 
 let createCart = function(group_id){
-    let carts = getFromFile("carts");
-    console.log(group_id);
     for(let id in carts){
         if(carts[id].group_id ==group_id && carts.status == 1){
             return JSON.stringify({"type" : 0, "data" : "OPEN_CART"});
@@ -339,7 +271,6 @@ let createCart = function(group_id){
     if(!insertToFile(carts, "carts", "carts_id")){
         return JSON.stringify({"type" : 0, "data" : "DB_ERROR"})
     }
-    updateDBData();
     return JSON.stringify({"type" : 1, "data" : carts[ids.carts_id -1]});
 }
 /**
@@ -347,7 +278,6 @@ let createCart = function(group_id){
  * params: group_id
  */
 app.post('/cart/create', function (req, res) {
-    let carts = getFromFile("carts");
     let body = req.body;
     for(let id in carts){
         if(carts[id].group_id == body.group_id && carts.status == 1){
@@ -359,7 +289,6 @@ app.post('/cart/create', function (req, res) {
     if(!insertToFile(carts, "carts", "carts_id")){
         res.json({"type" : 0, "data" : "DB_ERROR"})
     }
-    updateDBData();
     res.json({"type" : 1, "data" : carts[ids.carts_id -1]});
 });
 
@@ -368,12 +297,6 @@ app.post('/cart/create', function (req, res) {
  * params: group_id
  */
 app.post('/cart/get', function (req, res) {
-    let carts = getFromFile("carts");
-    let orders = getFromFile("orders");
-    if(carts === false || orders === false){
-        res.json({"type" : 0, "data" : "CARTS_NOT_FOUND"});
-        return;
-    }
 
     let body = req.body;
     if(body.group_id === "undefined"){
@@ -410,7 +333,7 @@ let getTotalAmount = function(cart){
     return amount;
 }
 
-let getTotalPaid = function(cart_id, orders){
+let getTotalPaid = function(cart_id){
     let paid = 0.0;
     for(let i in orders){
         if(orders[i].cart_id == cart_id){
@@ -426,13 +349,8 @@ let getTotalPaid = function(cart_id, orders){
  */
 
 app.post('/cart/deleteProduct', function (req, res) {
-    let carts = getFromFile("carts");
     let body = req.body;
     if(body.cart_id === "undefined" || body.product_ID === "undefined"){
-        res.json({"type" : 0, "data" : "DB_ERROR"});
-        return;
-    }
-    if(carts === false ){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
@@ -458,14 +376,8 @@ app.post('/cart/deleteProduct', function (req, res) {
  */
 
 app.post('/cart/editProduct', function (req, res) {
-    let carts = getFromFile("carts");
-    let products = getFromFile("products");
     let body = req.body;
     if(body.cart_id  === "undefined" || body.product_id  === "undefined" || body.amount === "undefined" ){
-        res.json({"type" : 0, "data" : "DB_ERROR"});
-        return;
-    }
-    if(carts === false || products === false){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
@@ -493,21 +405,13 @@ app.post('/cart/editProduct', function (req, res) {
  */
 
 app.post('/order/place', function (req, res) {
-    let carts = getFromFile("carts");
-    let orders = getFromFile("orders");
     let body = req.body;
-    //TODO change validation;
-
 
     if(!body.group_id || !body.type || !body.amount || !body.type){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
 
-    if(carts === false || orders === false){
-        res.json({"type" : 0, "data" : "DB_ERROR"});
-        return;
-    }
     if(carts[body.cart_id] === "undefined"){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
@@ -517,7 +421,7 @@ app.post('/order/place', function (req, res) {
     if(body.payment_data.partOrFullPayment == "full"){
         body.amount = total - paid;
     } else {
-        if(body.amount - paid < 0){
+        if(total  - (parseFloat(body.amount) + paid) < 0){
             body.amount = total - paid;
         }
     }
@@ -527,10 +431,46 @@ app.post('/order/place', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    updateDBData();
 
     res.json({"type" : 1, "data" : order});
 
+});
+
+/**
+ * cart_id, user_id shipments_data
+ */
+app.post('/order/close', function (req, res) {
+    let body = req.body;
+
+    if(!body.cart_id || !body.user_id || ! body.shipments_data){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+
+    if(!carts[body.cart_id]){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return;
+    }
+    let cart = carts[body.cart_id]
+    let paid = getTotalPaid(body.cart_id);
+    let total =  getTotalAmount(carts[body.cart_id]);
+    if(paid - total != 0){
+        return res.json({"type" : 0, "data" : "DB_ERROR"});
+    }
+    let shipment = {"id" : ids.shipments_id, "users_id" : body.user_id, "cart_data" : cart, "shipments_data" : body.shipments_data};
+    shipments[ids.shipments_id] = shipment;
+    if(!insertToFile(shipments, "shipments", "shipments_id")){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return
+    }
+    createCart(cart.group_id);
+    delete carts[body.cart_id];
+    if(!insertToFile(carts, "carts", false)){
+        res.json({"type" : 0, "data" : "DB_ERROR"});
+        return
+    }
+
+    res.json({"type" : 1, "data" : 1});
 });
 
 let loadDBData = function () {
@@ -541,6 +481,14 @@ let loadDBData = function () {
         ids.group_id = db_data.group_id;
         ids.carts_id = db_data.carts_id;
         ids.orders_id = db_data.orders_id;
+        ids.shipments_id = db_data.shipments_id;
+        carts = JSON.parse(fs.readFileSync("carts").toString());
+        orders = JSON.parse(fs.readFileSync("orders").toString());
+        coupons = JSON.parse(fs.readFileSync("coupons").toString());
+        groups = JSON.parse(fs.readFileSync("groups").toString());
+        products = JSON.parse(fs.readFileSync("products").toString());
+        users = JSON.parse(fs.readFileSync("users").toString());
+        shipments = JSON.parse(fs.readFileSync("shipments").toString());
         return true;
     }
     catch(e){
@@ -550,7 +498,7 @@ let loadDBData = function () {
 };
 
 let updateDBData = function(){
-    let data = {"users_id" : ids.users_id, "group_id" : ids.group_id, "carts_id" : ids.carts_id, "orders_id" : ids.orders_id};
+    let data = {"users_id" : ids.users_id, "group_id" : ids.group_id, "carts_id" : ids.carts_id, "orders_id" : ids.orders_id, "shipments_id" : ids.shipments_id};
     try{
         fs.writeFileSync("DBdata", JSON.stringify(data), 'utf8');
         return true;
@@ -565,6 +513,7 @@ let insertToFile = function(data, filename, counter) {
         fs.writeFileSync(filename,  JSON.stringify(data), 'utf8');
         if(counter){
             ids[counter]++;
+            updateDBData();
         }
         return true;
     } catch (e) {
@@ -574,14 +523,14 @@ let insertToFile = function(data, filename, counter) {
 };
 
 
-let getFromFile = function (filename) {
-    try{
-        let data = fs.readFileSync(filename).toString();
-        return JSON.parse(data);
-    } catch(e){
-        return false;
-    }
-};
+// let getFromFile = function (filename) {
+//     try{
+//         let data = fs.readFileSync(filename).toString();
+//         return JSON.parse(data);
+//     } catch(e){
+//         return false;
+//     }
+// };
 
 let server = app.listen(3000, function () {
     let host = server.address().address;
