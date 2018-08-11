@@ -13,47 +13,13 @@
     <link rel="stylesheet" href="CSS/PaymentCssFile.css">
     <script src="JS/CartFunctionality.js"></script>
     <script src="JS/closeOrderJS.js"></script>
+    <script src="JS/NavBar.js"></script>
 </head>
 
 <body class="bg-light" onload="init()">
 
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
-        <ul class="navbar-nav navbar-right">
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8081/static/profilePage.html"> הפרופיל האישי </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8081/static/GroupPage.html">הקבוצה הנוכחית</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8081/static/My-Cart.html">העגלה שלי</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8081/static/PaymentMethod.html">תשלום</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8081/static/login.html" onclick="disconnectFromSite()">התנתקות</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>
-            </li>
-            <li>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="חיפוש" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">חיפוש</button>
-        </form>
-    </div>
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" id="navBar" >
+
 </nav>
 
 <div class="container" dir="rtl">

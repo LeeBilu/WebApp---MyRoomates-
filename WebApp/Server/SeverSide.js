@@ -480,6 +480,18 @@ app.post('/Cart/RequestForCoupon', function (req, res) {
 
 });
 
+app.post('/users/logout/', function (req, res) {
+   // let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let options = {
+        maxAge: 0,
+        httpOnly: true, // The cookie only accessible by the web server
+    };
+
+    res.cookie('cookieName',' ', options);
+    return res.json({"type" : 1 , "data" : { "url" :"http://localhost:8081/static/login.html"}});
+});
+
+
 
 let server = app.listen(8081, function () {
     let host = server.address().address;

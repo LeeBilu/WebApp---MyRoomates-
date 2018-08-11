@@ -1,4 +1,7 @@
-
+function initPage()
+{
+    initNavBar();
+}
 function onCouponsSubmission() {
 
     let coupon = document.getElementById("CouponNumber").value;
@@ -92,7 +95,6 @@ function CreateJSONFromElements(elements)
         }
     }
     newJSON["paymentMethod"] = paymentMethod_value;
-    //TODO get group_id from url
     newJSON["cart_id"] = document.getElementById("Cart_ID").value;
     return newJSON;
 }

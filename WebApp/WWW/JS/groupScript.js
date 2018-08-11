@@ -1,6 +1,7 @@
 function initPage()
 {
     someMembersInGroup();
+    initNavBar();
 }
 
 
@@ -62,36 +63,6 @@ function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetPa
 
 }
 
-//
-// function disconnectFromSite() {
-//
-//     let url = 'http://localhost:8081/DisconnectFromUser/';
-//         fetch(url,
-//             {
-//                 redirect: 'follow',
-//                 credentials: "same-origin",
-//                 method: "POST",
-//                 headers: { 'Content-Type': 'application/json' }
-//
-//             })
-//             .then(function (response) {
-//
-//                 if(response.redirected)
-//                 {
-//                     window.location.replace(response.url);
-//                 }
-//                 return response.json();
-//             })
-//             .then(function (myJson) {
-//                 if(myJson.approve = 1)
-//                 {
-//
-//                 }
-//             })
-//             .catch(function (err) {
-//                 console.log(err.toString());
-//             })
-// }
 
 function someMembersInGroup() {
     let url = 'http://localhost:8081/group/allMembers';

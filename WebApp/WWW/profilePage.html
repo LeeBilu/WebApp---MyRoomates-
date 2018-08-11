@@ -13,48 +13,14 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="JS/NavBar.js"></script>
 
 </head>
 <body dir="rtl" onload="initPage()" class="bg-light" >
 
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
-        <ul class="navbar-nav navbar-right">
-            <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8081/static/profilePage.html"> הפרופיל האישי </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8081/static/GroupPage.html">הקבוצה הנוכחית</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="http://localhost:8081/static/My-Cart.html">העגלה שלי</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="http://localhost:8081/static/PaymentMethod.html">תשלום</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="http://localhost:8081/static/login.html" onclick="disconnectFromSite()">התנתקות</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>
-            </li>
-            <li>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="חיפוש" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">חיפוש</button>
-        </form>
-    </div>
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" id="navBar" >
 </nav>
+
 <main role="main" class="container">
     <div class="container" dir="rtl">
         <div class="row">

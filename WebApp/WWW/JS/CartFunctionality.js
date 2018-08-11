@@ -77,9 +77,9 @@ jsonFile = {
 function RequestCart() {
 
     let url = 'http://localhost:8081/Cart/RequestCart';
-    //TODO - get the group ID out of the URL
+    let group_id = findGetParameter("group_id");
     let data_to_send = {
-        "group_id" : "33"
+        "group_id" : group_id
     };
     fetch(url,
         {

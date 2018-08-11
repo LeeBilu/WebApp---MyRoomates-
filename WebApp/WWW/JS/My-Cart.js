@@ -1,3 +1,8 @@
+function initPage()
+{
+    initNavBar();
+}
+
 function onLoadingPage() {
 
     LoadProductsListAndPrices();

@@ -235,4 +235,5 @@ function initPage()
     showUserDetails();
     showAllGroups();
     createNewGroup();
+    initNavBar();
 }
