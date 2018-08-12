@@ -33,8 +33,9 @@ function submitLogIn() {
                 window.location.replace(myJson.url);
             }
             else {
-                alert("wrong password");
-                window.location.replace("http://localhost:8081/static/register.html" + "?variable=value");
+
+                let url = "http://localhost:8081/static/register.html" + "?login=failed";
+                window.location.replace(url);
             }
         })
         .catch(function (err) {

@@ -22,17 +22,19 @@
 
 
 
-<body dir="rtl" class="text-center">
+<body dir="rtl" class="text-center" onload="initPage()">
 
 
 <div class="col-md-4 col-md-offset-4">
     <div class="panel-transparent panel-heading">
         <div class="panel-heading">
             <h1 class="title" class="panel-title">הרשמה</h1>
+
         </div>
         <div class="panel-body">
             <div accept-charset="UTF-8" role="form">
                 <div class="form-group">
+                    <p id="invalid-user" class="invalid-user-class">שם משתמש/סיסמא לא נכונים אנא הירשם לאתר</p>
                     <input class="form-control" id="FullName" placeholder="שם מלא" name="FullName" type="text">
                     <div id="invalid-name" style="display: none">
                         דרוש שם

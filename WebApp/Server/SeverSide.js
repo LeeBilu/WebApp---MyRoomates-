@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
         // In case there is no cookie and the user trying to get into an unpermitted place
         if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
             req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
-              req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register")
+              req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register" || req.originalUrl === "/static/register.html?login=failed")
         {
             next();
             return;
@@ -540,7 +540,7 @@ let server = app.listen(8081, function () {
     let port = server.address().port;
 
     console.log("Example app listening at http://%s:%s", host, port)
-})
+});
 
 
 
