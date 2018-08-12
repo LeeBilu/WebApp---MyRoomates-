@@ -10,16 +10,16 @@ function getNav()
     `<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
         <ul class="navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick = getFullURL("http://localhost:8081/static/profilePage.html")> הפרופיל האישי </a>
+                <a class="nav-link" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html", this)> הפרופיל האישי </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick = getFullURL("http://localhost:8081/static/GroupPage.html")>הקבוצה הנוכחית</a>
+                <a class="nav-link" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html", this)>הקבוצה הנוכחית</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#" onclick = getFullURL("http://localhost:8081/static/My-Cart.html")>העגלה שלי</a>
+                <a class="nav-link" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html", this)>העגלה שלי</a>
             </li>
            <li class="nav-item ">
-                <a class="nav-link" href="#" onclick = getFullURL("http://localhost:8081/static/PaymentMethod.html")>תשלום</a>
+                <a class="nav-link" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/PaymentMethod.html", this)>תשלום</a>
             </li>
         </ul>
         <ul class="navbar-nav mr-auto">
@@ -38,10 +38,7 @@ function getNav()
             </div>
         </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="חיפוש" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">חיפוש</button>
-    </form>
+  
     </div>`;
 
     return element;
@@ -80,9 +77,10 @@ function disconnectFromSite() {
             })
 }
 
-function getFullURL(url)
+function NavButtonOnClick(url, this)
 {
     window.location.replace(url + location.search);
+    this.getParent().addClass('active');
 }
 
 function findGetParameter(parameterName) {

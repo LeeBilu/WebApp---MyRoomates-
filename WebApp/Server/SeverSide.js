@@ -528,7 +528,9 @@ app.post('/users/logout/', function (req, res) {
     };
 
     res.cookie('cookieName',' ', options);
-    return res.json({"type" : 1 , "data" : { "url" :"http://localhost:8081/static/login.html"}});
+    req.session.destroy(function (err) {
+        return res.json({"type" : 1 , "data" : { "url" :"http://localhost:8081/static/login.html"}});
+    });
 });
 
 
