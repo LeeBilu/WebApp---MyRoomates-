@@ -385,6 +385,8 @@ app.post('/Cart/RequestToPay', function (req, res) {
         "partOrFullPayment" : req.body.partOrFullPayment
     };
     if(req.body.paymentMethod === "credit"){
+
+        paymant_data.OwnerID = req.body.OwnerID,
         paymant_data.VisaNumber = req.body.VisaNumber,
         paymant_data.VisaOwner = req.body.VisaOwner,
         paymant_data.cc_cvv = req.body.cc_cvv,

@@ -2,6 +2,13 @@ function initNavBar()
 {
     let navBar = document.getElementById("navBar");
     navBar.innerHTML =  getNav();
+    let parentE = document.getElementById(localStorage['active-nav']).parentElement;
+
+    if(parentE)
+    {
+        parentE.classList.add('active');
+    }
+
 }
 
 function getNav()
@@ -10,16 +17,16 @@ function getNav()
     `<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
         <ul class="navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html", this)> הפרופיל האישי </a>
+                <a class="nav-link" id = "nav1" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html",this.id)> הפרופיל האישי </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html", this)>הקבוצה הנוכחית</a>
+                <a class="nav-link" id = "nav2" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html",this.id)>הקבוצה הנוכחית</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html", this)>העגלה שלי</a>
+            <li class="nav-item">
+                <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>העגלה שלי</a>
             </li>
            <li class="nav-item ">
-                <a class="nav-link" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/PaymentMethod.html", this)>תשלום</a>
+                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/PaymentMethod.html",this.id)>תשלום</a>
             </li>
         </ul>
         <ul class="navbar-nav mr-auto">
@@ -77,10 +84,11 @@ function disconnectFromSite() {
             })
 }
 
-function NavButtonOnClick(url, this)
+function NavButtonOnClick(url, elementID)
 {
     window.location.replace(url + location.search);
-    this.getParent().addClass('active');
+    //parent = element.parentElement;
+    localStorage['active-nav'] = elementID;
 }
 
 function findGetParameter(parameterName) {

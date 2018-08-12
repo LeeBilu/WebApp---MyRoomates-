@@ -52,12 +52,20 @@ function OnSubmitPayment() {
         let elements = document.getElementsByClassName("form-control");
         let VisaDiv = document.getElementById ("PayByVisa");
         let isPaidByVisa = document.getElementById("credit").checked;
+        let paymentMethod_value = document.getElementById ("partOrFullPayment").value;
         // Loop over them and prevent submission in case there is an empty field
          Array.prototype.forEach.call(elements, function(element) {
              let invalidFeedbackBlock  = element.parentElement.getElementsByClassName("my-invalid-feedback")[0];
              if(invalidFeedbackBlock)
              {
-                 if(element.value == "" && (VisaDiv.contains(element) == false || isPaidByVisa))
+                 if(element.value == "" && (VisaDiv.contains(element) == false || isPaidByVisa) && (paymentMethod_value != "partial" && element.id === "AmountOfMoney") == false)
+                 {
+
+                         approve = false;
+                         invalidFeedbackBlock.style.display = "block";
+
+                 }
+                 else if(validateElement(element) == false && (VisaDiv.contains(element) == false || isPaidByVisa) && element.id != "AmountOfMoney")
                  {
                      approve = false;
                      invalidFeedbackBlock.style.display = "block";
@@ -76,6 +84,27 @@ function OnSubmitPayment() {
     }
 }
 
+function validateElement(element)
+{
+    if(element.id === "email")
+    {
+       return validateEmail(element.value);
+    }
+    else if(element.id === "VisaNumber")
+    {
+        return validateVisaNumber(element.value);
+    }
+    else if(element.id === "OwnerID")
+    {
+         return validateIDNumber(element.value);
+
+    }
+    else
+    {
+        return true;
+    }
+}
+
 function CreateJSONFromElements(elements)
 {
     let newJSON = {};
@@ -87,16 +116,23 @@ function CreateJSONFromElements(elements)
 
     });
     //gets the radio button val
+    let paymentMethod_value = getPaymentMethodValue();
+    newJSON["paymentMethod"] = paymentMethod_value;
+    newJSON["cart_id"] = document.getElementById("Cart_ID").value;
+    return newJSON;
+}
+
+function getPaymentMethodValue()
+{
     let paymentMethod = document.getElementsByName('paymentMethod');
-    let paymentMethod_value;
+    let paymentMethod_value = "";
     for(let i = 0; i < paymentMethod.length; i++){
         if(paymentMethod[i].checked){
             paymentMethod_value = paymentMethod[i].value;
         }
     }
-    newJSON["paymentMethod"] = paymentMethod_value;
-    newJSON["cart_id"] = document.getElementById("Cart_ID").value;
-    return newJSON;
+
+    return paymentMethod_value;
 }
 function sendPaymentDetailsToServer(elementsToSend) {
     let data = CreateJSONFromElements(elementsToSend);
