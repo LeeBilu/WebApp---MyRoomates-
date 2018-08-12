@@ -2,13 +2,21 @@ function initNavBar()
 {
     let navBar = document.getElementById("navBar");
     navBar.innerHTML =  getNav();
-    let parentE = document.getElementById(localStorage['active-nav']).parentElement;
+    initActivationBar();
+
+
+}
+function initActivationBar()
+{
+    let urlWithoutVariable = window.location.href.split("?")[0];
+    let NavDictionary = JSON.parse(localStorage.getItem('nav_keys'));
+    let elementID = NavDictionary[urlWithoutVariable];
+    let parentE = document.getElementById("nav" +elementID).parentElement;
 
     if(parentE)
     {
         parentE.classList.add('active');
     }
-
 }
 
 function getNav()
