@@ -398,7 +398,8 @@ app.post('/Cart/RequestToPay', function (req, res) {
         "cart_id" : req.body.cart_id,
         "amount" : req.body.AmountOfMoney,
         "type" : req.body.paymentMethod,
-        "payment_data" : paymant_data
+        "payment_data" : paymant_data,
+        "user_id" : mappingRandToCookieNumber[req.cookies.cookieName].username
 
     };
     let url = 'http://localhost:3000/order/place';
