@@ -8,7 +8,11 @@ function allMembersInGroup() {
         })  .then(function (response) {
         return response.json();
     }).then(function (data){
-        showMember(data, data.length);
+        if(data.type == "1") {
+            showMember(data.data, data.data.length);
+        }else{
+            illegalOperation(data.url);
+        }
     });
 
 }

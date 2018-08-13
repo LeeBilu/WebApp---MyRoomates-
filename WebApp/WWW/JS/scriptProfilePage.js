@@ -9,29 +9,32 @@ function showUserDetails(){
         })  .then(function (response) {
              return response.json();
         }).then(function (data){
+            if(data.type == "1") {
 
-
-            profilePage += `  <ul class="list-group mb-3"  style="overflow: auto">
+                profilePage += `  <ul class="list-group mb-3"  style="overflow: auto">
 <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
                         <div>
                             <h6 class="my-0 text-right"><b>שם מלא</b></h6>
                         </div>
-                        <span class="text-muted">${data.fullname}</span>
+                        <span class="text-muted">${data.data.fullname}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css">
                         <div>
                             <h6 class="my-0"><b>כתובת מייל </b></h6>
                         </div>
-                        <span class="text-muted">${data.email}</span>
+                        <span class="text-muted">${data.data.email}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
                         <div>
                             <h6 class="my-0 text-right"><b>מספר טלפון סלולרי</b></h6>
                         </div>
-                        <span class="text-muted">${data.phone}</span>
+                        <span class="text-muted">${data.data.phone}</span>
                     </li> </ul>
 <button type="submit" class="btn btn-secondary" onclick="editProfileDetails()">עריכת פרופיל אישי</button>`
-        document.getElementById("profileDetails").innerHTML = profilePage;
+                document.getElementById("profileDetails").innerHTML = profilePage;
+            }else{
+                illegalOperation(data.url);
+            }
     });
 
 }
@@ -47,26 +50,27 @@ function showAllGroups(){
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        if(data){
+
+        if(data.type == "1"){
+
             let i;
-            for(i in data){
+            for(i in data.data){
                     myGroups += `<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css">
                             <div>
-                                <h6 class="my-0 text-right"><b>${data[i].name}</b></h6>
+                                <h6 class="my-0 text-right"><b>${data.data[i].name}</b></h6>
                             </div>
                             <small class="text-muted">
-                            <button class="btn btn-primary  btn-sm cart_buttons" data-pos="${data[i].id}" id="group${i}" >עבור לדף הקבוצה</button>
+                            <button class="btn btn-primary  btn-sm cart_buttons" data-pos="${data.data[i].id}" id="group${i}" >עבור לדף הקבוצה</button>
                             </small>
                         </li>`
             }
 
             document.getElementById("myGroups").innerHTML = myGroups;
-            for(i in data) {
+            for(i in data.data) {
                 let chooseGroup = document.getElementById("group" + i);
                 chooseGroup.addEventListener('click', function(){
 
                     let i = this.dataset.pos;
-                    console.log(i);
                     let url = 'http://localhost:8081/users/groupPage';
                     let data = {"groupNum": i};
                     fetch(url,
@@ -83,11 +87,13 @@ function showAllGroups(){
                         if(data.type == "1"){
                             window.location.replace(data.url);
                         }else{
-                            window.location.replace(data.url);
+                            illegalOperation(data.url);
                         }
                     });
                 });
             }
+        }else{
+            illegalOperation(data.url);
         }
 
     });
@@ -134,6 +140,8 @@ function addNewGroup() {
         }).then(function (data) {
             if(data){
                 window.location.replace(data.url);
+            }else{
+                illegalOperation(data.url);
             }
         });
 }
@@ -147,18 +155,20 @@ function editProfileDetails(){
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
+        if(data.type == "1"){
+
         let profilePage = `  <ul class="list-group mb-3"  style="overflow: auto">
     <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
                                 <div>
                                     <h6 class="my-0 text-right"><b>שם מלא</b></h6>
                                 </div>
-                                    <input type="text" id="InputFullName" placeholder=${data.fullname}>
+                                    <input type="text" id="InputFullName" placeholder=${data.data.fullname}>
                             </li>
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between lh-condensed list-item-css">
                                     <h6 class="my-0"><b>כתובת מייל </b></h6>
                                 
-                                    <input type="text" id="InputEmail" placeholder=${data.email}>
+                                    <input type="text" id="InputEmail" placeholder=${data.data.email}>
                                 </div>
                                 <div id="invalid-email" style="display: none">
                                    דרושה כתובת מייל חוקית
@@ -167,7 +177,7 @@ function editProfileDetails(){
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between lh-condensed list-item-css">
                                     <h6 class="my-0 text-right"><b>מספר טלפון סלולרי</b></h6>
-                                    <input type="text" id="InputPhoneNumber" placeholder=${data.phone}>
+                                    <input type="text" id="InputPhoneNumber" placeholder=${data.data.phone}>
                                  </div>
                                 <div id="invalid-phone" style="display: none">
                                     דרוש מספר פלאפון חוקי
@@ -176,6 +186,10 @@ function editProfileDetails(){
         <button type="submit" class="btn btn-secondary" onclick="changeDetails()">אישור</button>
             <button type="submit" class="btn btn-secondary" onclick="window.location.href='profilePage.html'">ביטול</button>`
         document.getElementById("profileDetails").innerHTML = profilePage;
+        }else{
+            illegalOperation(data.url)
+        }
+
     })
 }
 
@@ -225,8 +239,10 @@ function changeDetails(){
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        if(data){
+        if(data.type == "1"){
             window.location.replace(data.url);
+        }else{
+            illegalOperation(data.url);
         }
     });
 }

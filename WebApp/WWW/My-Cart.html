@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="CSS/bootstrap.css">
     <script src="JS/CartFunctionality.js"></script>
     <script src="JS/NavBar.js"></script>
+    <script src="JS/validationFunctions.js"></script>
 </head>
 
 <body  onload="initPage()" class="bg-light" >
@@ -34,35 +35,35 @@
                 <span class="text-muted">העגלה שלך</span>
                 <span class="badge badge-secondary badge-pill" id="numberOfProducts">3</span>
             </h4>
-            <ul class="list-group mb-3" id="my-cart" style="overflow: auto">
-                <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
-                    <div>
-                        <h6 class="my-0 text-right">מוצר א'</h6>
-                        <small class="text-muted">תיאור מוצר א'</small>
-                    </div>
-                    <span class="text-muted">12 &#8362</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between lh-condensed .list-item-css">
-                    <div>
-                        <h6 class="my-0">מוצר ב'</h6>
-                        <small class="text-muted">תיאור מוצר ב'</small>
-                    </div>
-                    <span class="text-muted">13 &#8362</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between bg-light">
-                    <div class="text-success">
-                        <h6 class="my-0">קוד קופון</h6>
-                        <small>הנחת סטודנט</small>
-                    </div>
-                    <span class="text-success">10- &#8362</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>סכום כולל</span>
-                    <strong>15 &#8362   </strong>
-                </li>
+            <ul class="list-group mb-3" id="my-cart" style="max-height: 400px ;overflow: auto">
+                <!--<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">-->
+                    <!--<div>-->
+                        <!--<h6 class="my-0 text-right">מוצר א'</h6>-->
+                        <!--<small class="text-muted">תיאור מוצר א'</small>-->
+                    <!--</div>-->
+                    <!--<span class="text-muted">12 &#8362</span>-->
+                <!--</li>-->
+                <!--<li class="list-group-item d-flex justify-content-between lh-condensed .list-item-css">-->
+                    <!--<div>-->
+                        <!--<h6 class="my-0">מוצר ב'</h6>-->
+                        <!--<small class="text-muted">תיאור מוצר ב'</small>-->
+                    <!--</div>-->
+                    <!--<span class="text-muted">13 &#8362</span>-->
+                <!--</li>-->
+                <!--<li class="list-group-item d-flex justify-content-between bg-light">-->
+                    <!--<div class="text-success">-->
+                        <!--<h6 class="my-0">קוד קופון</h6>-->
+                        <!--<small>הנחת סטודנט</small>-->
+                    <!--</div>-->
+                    <!--<span class="text-success">10- &#8362</span>-->
+                <!--</li>-->
+                <!--<li class="list-group-item d-flex justify-content-between">-->
+                    <!--<span>סכום כולל</span>-->
+                    <!--<strong>15 &#8362   </strong>-->
+                <!--</li>-->
 
             </ul>
-            <button type="submit" class="btn btn-secondary" onclick="RequestCart()">בדיקת JSON</button>
+            <!--<button type="submit" class="btn btn-secondary" onclick="RequestCart()">בדיקת JSON</button>-->
 
         </div>
         <div class="col-md-5 order-md-2 mb-4">
@@ -74,47 +75,47 @@
                        placeholder="חפש מוצרים" aria-label="Username" aria-describedby="basic-addon1">
             </div>
             <ul class="list-group mb-4" id="list_Of_Products" style="max-height: 400px ;overflow: auto">
-                <div class="Product">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
-                        <div>
-                            <h6 class="my-0 text-right">מוצר א'</h6>
-                            <small class="text-muted">תיאור מוצר א'</small>
-                        </div>
-                        <div class="addingToCartOption_div">
-                            <small class="text-muted">
-                                <button class="btn-primary cart_buttons" onclick="onChoosingProduct(this,`quantity_div`)" >להוספה לסל</button></small>
-                        </div>
-                        <div class="quantity_div">
-                            <small class="text-muted">
-                                <input type="number small" placeholder="כמות" class="quantity_input" maxlength="4" size="4">
-                                <button class="btn-primary cart_buttons" onclick="onApprovingProduct(this,`addingToCartOption_div`,1)" > לאישור</button>
-                                <button class="btn-danger cart_buttons" onclick="onCancelingProduct(this,`addingToCartOption_div`)" > לביטול</button></small>
-                        </div>
+                <!--<div class="Product">-->
+                    <!--<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">-->
+                        <!--<div>-->
+                            <!--<h6 class="my-0 text-right">מוצר א'</h6>-->
+                            <!--<small class="text-muted">תיאור מוצר א'</small>-->
+                        <!--</div>-->
+                        <!--<div class="addingToCartOption_div">-->
+                            <!--<small class="text-muted">-->
+                                <!--<button class="btn-primary cart_buttons" onclick="onChoosingProduct(this,`quantity_div`)" >להוספה לסל</button></small>-->
+                        <!--</div>-->
+                        <!--<div class="quantity_div">-->
+                            <!--<small class="text-muted">-->
+                                <!--<input type="number small" placeholder="כמות" class="quantity_input" maxlength="4" size="4">-->
+                                <!--<button class="btn-primary cart_buttons" onclick="onApprovingProduct(this,`addingToCartOption_div`,1)" > לאישור</button>-->
+                                <!--<button class="btn-danger cart_buttons" onclick="onCancelingProduct(this,`addingToCartOption_div`)" > לביטול</button></small>-->
+                        <!--</div>-->
 
-                        <span class="text-muted">12 &#8362</span>
-                    </li>
-                </div>
-                <div class="Product">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">
-                        <div >
-                            <h6 class="my-0 text-right">מוצר ב'</h6>
-                            <small class="text-muted">תיאור מוצר ב'</small>
-                        </div>
-                        <div>
-                            <small class="text-muted">
-                                <button class="btn-primary cart_buttons" >להוספה לסל</button></small>
-                        </div>
+                        <!--<span class="text-muted">12 &#8362</span>-->
+                    <!--</li>-->
+                <!--</div>-->
+                <!--<div class="Product">-->
+                    <!--<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">-->
+                        <!--<div >-->
+                            <!--<h6 class="my-0 text-right">מוצר ב'</h6>-->
+                            <!--<small class="text-muted">תיאור מוצר ב'</small>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<small class="text-muted">-->
+                                <!--<button class="btn-primary cart_buttons" >להוספה לסל</button></small>-->
+                        <!--</div>-->
 
 
-                        <span class="text-muted">14 &#8362</span>
-                    </li>
-                </div>
+                        <!--<span class="text-muted">14 &#8362</span>-->
+                    <!--</li>-->
+                <!--</div>-->
 
             </ul>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-secondary" onclick="LoadProductsListAndPrices()">בדיקת JSON</button>
+    <!--<button type="submit" class="btn btn-secondary" onclick="LoadProductsListAndPrices()">בדיקת JSON</button>-->
 </div>
 
     <footer class="my-5 pt-5 text-muted text-center text-small">

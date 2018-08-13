@@ -27,6 +27,8 @@ function onCouponsSubmission() {
         }).then(function (data) {
             if(data.type == "1"){
                 RequestCart();
+            }else{
+                illegalOperation(data.url);
             }
         });
     }
@@ -119,6 +121,7 @@ function CreateJSONFromElements(elements)
     let paymentMethod_value = getPaymentMethodValue();
     newJSON["paymentMethod"] = paymentMethod_value;
     newJSON["cart_id"] = document.getElementById("Cart_ID").value;
+    newJSON["group_id"] = findGetParameter("group_id");
     return newJSON;
 }
 
@@ -150,6 +153,8 @@ function sendPaymentDetailsToServer(elementsToSend) {
         }).then(function (data) {
             if(data.type == "1"){
                 window.location.replace(data.url);
+            }else{
+                illegalOperation(data.url)
             }
         });
 
@@ -185,9 +190,10 @@ function groupPermission(){
     }).then(function (data) {
         if(data.type == "1"){
             initNavBar();
+            RequestCart();
             return;
         }else{
-            window.location.replace(data.url);
+            illegalOperation(data.url);
 
         }
     });
