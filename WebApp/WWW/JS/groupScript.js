@@ -11,56 +11,36 @@ function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetPa
 {
 
 
-    let left = (screen.width/2)-(w/2);
-    let top = (screen.height/2)-(h/2);
-    window.open(url, title, 'toolbar=no, ' +
-        'location=no, directories=no, status=no, menubar=no, ' +
-        'scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-    // //let coupon = document.getElementById("CouponNumber");
-    // if(coupon.value != null)
-    // {
-    //     // let url = 'http://localhost:8081/RequestForCoupon/';
-    //     // fetch(url,
-    //     //     {
-    //     //         redirect: 'follow',
-    //     //         credentials: "same-origin",
-    //     //         method: "POST",
-    //     //         headers: { 'Content-Type': 'application/json' },
-    //     //         body: JSON.stringify({
-    //     //             Coupon : coupon.value
-    //     //
-    //     //         })})
-    //     //     .then(function (response) {
-    //     //
-    //     //         if(response.redirected)
-    //     //         {
-    //     //             window.location.replace(response.url);
-    //     //         }
-    //     //         console.log("success");
-    //     //         return response.json();
-    //     //     })
-    //     //     .then(function (myJson) {
-    //     //
-    //     //         if(myJson.approve != 1)
-    //     //         {
-    //     //             RequestNewCartList();
-    //     //         }
-    //     //         else
-    //     //         {
-    //     //             console.log('Not a valid coupon');
-    //     //         }
-    //     //     })
-    //     //     .catch(function (err) {
-    //     //         console.log(err.toString());
-    //     //     })
-    //
-    //     coupon = "";
-    //
-    //
-    // }
+    // let left = (screen.width/2)-(w/2);
+    // let top = (screen.height/2)-(h/2);
+    // window.open(url, title, 'toolbar=no, ' +
+    //     'location=no, directories=no, status=no, menubar=no, ' +
+    //     'scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 
 
+}
+function allMembersInGroup() {
+    let url = 'http://localhost:8081/group/allMembers';
+    let data = {};
+    data.group_id = findGetParameter("group_id");
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data){
+        if(data.type == "1") {
+            console.log("hi");
+            showMember(data.data, data.data.length);
+        }else{
+            illegalOperation(data.url);
+        }
+    });
 }
 
 
@@ -103,7 +83,9 @@ function showMember(data, amount) {
            </div>
            </div>`
     }
-    if(document.getElementById("allMemberGroup")){
+    if(document.getElementById("allMembersGroup")){
+        document.getElementById("allMembersGroup").innerHTML = members;
+    }if(document.getElementById("allMemberGroup")){
         document.getElementById("allMemberGroup").innerHTML = members;
     }
 
@@ -221,16 +203,10 @@ function BuildNotificationJSON(JSON_obj)
           </div>`
     }
 
-
-    //
-    // element +=` <small class="d-block text-right mt-3">
-    //         <a href="#">לכל עדכוני הקבוצה</a>
-    //     </small>`
     notificationDiv.innerHTML = element;
 
 }
 
-someMembersInGroup();
 function groupPermission(){
     let url = 'http://localhost:8081/users/groupPage';
     let data = {"groupNum": findGetParameter("group_id")};

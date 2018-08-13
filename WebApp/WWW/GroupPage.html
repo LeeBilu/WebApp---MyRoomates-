@@ -21,6 +21,7 @@
     <script src="JS/NavBar.js"></script>
     <script src="JS/groupScript.js"></script>
     <script src="JS/validationFunctions.js"></script>
+    <script src="JS/allMyGroupMembersJS.js"></script>
 </head>
 
 <body class="bg-light" dir="rtl" onload="initPage()" >
@@ -65,7 +66,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h5 class="col-11 modal-title text-center" id="exampleModalLabel"  align="center">הוסף משתמש חדש לקבוצה</h5>
+                            <h5 class="col-11 modal-title " id="exampleModalLabel"  align="center">הוסף משתמש חדש לקבוצה</h5>
 
                         </div>
                         <div class="modal-body">
@@ -86,7 +87,7 @@
             </div>
         </div>
         <h6 class="border-bottom border-gray pb-2 mb-0">חברי הקבוצה</h6>
-        <div id="allMemberGroup" style="max-height: 400px ;overflow: auto"> </div>
+        <div id="allMemberGroup"> </div>
         <!--<div class="media text-muted pt-3">-->
             <!--<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">-->
             <!--<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
@@ -118,8 +119,31 @@
             <!--</div>-->
         <!--</div>-->
         <small class="d-block text-right mt-3" id="forAllGroupMembers" >
-            <a href="#" onclick="getAllGroupMembers()">לכל חברי הקבוצה</a>
+            <a href="#" data-toggle="modal" data-target="#exampleModalLong" onclick="allMembersInGroup()">לכל חברי הקבוצה</a>
+            <!-- Button trigger modal -->
+            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">-->
+                <!--Launch demo modal-->
+            <!--</button>-->
 
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 class="col-11 text-center modal-title" id="exampleModalLongTitle">חברי הקבוצה</h5>
+                        </div>
+                        <div class="modal-body form-group" id="allMembersGroup">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">סגור</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </small>
         <div class=" text-left">
         <button type="button" class="btn btn-primary" onclick="leftGroup()" >צא מהקבוצה</button>
