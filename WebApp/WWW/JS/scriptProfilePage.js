@@ -80,7 +80,9 @@ function showAllGroups(){
                         })  .then(function (response) {
                         return response.json();
                     }).then(function (data) {
-                        if(data){
+                        if(data.type == "1"){
+                            window.location.replace(data.url);
+                        }else{
                             window.location.replace(data.url);
                         }
                     });

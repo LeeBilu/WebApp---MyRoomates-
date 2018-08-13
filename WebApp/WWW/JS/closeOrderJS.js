@@ -1,8 +1,7 @@
 let cart;
 function init() {
-    RequestCart();
-    initNavBar();
-    cart = RequestCart();
+    groupPermission();
+
 }
 
 function OnSubmitShipments() {
@@ -71,6 +70,32 @@ function OnSubmitShipments() {
     }).then(function (data) {
         if(data.type == 1){
             window.location.replace(data.url);
+        }
+    });
+}
+
+function groupPermission(){
+    let url = 'http://localhost:8081/Cart/closeOrderPage';
+    let data = {"groupNum": findGetParameter("group_id")};
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+            RequestCart();
+            initNavBar();
+            cart = RequestCart();
+            return;
+        }else{
+            window.location.replace(data.url);
+
         }
     });
 }
