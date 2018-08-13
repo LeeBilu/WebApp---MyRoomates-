@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <link href="CSS/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/PaymentCssFile.css">
+    <script src="JS/NavBar.js"></script>
+    <script src="JS/finishPageJS.js"></script>
     <title>finish page</title>
 </head>
-<body dir="rtl" class="text-center">
-    <h1>הקנייה בוצעה בהצלחה, ההזמנה בדרך אליך</h1>
-    <button onclick="window.location.href='profilePage.html'">מעבר לדף הפרופיל</button>
+<body dir="rtl" class="bg-light" onload="init()">
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" id="navBar" >
+
+    </nav>
+    <div class="container" dir="rtl">
+        <div class="py-5 text-center">
+
+            <h1 class="text-muted"><b>הקנייה בוצעה בהצלחה</b></b></h1>
+            <h1 class="text-muted"><b>ההזמנה בדרך אליך :)</b></b></h1>
+        </div>
+        <hr class="mb-4">
+        <div class="text-center">
+        <button class="btn btn-primary btn-lg " onclick="window.location.href='profilePage.html'">מעבר לדף הפרופיל</button>
+        </div>
+    </div>
 </body>
 </html>

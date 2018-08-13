@@ -175,12 +175,10 @@ app.get('/users/allGroups', function (req, res) {
 
 });
 
-app.post('/users/groupPage', function (req, res) {
-    let group_id = req.body.groupNum;
-    let data = {};
-    data.group_id = group_id;
-    let url = 'http://localhost:3000/groups/get';
-    fetch(url,
+function groupPermission(group_id, username){
+    let url = 'http://localhost:3000/users/user';
+    let data = {"id": username};
+    return fetch(url,
         {
             credentials: "same-origin",
             method: "POST",
@@ -192,9 +190,50 @@ app.post('/users/groupPage', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            return res.send(JSON.stringify({'url': "/static/GroupPage.html?group_id=" + group_id}));
+            for(let i = 0; i < data.data.groups_id.length; i++){
+
+                if(data.data.groups_id[i] == group_id){
+                    console.log(data.data.groups_id[i] + " " + group_id );
+
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+
+    });
+}
+
+app.post('/users/groupPage', function (req, res) {
+    let group_id = req.body.groupNum;
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let data = {};
+    data.group_id = group_id;
+    // let url = 'http://localhost:3000/groups/get';
+    // fetch(url,
+    //     {
+    //         credentials: "same-origin",
+    //         method: "POST",
+    //         body: JSON.stringify(data),
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     })
+    //     .then(function (response) {
+    //     return response.json();
+    // }).then(function (data) {
+    //     if(data.type == "1"){
+           return groupPermission(group_id, username)
+    .then(function (data) {
+        console.log(data);
+        if(data){
+            res.send(JSON.stringify({"type" : 1, 'url': ("/static/GroupPage.html?group_id=" + group_id)}));
+        }else{
+            res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
         }
     });
+
 
 });
 
@@ -267,6 +306,72 @@ app.post('/group/newMember', function (req, res) {
     });
 
 });
+
+app.post('/Cart/cartPage', function (req, res) {
+    let group_id = req.body.groupNum;
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let data = {};
+    data.group_id = group_id;
+    return groupPermission(group_id, username)
+        .then(function (data) {
+            console.log(data);
+            if(data){
+                res.send(JSON.stringify({"type" : 1, 'url': ("/static/My-Cart.html?group_id=" + group_id)}));
+            }else{
+                res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+            }
+        });
+});
+
+app.post('/Cart/paymentPage', function (req, res) {
+    let group_id = req.body.groupNum;
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let data = {};
+    data.group_id = group_id;
+    return groupPermission(group_id, username)
+        .then(function (data) {
+            console.log(data);
+            if(data){
+                res.send(JSON.stringify({"type" : 1, 'url': ("/static/PaymentMethod.html?group_id=" + group_id)}));
+            }else{
+                res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+            }
+        });
+});
+
+
+app.post('/Cart/closeOrderPage', function (req, res) {
+    let group_id = req.body.groupNum;
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let data = {};
+    data.group_id = group_id;
+    return groupPermission(group_id, username)
+        .then(function (data) {
+            console.log(data);
+            if(data){
+                res.send(JSON.stringify({"type" : 1, 'url': ("/static/closeOrder.html?group_id=" + group_id)}));
+            }else{
+                res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+            }
+        });
+});
+
+app.post('/Cart/finishPage', function (req, res) {
+    let group_id = req.body.groupNum;
+    let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
+    let data = {};
+    data.group_id = group_id;
+    return groupPermission(group_id, username)
+        .then(function (data) {
+            console.log(data);
+            if(data){
+                res.send(JSON.stringify({"type" : 1, 'url': ("/static/finishPage.html?group_id=" + group_id)}));
+            }else{
+                res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+            }
+        });
+});
+
 
 app.post('/Cart/LoadProductsListAndPrices', function (req, res) {
     let url = 'http://localhost:3000/products/get';
@@ -486,7 +591,8 @@ app.post('/Cart/Close', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-            return res.send({"type" : 1, "data" : 1});
+
+            return res.send({"type" : 1, "url":"http://localhost:8081/static/finisihPage.html"});
         } else{
             return res.json({"type" : 0});
         }
@@ -530,6 +636,7 @@ app.post('/users/logout/', function (req, res) {
     res.cookie('cookieName',' ', options);
     return res.json({"type" : 1 , "data" : { "url" :"http://localhost:8081/static/login.html"}});
 });
+
 
 
 
