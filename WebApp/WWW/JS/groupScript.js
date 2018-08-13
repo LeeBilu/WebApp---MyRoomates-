@@ -202,31 +202,30 @@ function BuildNotificationJSON(JSON_obj)
     let notificationDiv = document.getElementById("notification-div");
     let element = `<h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>`;
     let paymentsOfTheGroup = JSON_obj;
-    for(let i in paymentsOfTheGroup)
+    for(let i =0; i < 5 && i <paymentsOfTheGroup.length; i++)
     {
         element += `<div class="media text-muted pt-3" dir="rtl">
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">${paymentsOfTheGroup[i].user.fullname}</strong>`
-          if(paymentsOfTheGroup[i].type ==="PAID"){
+          <strong class="d-block text-gray-dark">${paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].user.fullname}</strong>`
+          if(paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].type ==="PAID"){
               element += `<span dir="rtl">
-               שילם על הסל  ${paymentsOfTheGroup[i].amount}
+               שילם על הסל  ${paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].amount}
                 </span>`
 
-          } else if(paymentsOfTheGroup[i].type ==="CLOSE"){
+          } else if(paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].type ==="CLOSE"){
               element += `<span dir="rtl">
                 סגר את ההזמנה
                 </span>`
           }
             element +=`</p>
           </div>`
-    console.log(paymentsOfTheGroup[i]);
     }
 
 
-
-    element +=` <small class="d-block text-right mt-3">
-            <a href="#">לכל עדכוני הקבוצה</a>
-        </small>`
+    //
+    // element +=` <small class="d-block text-right mt-3">
+    //         <a href="#">לכל עדכוני הקבוצה</a>
+    //     </small>`
     notificationDiv.innerHTML = element;
 
 }
@@ -249,6 +248,7 @@ function groupPermission(){
         if(data.type == "1"){
             someMembersInGroup();
             initNavBar();
+            getAllNotificationsFromServer();
             return;
         }else{
             illegalOperation(data.url);
@@ -256,4 +256,3 @@ function groupPermission(){
         }
     });
 }
-someMembersInGroup();

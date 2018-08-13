@@ -50,6 +50,7 @@ function OnSubmitShipments() {
     data.street = street;
     data.numOfHouse = numberOfHouse;
     data.phone = phone;
+    data.group_id = findGetParameter("group_id");
     if(enter){
         data.enter = enter;
     } if(floor){

@@ -25,7 +25,7 @@ function getNav()
     `<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
         <ul class="navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" id = "nav1" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html",this.id)> הפרופיל האישי </a>
+                <a class="nav-link" id = "nav1" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html")> הפרופיל האישי </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id = "nav2" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html",this.id)>הקבוצה הנוכחית</a>
@@ -92,11 +92,16 @@ function disconnectFromSite() {
             })
 }
 
-function NavButtonOnClick(url, elementID)
+function NavButtonOnClick(url, elementID = false)
 {
-    window.location.replace(url + location.search);
-    //parent = element.parentElement;
-    localStorage['active-nav'] = elementID;
+    if(elementID){
+        window.location.replace(url + location.search);
+        //parent = element.parentElement;
+        localStorage['active-nav'] = elementID;
+
+    } else{
+        window.location.replace(url);
+    }
 }
 
 function findGetParameter(parameterName) {

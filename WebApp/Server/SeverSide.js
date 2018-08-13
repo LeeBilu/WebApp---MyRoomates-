@@ -144,7 +144,6 @@ app.post('/users/newGroup', function (req, res) {
         })  .then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data.type)
         if(data.type == "1"){
             return res.send(JSON.stringify({'url': ("/static/GroupPage.html?group_id=" + data.data.id)}));
         }else{
@@ -276,7 +275,6 @@ app.post('/group/allMembers', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type == "1"){
-            console.log(data.data);
             return res.send(JSON.stringify({"type" : 1 ,"data":data.data}));
         }else{
             return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
@@ -395,6 +393,7 @@ app.post('/Cart/finishPage', function (req, res) {
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
     data.group_id = group_id;
+    console.log(data.group_id);
     return groupPermission(group_id, username)
         .then(function (data) {
             if(data){
@@ -554,7 +553,6 @@ app.post('/Cart/RequestToPay', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-            console.log(Math.floor(data.remainToPay));
             if(Math.floor(data.remainToPay) == 0){
                 return res.send({"type" : 1, "url" : "/static/closeOrder.html?group_id=" + group_id});
             }
@@ -606,6 +604,8 @@ app.post('/Cart/Close', function (req, res) {
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
     //TODO: Validation.
+    let group_id = body.group_id;
+    data.group_id = group_id;
     data.user_id = username;
     data.cart_id =body.cart_id;
     data.shipments_data = {};
@@ -633,7 +633,7 @@ app.post('/Cart/Close', function (req, res) {
     }).then(function (data) {
         if(data.type){
 
-            return res.send({"type" : 1, "url":"http://localhost:8081/static/finisihPage.html"});
+            return res.send(JSON.stringify({"type" : 1, "url":"http://localhost:8081/static/finishPage.html?group_id=" + group_id}));
         } else{
             return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
         }

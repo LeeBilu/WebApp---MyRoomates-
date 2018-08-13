@@ -37,23 +37,23 @@
 
     <div class="my-3 p-3 bg-white rounded box-shadow" id="notification-div" align="right">
         <h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>
-        <div class="media text-muted pt-3">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">אופיר</strong>
-                הוסיף חלב תנובה 5 אחוז.
-            </p>
-        </div>
-        <div class="media text-muted pt-3">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">דניאל</strong>
-                הסירה מהרשימה שני סוכר לבן
-            </p>
-        </div>
-        <small class="d-block text-right mt-3">
-            <a href="#">לכל עדכוני הקבוצה</a>
-        </small>
+        <!--<div class="media text-muted pt-3">-->
+            <!--<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
+                <!--<strong class="d-block text-gray-dark">אופיר</strong>-->
+                <!--הוסיף חלב תנובה 5 אחוז.-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<div class="media text-muted pt-3">-->
+            <!--<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
+                <!--<strong class="d-block text-gray-dark">דניאל</strong>-->
+                <!--הסירה מהרשימה שני סוכר לבן-->
+            <!--</p>-->
+        <!--</div>-->
+        <!--<small class="d-block text-right mt-3">-->
+            <!--<a href="#">לכל עדכוני הקבוצה</a>-->
+        <!--</small>-->
     </div>
-    <button onclick="getAllNotificationsFromServer()">תן את כל ההתראות</button>
+    <!--<button onclick="getAllNotificationsFromServer()">תן את כל ההתראות</button>-->
 
     <div class="my-3 p-3 bg-white rounded box-shadow" id="group members" align="right">
         <div class = "text-left">
@@ -86,7 +86,7 @@
             </div>
         </div>
         <h6 class="border-bottom border-gray pb-2 mb-0">חברי הקבוצה</h6>
-        <div id="allMemberGroup"> </div>
+        <div id="allMemberGroup" style="max-height: 400px ;overflow: auto"> </div>
         <!--<div class="media text-muted pt-3">-->
             <!--<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">-->
             <!--<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
