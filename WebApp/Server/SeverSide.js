@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
         // In case there is no cookie and the user trying to get into an unpermitted place
         if(req.originalUrl === "/static/login.html" || req.originalUrl === "/users/login"||
             req.originalUrl.endsWith(".css")||req.originalUrl.endsWith(".jpg") || req.originalUrl.endsWith(".js") ||
-              req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register")
+              req.originalUrl === "/static/register.html" || req.originalUrl === "/users/register" || req.originalUrl === "/static/register.html?login=failed")
         {
             next();
             return;
@@ -385,6 +385,8 @@ app.post('/Cart/RequestToPay', function (req, res) {
         "partOrFullPayment" : req.body.partOrFullPayment
     };
     if(req.body.paymentMethod === "credit"){
+
+        paymant_data.OwnerID = req.body.OwnerID,
         paymant_data.VisaNumber = req.body.VisaNumber,
         paymant_data.VisaOwner = req.body.VisaOwner,
         paymant_data.cc_cvv = req.body.cc_cvv,
@@ -528,7 +530,9 @@ app.post('/users/logout/', function (req, res) {
     };
 
     res.cookie('cookieName',' ', options);
-    return res.json({"type" : 1 , "data" : { "url" :"http://localhost:8081/static/login.html"}});
+    req.session.destroy(function (err) {
+        return res.json({"type" : 1 , "data" : { "url" :"http://localhost:8081/static/login.html"}});
+    });
 });
 
 
@@ -538,7 +542,7 @@ let server = app.listen(8081, function () {
     let port = server.address().port;
 
     console.log("Example app listening at http://%s:%s", host, port)
-})
+});
 
 
 

@@ -30,11 +30,13 @@ function submitLogIn() {
         .then(function (myJson) {
             if (myJson.approve == 1) {
 
+                initLocalMemory();
                 window.location.replace(myJson.url);
             }
             else {
-                alert("wrong password");
-                window.location.replace("http://localhost:8081/static/register.html" + "?variable=value");
+
+                let url = "http://localhost:8081/static/register.html" + "?login=failed";
+                window.location.replace(url);
             }
         })
         .catch(function (err) {
@@ -44,5 +46,19 @@ function submitLogIn() {
 
 }
 
+function initLocalMemory()
+{
+
+    let nav_keys =
+        {
+            "http://localhost:8081/static/profilePage.html" : 1,
+            "http://localhost:8081/static/GroupPage.html"   : 2,
+            "http://localhost:8081/static/My-Cart.html" : 3,
+            "http://localhost:8081/static/PaymentMethod.html" : 4
+        };
+    // Put the object into storage
+    localStorage.setItem('nav_keys', JSON.stringify(nav_keys));
+
+}
 
 // Get the form data with our (yet to be defined) function.

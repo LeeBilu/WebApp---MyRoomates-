@@ -8,12 +8,13 @@
     <meta name="author" content="">
 
     <title>MyPartners</title>
-
+    <script src="JS/NavBar.js"></script>
     <link href="CSS/bootstrap.min.css" rel="stylesheet">
     <script src="JS/PaymentScript.js"></script>
     <link rel="stylesheet" href="CSS/PaymentCssFile.css">
     <script src="JS/CartFunctionality.js"></script>
-    <script src="JS/NavBar.js"></script>
+    <script src="JS/validationFunctions.js"></script>
+
 </head>
 
 <body onload="initPage()" class="bg-light" >
@@ -137,6 +138,7 @@
                 </div >
                 <div id="PayByVisa">
                     <div class="row">
+
                         <div class="col-md-6 mb-3" >
                             <label for="VisaOwner">שם בעל הכרטיס</label>
                             <input type="text" class="form-control" id="VisaOwner" placeholder="">
@@ -145,7 +147,14 @@
                                 נחוץ שם בעל הכרטיס
                             </div>
                         </div>
-
+                        <div class="col-md-6 mb-3" >
+                            <label for="OwnerID">תעודת זהות של בעל הכרטיס</label>
+                            <input type="text" class="form-control" id="OwnerID" placeholder="">
+                            <small class="text-muted">תעודת זהות</small>
+                            <div class="my-invalid-feedback">
+                                אנא הכנס מספר תעודת זהות תקין
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-5 mb-3">

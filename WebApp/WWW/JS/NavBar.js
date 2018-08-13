@@ -2,6 +2,21 @@ function initNavBar()
 {
     let navBar = document.getElementById("navBar");
     navBar.innerHTML =  getNav();
+    initActivationBar();
+
+
+}
+function initActivationBar()
+{
+    let urlWithoutVariable = window.location.href.split("?")[0];
+    let NavDictionary = JSON.parse(localStorage.getItem('nav_keys'));
+    let elementID = NavDictionary[urlWithoutVariable];
+    let parentE = document.getElementById("nav" +elementID).parentElement;
+
+    if(parentE)
+    {
+        parentE.classList.add('active');
+    }
 }
 
 function getNav()
@@ -10,16 +25,16 @@ function getNav()
     `<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
         <ul class="navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick = getFullURL("http://localhost:8081/static/profilePage.html")> הפרופיל האישי </a>
+                <a class="nav-link" id = "nav1" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html",this.id)> הפרופיל האישי </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick = getFullURL("http://localhost:8081/static/GroupPage.html")>הקבוצה הנוכחית</a>
+                <a class="nav-link" id = "nav2" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html",this.id)>הקבוצה הנוכחית</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#" onclick = getFullURL("http://localhost:8081/static/My-Cart.html")>העגלה שלי</a>
+            <li class="nav-item">
+                <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>העגלה שלי</a>
             </li>
            <li class="nav-item ">
-                <a class="nav-link" href="#" onclick = getFullURL("http://localhost:8081/static/PaymentMethod.html")>תשלום</a>
+                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/PaymentMethod.html",this.id)>תשלום</a>
             </li>
         </ul>
         <ul class="navbar-nav mr-auto">
@@ -38,10 +53,7 @@ function getNav()
             </div>
         </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="חיפוש" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">חיפוש</button>
-    </form>
+  
     </div>`;
 
     return element;
@@ -80,9 +92,11 @@ function disconnectFromSite() {
             })
 }
 
-function getFullURL(url)
+function NavButtonOnClick(url, elementID)
 {
     window.location.replace(url + location.search);
+    //parent = element.parentElement;
+    localStorage['active-nav'] = elementID;
 }
 
 function findGetParameter(parameterName) {

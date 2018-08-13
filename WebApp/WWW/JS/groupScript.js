@@ -157,4 +157,54 @@ function leftGroup(){
     });
 }
 
+function getAllNotificationsFromServer()
+{
+    let url = 'http://localhost:8081/group/getNotifications';
+    let data = {};
+    data.group_id = findGetParameter("group_id");
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+
+        return response.json();
+    }).then(function (myJson) {
+            if(myJson.type = 1)
+            {
+                BuildNotificationJSON(myJson.data);
+            }
+        })
+        .catch(function (err) {
+            console.log(err.toString());
+        })
+}
+
+function BuildNotificationJSON(JSON_obj)
+{
+    let notificationDiv = document.getElementById("notification-div");
+    let element = `<h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>`
+    let paymentsOfTheGroup = JSON_obj.payment;
+    for(let i in paymentsOfTheGroup)
+    {
+        element += `<div class="media text-muted pt-3">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">${paymentsOfTheGroup.userName}</strong>
+            ${paymentsOfTheGroup.amountPaid} שילם על הסל 
+            </p>
+          </div>`
+    }
+
+
+    element +=` <small class="d-block text-right mt-3">
+            <a href="#">לכל עדכוני הקבוצה</a>
+        </small>`
+    notificationDiv.innerHTML = element;
+
+}
+
 someMembersInGroup();

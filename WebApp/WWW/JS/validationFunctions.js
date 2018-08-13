@@ -1,6 +1,7 @@
 function validateEmail(email) {
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    let isValid =  re.test(String(email).toLowerCase());
+    return isValid;
 }
 
 function validatePhone(phone) {
@@ -9,4 +10,17 @@ function validatePhone(phone) {
         return false;
     }
     return true;
+}
+
+function validateVisaNumber(number)
+{
+    let isnum = /^\d+$/;
+    let valid =  isnum.test(number)
+    return valid;
+}
+
+function validateIDNumber(number)
+{
+    let isnum = /^\d+$/;
+    return isnum.test(number)
 }

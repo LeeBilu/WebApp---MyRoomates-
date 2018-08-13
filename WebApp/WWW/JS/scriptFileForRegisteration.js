@@ -1,3 +1,13 @@
+function initPage()
+{
+    let IsFaildDuringLogIn = getQueryVariable("login");
+    if(IsFaildDuringLogIn)
+    {
+        let invalidUserP = document.getElementById("invalid-user");
+        invalidUserP.style.display = "inline";
+    }
+}
+
 function getQueryVariable(variable) {
 
 

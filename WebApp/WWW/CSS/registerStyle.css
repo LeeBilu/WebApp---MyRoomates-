@@ -132,3 +132,11 @@ html {
 #empty-password {
     color: red;
 }
+
+.invalid-user-class
+{
+    color : red;
+    display: none;
+    font-family: Arial;
+    font-weight: bold;
+}
