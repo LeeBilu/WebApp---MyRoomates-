@@ -34,7 +34,7 @@
       <file leaf-file-name="groupScript.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WWW/JS/groupScript.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="345">
               <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
             </state>
           </provider>
@@ -49,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="allMyGroupMembersJS.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="allMyGroupMembersJS.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WWW/JS/allMyGroupMembersJS.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+            <state relative-caret-position="203">
+              <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -88,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GroupPage.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GroupPage.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/WWW/GroupPage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1459">
-              <caret line="121" column="102" selection-start-line="121" selection-start-column="102" selection-end-line="121" selection-end-column="102" />
+            <state relative-caret-position="224">
+              <caret line="141" column="73" selection-start-line="141" selection-start-column="73" selection-end-line="141" selection-end-column="73" />
               <folding>
                 <element signature="e#7499#7506#1" expanded="true" />
               </folding>
@@ -193,9 +193,9 @@
         <option value="$PROJECT_DIR$/WWW/profilePage.html" />
         <option value="$PROJECT_DIR$/WWW/JS/NavBar.js" />
         <option value="$PROJECT_DIR$/WWW/AllMyGroupMembers.html" />
-        <option value="$PROJECT_DIR$/WWW/GroupPage.html" />
         <option value="$PROJECT_DIR$/WWW/JS/groupScript.js" />
         <option value="$PROJECT_DIR$/WWW/JS/allMyGroupMembersJS.js" />
+        <option value="$PROJECT_DIR$/WWW/GroupPage.html" />
       </list>
     </option>
   </component>
@@ -321,12 +321,12 @@
       <workItem from="1533451425012" duration="575000" />
       <workItem from="1533457313366" duration="131000" />
       <workItem from="1533457595304" duration="15160000" />
-      <workItem from="1534166324426" duration="8003000" />
+      <workItem from="1534166324426" duration="8152000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81042000" />
+    <option name="totallyTimeSpent" value="81191000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="813" extended-state="6" />
@@ -679,23 +679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/GroupPage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1459">
-          <caret line="121" column="102" selection-start-line="121" selection-start-column="102" selection-end-line="121" selection-end-column="102" />
-          <folding>
-            <element signature="e#7499#7506#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WWW/JS/groupScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WWW/AllMyGroupMembers.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
@@ -705,8 +688,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/WWW/JS/allMyGroupMembersJS.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+        <state relative-caret-position="203">
+          <caret line="16" column="30" lean-forward="true" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/JS/groupScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WWW/GroupPage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="141" column="73" selection-start-line="141" selection-start-column="73" selection-end-line="141" selection-end-column="73" />
+          <folding>
+            <element signature="e#7499#7506#1" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
