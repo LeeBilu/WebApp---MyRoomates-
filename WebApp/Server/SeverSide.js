@@ -642,6 +642,31 @@ app.post('/users/logout/', function (req, res) {
     });
 });
 
+app.post('/group/getNotifications', function (req, res) {
+    let url = 'http://localhost:3000/groups/notifications';
+    let body = req.body;
+    if(!body.group_id){
+        return res.json({"type" : 0, "data" : "GROUP_ID"});
+    }
+    let data = {"group_id" : body.group_id};
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1, "data" : data.data});
+        } else{
+            return res.json({"type" : 0, "data" : "DB_ERROR"});
+        }
+    });
+});
 
 
 

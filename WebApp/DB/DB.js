@@ -195,7 +195,7 @@ app.post('/groups/getall', function (req, res) {
 
 app.post('/groups/notifications', function (req, res) {
     let body = req.body;
-    if(body.group_id || !groups[body.group_id]){
+    if(!body.group_id || !groups[body.group_id]){
         res.json({"type" : 0});
         return;
     }
@@ -439,18 +439,24 @@ app.post('/order/place', function (req, res) {
         }
     }
     let group_id = carts[body.cart_id].group_id;
-    let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount, "user" : users[body.user_id]};
+    let user = clone(users[body.user_id]);
+    delete user.password;
+    delete user.invited_notifications;
+    delete user.orders_notifications;
+    let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount, "user" :user};
     orders[ids.orders_id] = order;
     if(!groups[group_id]){
         return  res.json({"type" : 0, "data" : "DB_ERROR"});
     }
-    groups[group_id].notifications.push(order);
     // for(let i =0; i < groups[group_id].users_id.length; i++){
     //     if(!users[groups[group_id].users_id[i]]){
     //         continue;
     //     }
     //     users[groups[group_id].users_id[i]].orders_notifications[group_id] = {"order" :order };
     // }
+    let notify = clone(order);
+    notify.type="PAID";
+    groups[group_id].notifications.push(notify);
     if(!insertToFile(orders, "orders", "orders_id") || !insertToFile(groups, "groups", false)){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
@@ -481,15 +487,26 @@ app.post('/order/close', function (req, res) {
     if(paid - total != 0){
         return res.json({"type" : 0, "data" : "DB_ERROR"});
     }
-    let shipment = {"id" : ids.shipments_id, "users_id" : body.user_id, "cart_data" : cart, "shipments_data" : body.shipments_data};
+    if(!users[body.user_id]){
+        return res.json({"type" : 0, "data" : "DB_ERROR"});
+    }
+    let user = clone(users[body.user_id]);
+    delete user.password;
+    delete user.invited_notifications;
+    delete user.orders_notifications;
+
+    let shipment = {"id" : ids.shipments_id, "user" : user, "cart_data" : cart, "shipments_data" : body.shipments_data};
     shipments[ids.shipments_id] = shipment;
     if(!insertToFile(shipments, "shipments", "shipments_id")){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return
     }
+    let notify = clone(shipment);
+    notify.type = "CLOSE";
+    groups[carts[body.cart_id].group_id].notifications.push(notify);
     createCart(cart.group_id);
     delete carts[body.cart_id];
-    if(!insertToFile(carts, "carts", false)){
+    if(!insertToFile(carts, "carts", false) || !insertToFile(groups, "groups", false)){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return
     }
