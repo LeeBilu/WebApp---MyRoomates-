@@ -21,8 +21,7 @@ function groupPermission(){
             initNavBar();
             return;
         }else{
-            window.location.replace(data.url);
-
+            illegalOperation(data.url);
         }
     });
 }

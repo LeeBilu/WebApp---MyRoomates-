@@ -79,8 +79,11 @@ function someMembersInGroup() {
         })  .then(function (response) {
         return response.json();
     }).then(function (data){
-        console.log(data);
-        showMember(data, 3);
+        if(data.type == "1"){
+            showMember(data.data, 3);
+        }else{
+            illegalOperation(data.url);
+        }
     });
 }
 
@@ -88,6 +91,7 @@ function showMember(data, amount) {
     let members = " ";
     let id;
     for(id = 0; id< data.length && id< amount; id++){
+
         members += `<div class="media text-muted pt-3">
                <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
@@ -122,6 +126,7 @@ function addNewMember(){
     let data = {};
     data.email = newMemberEmail;
     data.group_id = findGetParameter("group_id");
+    console.log(data.group_id);
     fetch(url,
         {
             credentials: "same-origin",
@@ -130,8 +135,14 @@ function addNewMember(){
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then(function () {
-        someMembersInGroup();
+        }).then(function (res) {
+            return res.json();
+        }).then(function (data) {
+            if(data.type == "1"){
+                someMembersInGroup();
+            }else{
+                illegalOperation(data.url);
+            }
     });
 }
 
@@ -151,8 +162,10 @@ function leftGroup(){
         })  .then(function (response) {
         return response.json();
     }).then(function (data){
-        if(data){
+        if(data.type == "1"){
             window.location.replace(data.url);
+        }else{
+            illegalOperation(data.url);
         }
     });
 }
@@ -227,8 +240,9 @@ function groupPermission(){
             initNavBar();
             return;
         }else{
-            window.location.replace(data.url);
+            illegalOperation(data.url);
 
         }
     });
 }
+someMembersInGroup();

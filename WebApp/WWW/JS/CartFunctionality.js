@@ -95,7 +95,7 @@ function RequestCart() {
         if(data.type == "1"){
             loadCartFromJSON(data.order);
         } else{
-            //TODO - Problem with cart request
+           illegalOperation(data.url)
         }
     });
 
@@ -151,6 +151,7 @@ function loadCartFromJSON(jsonFile)
                 <span class="text-success">${Coupon.price}- &#8362</span>
                 </li></div>`;
     }
+
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום כולל</span>
                 <strong>${jsonFile.total_amount} &#8362   </strong>
@@ -203,7 +204,7 @@ function deleteProductFromCart(Product_ID, quantity)
             if(data.type == "1"){
                 RequestCart();
             } else{
-                //TODO: error
+                illegalOperation(data.url)
             }
         });
     }

@@ -420,10 +420,11 @@ app.post('/cart/editProduct', function (req, res) {
 app.post('/order/place', function (req, res) {
     let body = req.body;
 
-    if(!body.type || !body.amount || !body.type || !body.user_id){
+    if(!body.type || !body.type || !body.user_id){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
+
 
     if(carts[body.cart_id] === "undefined"){
         res.json({"type" : 0, "data" : "DB_ERROR"});
@@ -441,6 +442,7 @@ app.post('/order/place', function (req, res) {
     let group_id = carts[body.cart_id].group_id;
     let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount, "user" : users[body.user_id]};
     orders[ids.orders_id] = order;
+
     if(!groups[group_id]){
         return  res.json({"type" : 0, "data" : "DB_ERROR"});
     }
@@ -455,8 +457,8 @@ app.post('/order/place', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-
-    res.json({"type" : 1, "data" : order});
+    let remainToPay = total - body.amount -  paid;
+    res.json({"type" : 1, "data" : order, "remainToPay" : remainToPay});
 
 });
 

@@ -24,3 +24,8 @@ function validateIDNumber(number)
     let isnum = /^\d+$/;
     return isnum.test(number)
 }
+
+function illegalOperation(url){
+    alert("הפעולה איננה חוקית");
+    window.location.replace(url);
+}

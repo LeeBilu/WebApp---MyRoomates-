@@ -26,6 +26,8 @@ function LoadProductsListAndPrices()
         if(data.type == '1'){
 
             BuildProductListFromJson(data);
+        }else {
+            illegalOperation(data.url);
         }
     });
 
@@ -198,7 +200,7 @@ function addNewProductToCart(Product_ID, quantity)
              if(data.type == "1"){
                  RequestCart();
              } else{
-                 //TODO: error
+                 illegalOperation(data.url)
              }
          });
 
@@ -221,9 +223,11 @@ function groupPermission(){
     }).then(function (data) {
         if(data.type == "1"){
             initNavBar();
+            LoadProductsListAndPrices();
+            RequestCart()
             return;
         }else{
-            window.location.replace(data.url);
+           illegalOperation(data.url);
 
         }
     });

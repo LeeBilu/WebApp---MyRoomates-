@@ -70,6 +70,8 @@ function OnSubmitShipments() {
     }).then(function (data) {
         if(data.type == 1){
             window.location.replace(data.url);
+        }else{
+            illegalOperation(data.url);
         }
     });
 }
@@ -94,8 +96,7 @@ function groupPermission(){
             cart = RequestCart();
             return;
         }else{
-            window.location.replace(data.url);
-
+            illegalOperation(data.url);
         }
     });
 }
