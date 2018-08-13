@@ -631,15 +631,14 @@ app.post('/Cart/RequestForCoupon', function (req, res) {
 
 app.post('/users/logout/', function (req, res) {
    // let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
-    let options = {
-        maxAge: 0,
-        httpOnly: true, // The cookie only accessible by the web server
-    };
+   //  let options = {
+   //      maxAge: 0,
+   //      httpOnly: true, // The cookie only accessible by the web server
+   //  };
 
-    res.cookie('cookieName',' ', options);
-    req.session.destroy(function (err) {
-        return res.json({"type" : 1 , "data" : { "url" :"http://localhost:8081/static/login.html"}});
-    });
+    // res.cookie('cookieName',' ', options);
+    res.clearCookie("cookieName");
+    res.end();
 });
 
 app.post('/group/getNotifications', function (req, res) {
