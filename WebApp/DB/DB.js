@@ -40,7 +40,7 @@ app.post('/users/register', function (req, res) {
         }
     }
 
-    users[ids.users_id] = {"id":ids.users_id, "email":body.email, password: body.password, "fullname": body.username, "phone": body.phone, "groups_id" : []};
+    users[ids.users_id] = {"id":ids.users_id, "email":body.email, password: body.password, "fullname": body.username, "phone": body.phone, "groups_id" : [], "invited_notifications" : {}, "orders_notifications" : {}};
     if(!insertToFile(users, "users", "users_id")){
         res.json({"type" : 0, "data" : "ERROR"});
         return;
@@ -104,14 +104,14 @@ app.post('/groups/add', function (req, res) {
         res.json({"type" : 0});
         return;
     }
-    groups[ids.group_id] = {"id" : ids.group_id, "name" : body.name, "admin_id" : body.user_id};
+
+    groups[ids.group_id] = {"id" : ids.group_id, "name" : body.name, "admin_id" : body.user_id, "users_id" : [body.user_id]};
     let group_id = ids.group_id;
-    if(insertToFile(groups, "groups", "group_id") === false){
+    users[body.user_id].groups_id.push(group_id);
+    if(insertToFile(groups, "groups", "group_id") === false || insertToFile(users, "users", false) === false){
         res.json({"type" : 0});
         return;
     }
-    users[body.user_id].groups_id.push(group_id);
-    insertToFile(users, "users", false);
     createCart(group_id);
     res.json({"type" : 1, "data" :  groups[group_id]});
 });
@@ -126,11 +126,13 @@ app.post('/groups/update', function (req, res) {
         for(let i =0; i<body.emails.length; i++){
             if(body.emails[i] == users[id].email){
                 users[id].groups_id.push(body.group_id);
+                groups[body.group_id].users_id.push(users[id].id);
+                users[users[id].id].invited_notifications[body.group_id] = {"group" : groups[body.group_id]};
             }
         }
     }
 
-    if(!insertToFile(users,"users", false)){
+    if(!insertToFile(users,"users", false) || !insertToFile(groups,"groups", false)){
         res.json({"type" : 0});
         return;
     }
@@ -152,22 +154,20 @@ app.post('/groups/get', function (req, res) {
     group_data['name'] = groups[body.group_id].name;
     let admin_id =groups[body.group_id].admin_id;
     let users_to_send = [];
-    for(let id in users){
-        let user = {};
-        for(let i = 0; i < users[id].groups_id.length; i ++){
-            if(users[id].groups_id[i] == body.group_id){
-                user.name = users[id].fullname;
-                user.phone = users[id].phone;
-                user.email = users[id].email;
-                if(id == admin_id){
-                    user.is_admin = 1;
-                } else{
-                    user.is_admin = 0;
-                }
-                users_to_send.push(user);
-            }
-
+    for(let user_id in groups[body.group_id].users_id){
+        if(!users[groups[body.group_id].users_id[user_id]]){
+            continue;
         }
+        let user = {};
+        user.name = users[groups[body.group_id].users_id[user_id]].fullname;
+        user.phone = users[groups[body.group_id].users_id[user_id]].phone;
+        user.email = users[groups[body.group_id].users_id[user_id]].email;
+        if(user_id == admin_id){
+            user.is_admin = 1;
+        } else{
+            user.is_admin = 0;
+        }
+        users_to_send.push(user);
     }
     res.json({"type" : 1, "data": users_to_send});
 });
@@ -182,13 +182,12 @@ app.post('/groups/getall', function (req, res) {
         return;
     }
     let groups_to_return = [];
-    for(let id in groups){
-        for(let i =0; i< users[body.user_id].groups_id.length; i++){
-            if(id == users[body.user_id].groups_id[i]){
-                groups_to_return.push(groups[id]);
+    for(let i =0; i< users[body.user_id].groups_id.length; i++){
+        if(!groups[users[body.user_id].groups_id[i]]){
+            continue;
 
-            }
         }
+        groups_to_return.push(groups[users[body.user_id].groups_id[i]]);
     }
 
     res.json({"type": 1, "data" : groups_to_return});
@@ -208,10 +207,18 @@ app.post('/groups/remove', function (req, res) {
     for(let i =0; i< users[body.user_id].groups_id.length; i++) {
         if (body.group_id == users[body.user_id].groups_id[i]) {
             users[body.user_id].groups_id.splice(i,1);
+            break;
         }
     }
 
-    if(insertToFile(users, "users", false) === false){
+    for(let i =0; i< groups[body.group_id].users_id.length; i++) {
+        if (body.user_id == groups[body.group_id].users_id[i]) {
+            groups[body.group_id].users_id.splice(i,1);
+            break;
+        }
+    }
+
+    if(!insertToFile(users, "users", false)|| !insertToFile(groups, "groups", false)){
         res.json({"type" : 0});
         return;
     }
@@ -321,7 +328,7 @@ app.post('/cart/get', function (req, res) {
 let getTotalAmount = function(cart){
     let amount = 0.0;
     for(let i  in cart.cart){
-        amount += parseFloat(cart.cart[i].product.price * cart.cart[i].amount);
+        amount += parseFloat(cart.cart[i].product.price) * parseFloat(cart.cart[i].amount);
     }
     if(cart.coupon && cart.coupon.productName){
         amount -= parseFloat(cart.coupon.price);
@@ -403,7 +410,7 @@ app.post('/cart/editProduct', function (req, res) {
 app.post('/order/place', function (req, res) {
     let body = req.body;
 
-    if(!body.group_id || !body.type || !body.amount || !body.type){
+    if(!body.type || !body.amount || !body.type){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
@@ -421,9 +428,16 @@ app.post('/order/place', function (req, res) {
             body.amount = total - paid;
         }
     }
+    let group_id = carts[body.cart_id].group_id;
     let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount};
     orders[ids.orders_id] = order;
-    if(insertToFile(orders, "orders", "orders_id") === false){
+    for(let i =0; i < groups[group_id].users_id.length; i++){
+        if(!users[groups[group_id].users_id[i]]){
+            continue;
+        }
+        users[groups[group_id].users_id[i]].orders_notifications[group_id] = {"order" :order };
+    }
+    if(!insertToFile(orders, "orders", "orders_id") || !insertToFile(users, "users", false)){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
