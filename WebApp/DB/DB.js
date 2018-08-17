@@ -519,22 +519,41 @@ app.post('/order/close', function (req, res) {
     res.json({"type" : 1, "data" : 1});
 });
 
-let loadDBData = function () {
+app.get('/data/clean', function (req, res) {
+    ids = {"users_id":1,"group_id":1,"carts_id":1,"orders_id":1,"shipments_id":1};
+    users={};
+    groups ={};
+    carts ={};
+    shipments ={};
+    orders={};
+    if(!insertToFile(ids,'DBdata', false) ||
+    !insertToFile(users,'users', false)||
+    !insertToFile(groups,'groups', false)||
+    !insertToFile(carts,'carts', false) ||
+    !insertToFile(shipments,'shipments', false)||
+    !insertToFile(orders,'orders', false)){
+        return res.json({"type" : 0});
+    }
+    res.json({"type" : 1});
+
+
+});
+
+let loadDBData = async function () {
     try{
-        let data = fs.readFileSync("DBdata").toString();
-        let db_data = JSON.parse(data);
+        let db_data = await readFile("DBdata");
         ids.users_id = db_data.users_id;
         ids.group_id = db_data.group_id;
         ids.carts_id = db_data.carts_id;
         ids.orders_id = db_data.orders_id;
         ids.shipments_id = db_data.shipments_id;
-        carts = JSON.parse(fs.readFileSync("carts").toString());
-        orders = JSON.parse(fs.readFileSync("orders").toString());
-        coupons = JSON.parse(fs.readFileSync("coupons").toString());
-        groups = JSON.parse(fs.readFileSync("groups").toString());
-        products = JSON.parse(fs.readFileSync("products").toString());
-        users = JSON.parse(fs.readFileSync("users").toString());
-        shipments = JSON.parse(fs.readFileSync("shipments").toString());
+        carts = await readFile("carts");
+        orders = await readFile("orders");
+        coupons = await readFile("coupons");
+        groups = await readFile("groups");
+        products = await readFile("products");
+        users = await readFile("users");
+        shipments = await readFile("shipments");
         return true;
     }
     catch(e){
@@ -554,14 +573,18 @@ let updateDBData = function(){
 };
 
 
-let insertToFile = function(data, filename, counter) {
+let insertToFile = async function(data, filename, counter) {
     try{
-        fs.writeFileSync(filename,  JSON.stringify(data), 'utf8');
-        if(counter){
-            ids[counter]++;
-            updateDBData();
-        }
-        return true;
+        await fs.writeFile(filename,  JSON.stringify(data),function (err) {
+            if(err){
+            }
+            if(counter){
+                ids[counter]++;
+                updateDBData();
+            }
+            return true;
+        });
+
     } catch (e) {
         return false;
     }
@@ -569,14 +592,17 @@ let insertToFile = function(data, filename, counter) {
 };
 
 
-// let getFromFile = function (filename) {
-//     try{
-//         let data = fs.readFileSync(filename).toString();
-//         return JSON.parse(data);
-//     } catch(e){
-//         return false;
-//     }
-// };
+function readFile(path) {
+    return new Promise(function (resolve, reject) {
+        fs.readFile(path, function (error, result) {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(JSON.parse(result.toString()));
+            }
+        });
+    });
+}
 function clone(obj) {
     let copy;
 

@@ -1,1 +1,1 @@
-{"13":{"id":13,"name":"הקבוצה של שניר","admin_id":13,"users_id":[13],"notifications":[{"id":22,"cart_id":"20","type":"PAID","payment_data":{"firstName":"wr","lastName":"gr","email":"asfaf@fafa.fsdf","partOrFullPayment":"partial"},"amount":"10","user":{"id":13,"email":"a@a.com","fullname":"שניר","phone":"0508888888","groups_id":[13]}}]}}
+{"1":{"id":1,"name":"asfa","admin_id":1,"users_id":[1],"notifications":[]},"2":{"id":2,"name":"aaaa","admin_id":1,"users_id":[1],"notifications":[]},"3":{"id":3,"name":"asaaaaaaa","admin_id":1,"users_id":[1],"notifications":[]}}

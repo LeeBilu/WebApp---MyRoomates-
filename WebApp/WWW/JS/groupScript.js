@@ -121,7 +121,7 @@ function addNewMember(){
         }).then(function (data) {
             if(data.type == "1"){
                 someMembersInGroup();
-                getAllNotificationsFromServer();
+                getSomeNotificationsFromServer();
             }else{
                 illegalOperation(data.url);
             }
@@ -171,7 +171,7 @@ function getAllNotificationsFromServer()
     }).then(function (myJson) {
             if(myJson.type = 1)
             {
-                BuildNotificationJSON(myJson.data);
+                BuildNotificationJSON(myJson.data, false);
             }
         })
         .catch(function (err) {
@@ -179,13 +179,47 @@ function getAllNotificationsFromServer()
         })
 }
 
-function BuildNotificationJSON(JSON_obj)
+function getSomeNotificationsFromServer()
+{
+    let url = 'http://localhost:8081/group/getNotifications';
+    let data = {};
+    data.group_id = findGetParameter("group_id");
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+
+        return response.json();
+    }).then(function (myJson) {
+        if(myJson.type = 1)
+        {
+            BuildNotificationJSON(myJson.data, true);
+        }
+    })
+        .catch(function (err) {
+            console.log(err.toString());
+        })
+}
+
+
+function BuildNotificationJSON(JSON_obj, is_limited)
 {
     let notificationDiv = document.getElementById("notification-div");
     let element = `<h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>`;
     let paymentsOfTheGroup = JSON_obj;
     let counter = 0;
-    for(let i = paymentsOfTheGroup.length - 1; counter < 5 && i >= 0; i--)
+    let amount;
+    if(is_limited){
+        amount = 5;
+    } else{
+        amount = Number.MAX_SAFE_INTEGER;
+    }
+    for(let i = paymentsOfTheGroup.length - 1; counter < amount && i >= 0; i--)
     {
         counter++;
         element += `<div class="media text-muted pt-3" dir="rtl">
@@ -193,7 +227,7 @@ function BuildNotificationJSON(JSON_obj)
           <strong class="d-block text-gray-dark">${paymentsOfTheGroup[i].user.fullname}</strong>`
           if(paymentsOfTheGroup[i].type ==="PAID"){
               element += `<span dir="rtl">
-               שילם על הסל  ${paymentsOfTheGroup[i].amount}
+               שילם על הסל  ${paymentsOfTheGroup[i].amount} ש"ח
                 </span>`
 
           } else if(paymentsOfTheGroup[i].type ==="CLOSE"){
@@ -211,7 +245,7 @@ function BuildNotificationJSON(JSON_obj)
     }
     element +=`  <small class="d-block text-right mt-3" id="allNotifications" >
         <a href="#" data-toggle="modal" data-target="#exampleModalLong" onclick="getAllNotificationsFromServer()">לכל ההתראות</a>
-        <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -252,7 +286,7 @@ function groupPermission(){
         if(data.type == "1"){
             someMembersInGroup();
             initNavBar();
-            getAllNotificationsFromServer();
+            getSomeNotificationsFromServer();
             return;
         }else{
             illegalOperation(data.url);
