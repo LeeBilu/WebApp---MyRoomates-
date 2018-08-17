@@ -19,3 +19,8 @@
 {
     text-align: right;
 }
+
+.coupon-invalid
+{
+    padding-left : 100%;
+}

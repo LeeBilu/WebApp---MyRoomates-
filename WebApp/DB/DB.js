@@ -263,21 +263,26 @@ app.post('/products/get', function (req, res) {
 app.post('/coupons/checkandset', function (req, res) {
     let body = req.body;
 
-    if(!carts[body.cart_id] || !coupons[body.coupon] ){
+    if(!carts[body.cart_id] || (!body.coupon && body.coupon != '' )){
         console.log("hi");
         return res.json({"type" : 0, "data" : "DB_ERROR"});
+    }
+    else if(!coupons[body.coupon])
+    {
+        console.log("invalid coupon");
+        return res.json({"type" : 1, "data" : "NOT_A_VALID_COUPON"});
     }
 
     let cart = carts[body.cart_id];
     if(cart.coupon && cart.coupon.product_ID){
-        return res.json({"type" : 0, "data" : "CART_HAS_COUPON"});
+        return res.json({"type" : 1, "data" : "CART_HAS_COUPON"});
     }
     cart.coupon = coupons[body.coupon];
     carts[body.cart_id] = cart;
     delete coupons[body.coupon];
     insertToFile(carts, "carts", false);
     insertToFile(coupons, "coupons", false);
-    return res.json({"type" : 1, "data" : 1});
+    return res.json({"type" : 1, "data" : "OK"});
 
 });
 

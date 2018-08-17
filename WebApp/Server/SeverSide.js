@@ -726,7 +726,7 @@ app.post('/Cart/RequestForCoupon', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-            return res.send({"type" : 1, "data" : 1});
+            return res.send(data);
         } else{
             return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
         }

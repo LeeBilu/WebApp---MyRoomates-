@@ -6,7 +6,13 @@ function onCouponsSubmission() {
 
     let coupon = document.getElementById("CouponNumber").value;
     let cart_ID = document.getElementById("Cart_ID").value;
-    if(coupon != null)
+    let coupon_invalid_div= document.getElementById("coupon-invalid");
+
+    if(coupon === '')
+    {
+        coupon_invalid_div.style.display = "inline";
+    }
+    else if(coupon != null)
     {
         let url = 'http://localhost:8081/Cart/RequestForCoupon';
         let data = {
@@ -25,8 +31,16 @@ function onCouponsSubmission() {
             })  .then(function (response) {
             return response.json();
         }).then(function (data) {
-            if(data.type == "1"){
-                RequestCart();
+            if(data.type == "1" ){
+                if(data.data === "OK")
+                {
+                    coupon_invalid_div.style.display = "none";
+                    RequestCart();
+                }
+                else
+                {
+                    coupon_invalid_div.style.display = "inline";
+                }
             }else{
                 illegalOperation(data.url);
             }
