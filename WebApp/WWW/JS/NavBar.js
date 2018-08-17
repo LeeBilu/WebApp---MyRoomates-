@@ -53,22 +53,14 @@ function getNav()
         </ul>
         `;
         }
-
+        else
+        {
+            element += `</ul>`
+        }
         element += `<ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="http://localhost:8081/static/login.html" onclick="disconnectFromSite()">התנתקות</a>
             </li>
-            <!--<li class="nav-item dropdown">-->
-            <!--<a class="nav-link dropdown-toggle" href="#"-->
-            <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>-->
-            <!--</li>-->
-        <!--<li>-->
-            <!--<div class="dropdown-menu" aria-labelledby="dropdown01">-->
-                <!--<a class="dropdown-item" href="#">Action</a>-->
-                <!--<a class="dropdown-item" href="#">Another action</a>-->
-                <!--<a class="dropdown-item" href="#">Something else here</a>-->
-            <!--</div>-->
-        <!--</li>-->
     </ul>
   
     </div>`;
@@ -93,6 +85,7 @@ function disconnectFromSite() {
                 {
                     window.location.replace(response.url);
                 }
+
                 return response.json();
             })
             .then(function (myJson) {
