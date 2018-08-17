@@ -47,7 +47,7 @@ app.use(function (req, res, next) {
                 let options = {
                     maxAge: 1000 * 60 * 30, // would expire after 30 minutes
                     httpOnly: true, // The cookie only accessible by the web server
-                }
+                };
                 mappingRandToCookieNumber[randomNum] = {"username": username, "date": d.getTime() + options.maxAge};
                 res.cookie('cookieName',randomNum, options);
         }
@@ -61,7 +61,9 @@ app.use(function (req, res, next) {
 app.use('/static', express.static('../WWW'));
 
 app.post('/users/register', function (req, res) {
-
+    // if(!req.body.user || ! req.body.password || !req.body.name|| !req.body.phone){
+    //     return res.send(JSON.stringify({'error': "ERROR", 'approve' : 0}));
+    // }
     let url = 'http://localhost:3000/users/register';
     let data = {};
     data.email = req.body.user;
@@ -90,10 +92,12 @@ app.post('/users/register', function (req, res) {
             }
         }
     })
-    //TODO CHANGE 'A' TO THE USER LOGIN NAME
-})
+});
 
 app.post('/users/login', function (req, res) {
+    // if(!req.body.user || !req.body.password){
+    //     return res.send(JSON.stringify({'approve' : 0}));
+    // }
     let url = 'http://localhost:3000/users/login';
     let data = {};
     data.email = req.body.user;
@@ -115,7 +119,7 @@ app.post('/users/login', function (req, res) {
             let options = {
                 maxAge: 1000 * 60 * 30, // would expire after 30 minutes
                 httpOnly: true, // The cookie only accessible by the web server
-            }
+            };
             let d = new Date();
             res.cookie('cookieName',randomNumber, options);
             mappingRandToCookieNumber[randomNumber] = {"username" : data.data.id, "date" : d.getTime()+options.maxAge};
@@ -124,9 +128,12 @@ app.post('/users/login', function (req, res) {
             return res.send(JSON.stringify({'approve' : 0}));
         }
     })
-})
+});
 
 app.post('/users/newGroup', function (req, res) {
+    // if(!req.body.groupName || !Number.isInteger(req.body.groupName)){
+    //     res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let groupName = req.body.groupName;
     let data = {};
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
@@ -207,6 +214,9 @@ function groupPermission(group_id, username){
 }
 
 app.post('/users/groupPage', function (req, res) {
+    // if(!req.body.groupNum || !Number.isInteger(req.body.groupNum)){
+    //     res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let group_id = req.body.groupNum;
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
@@ -261,6 +271,9 @@ app.get('/users/myDetails', function (req, res) {
 });
 
 app.post('/group/allMembers', function (req, res) {
+    // if(!req.body.group_id || !Number.isInteger(req.body.group_id)){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let url = 'http://localhost:3000/groups/get';
     let data = {"group_id": req.body.group_id};
     fetch(url,
@@ -284,6 +297,9 @@ app.post('/group/allMembers', function (req, res) {
 });
 
 app.post('/group/newMember', function (req, res) {
+    // if(!req.body.group_id || !req.body.email || !Number.isInteger(req.body.group_id)){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let group_id = req.body.group_id;
     let emails = [];
     emails.push(req.body.email);
@@ -313,6 +329,9 @@ app.post('/group/newMember', function (req, res) {
 });
 
 app.post('/group/leftGroup', function (req, res) {
+    // if(!req.body.group_id || !Number.isInteger(req.body.group_id) ){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let group_id = req.body.group_id;
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
@@ -343,6 +362,9 @@ app.post('/group/leftGroup', function (req, res) {
 
 
 app.post('/Cart/cartPage', function (req, res) {
+    // if(! req.body.groupNum  || !Number.isInteger(req.body.groupNum)){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let group_id = req.body.groupNum;
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
@@ -358,6 +380,9 @@ app.post('/Cart/cartPage', function (req, res) {
 });
 
 app.post('/Cart/paymentPage', function (req, res) {
+    // if(!req.body.groupNum  || !Number.isInteger(req.body.groupNum)){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let group_id = req.body.groupNum;
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
@@ -374,6 +399,9 @@ app.post('/Cart/paymentPage', function (req, res) {
 
 
 app.post('/Cart/closeOrderPage', function (req, res) {
+    // if(!req.body.groupNum || !Number.isInteger(req.body.groupNum)){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let group_id = req.body.groupNum;
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
@@ -389,6 +417,9 @@ app.post('/Cart/closeOrderPage', function (req, res) {
 });
 
 app.post('/Cart/finishPage', function (req, res) {
+    // if(!req.body.groupNum  || !Number.isInteger(req.body.groupNum)){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let group_id = req.body.groupNum;
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
@@ -427,10 +458,10 @@ app.post('/Cart/LoadProductsListAndPrices', function (req, res) {
 });
 
 app.post('/Cart/RequestCart', function (req, res) {
-    if(req.body.group_id === "undefined"){
-        res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
-        return;
-    }
+    // if(!req.body.group_id || !Number.isInteger(req.body.group_id)){
+    //     res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    //     return;
+    // }
     let data = {group_id : req.body.group_id}
     let url = 'http://localhost:3000/cart/get';
     fetch(url,
@@ -454,10 +485,10 @@ app.post('/Cart/RequestCart', function (req, res) {
 });
 
 app.post('/Cart/DeleteProduct', function (req, res) {
-    if(req.body.product_ID === "undefined"  || req.body.cart_id === "undefined"){
-        res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
-        return;
-    }
+    // if(!req.body.product_ID  || !req.body.cart_id || !Number.isInteger(req.body.cart_id)|| !Number.isInteger(req.body.product_ID)){
+    //     res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    //     return;
+    // }
 
     let url = 'http://localhost:3000/Cart/deleteProduct';
     fetch(url,
@@ -482,10 +513,12 @@ app.post('/Cart/DeleteProduct', function (req, res) {
 
 
 app.post('/Cart/AddProduct', function (req, res) {
-    if(req.body.product_id === "undefined"  || req.body.amount  === "undefined"|| req.body.cart_id === "undefined"){
-        res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
-        return;
-    }
+    // if(!req.body.product_id || !req.body.amount ||!req.body.cart_id||
+    //     !Number.isInteger(req.body.cart_id) || !Number.isInteger(req.body.product_id) || !Number.isInteger(req.body.amount)||
+    //     req.body.amount < 0 ){
+    //     res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    //     return;
+    // }
 
     let url = 'http://localhost:3000/Cart/editProduct';
     fetch(url,
@@ -508,12 +541,32 @@ app.post('/Cart/AddProduct', function (req, res) {
 
 });
 
+let validatePayment = function(data){
+    if(!data.firstName || !data.lastName || !data.email || !data.partOrFullPayment || !data.group_id||
+    !Number.isInteger(data.group_id)){
+        return false;
+    }
+    if(!data.group_id || !data.cart_id || !data.AmountOfMoney || !data.paymentMethod||
+        !Number.isInteger(data.AmountOfMoney) || data.AmountOfMoney < 0)
+        return false;
+
+    if(data.paymentMethod === "credit"){
+        if(!data.OwnerID || !data.VisaNumber || !data.cc_cvv||!data.monthOfExpiration){
+            return false;
+        }
+    }
+
+    return true;
+
+
+};
+
 
 app.post('/Cart/RequestToPay', function (req, res) {
-    if(req.body.product_id === "undefined"  || req.body.amount  === "undefined"|| req.body.cart_id === "undefined"){
-        res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
-        return;
-    }
+    // if(!validatePayment(req.body)){
+    //     res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    //     return;
+    // }
 
     let paymant_data ={
         "firstName" : req.body.firstName,
@@ -598,7 +651,19 @@ app.post('/users/editProfileDetails', function (req, res) {
 
 });
 
+let validateCloseOrder = function(data){
+    if(!data.group_id || !Number.isInteger(data.group_id) || !data.cart_id || !Number.isInteger(data.cart_id)||
+    !data.city || ! data.street || ! data.numOfHouse || ! data.phone) {
+        return false;
+    }
+
+    return true;
+};
+
 app.post('/Cart/Close', function (req, res) {
+    // if(!validateCloseOrder(req.body)){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let url = 'http://localhost:3000/order/close';
     let body = req.body;
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
@@ -618,7 +683,6 @@ app.post('/Cart/Close', function (req, res) {
     } if(typeof(body.floor) !== "undefined"){
         data.shipments_data.floor = body.floor;
     }
-
 
     fetch(url,
         {
@@ -643,6 +707,9 @@ app.post('/Cart/Close', function (req, res) {
 app.post('/Cart/RequestForCoupon', function (req, res) {
     let url = 'http://localhost:3000/coupons/checkandset';
     let body = req.body;
+    // if(!body.Cart_ID || !Number.isInteger(body.Cart_ID) || ! body.Coupon_ID || !Number.isInteger(body.Coupon_ID)){
+    //     return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+    // }
     let data = {};
     data.cart_id = body.Cart_ID;
     data.coupon = body.Coupon_ID;
@@ -668,13 +735,6 @@ app.post('/Cart/RequestForCoupon', function (req, res) {
 });
 
 app.post('/users/logout/', function (req, res) {
-   // let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
-   //  let options = {
-   //      maxAge: 0,
-   //      httpOnly: true, // The cookie only accessible by the web server
-   //  };
-
-    // res.cookie('cookieName',' ', options);
     res.clearCookie("cookieName");
     res.end();
 });
@@ -682,9 +742,9 @@ app.post('/users/logout/', function (req, res) {
 app.post('/group/getNotifications', function (req, res) {
     let url = 'http://localhost:3000/groups/notifications';
     let body = req.body;
-    if(!body.group_id){
-        return res.json({"type" : 0, "data" : "GROUP_ID"});
-    }
+    // if(!body.group_id || !Number.isInteger(body.group_id)){
+    //     return res.json({"type" : 0, "data" : "GROUP_ID"});
+    // }
     let data = {"group_id" : body.group_id};
     fetch(url,
         {
@@ -713,6 +773,3 @@ let server = app.listen(8081, function () {
 
     console.log("Example app listening at http://%s:%s", host, port)
 });
-
-
-

@@ -21,37 +21,54 @@ function initActivationBar()
 
 function getNav()
 {
-    element =
-    `<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
+    let element = `<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
         <ul class="navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" id = "nav1" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html")> הפרופיל האישי </a>
+                <a class="nav-link" id = "nav1" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html")>
+                 <span class="d-none d-md-inline">הפרופיל האישי</span>
+                 <span class="d-md-none"><i class="fa fa-address-card"></i></span>
+                 </a>
+            </li>`;
+        if(findGetParameter("group_id") != ''){
+        element += ` <li class="nav-item">
+                <a class="nav-link" id = "nav2" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html",this.id)>
+                                 <span class="d-none d-md-inline">הקבוצה הנוכחית</span>
+                 <span class="d-md-none"><i class="fa fa-group"></i></span>
+           
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id = "nav2" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html",this.id)>הקבוצה הנוכחית</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>העגלה שלי</a>
+                <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>
+            <span class="d-none d-md-inline">העגלה שלי</span>
+                 <span class="d-md-none"><i class="fa fa-cart-plus"></i></span>
+                
+             </a>
             </li>
            <li class="nav-item ">
-                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/PaymentMethod.html",this.id)>תשלום</a>
+                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/PaymentMethod.html",this.id)>
+                <span class="d-none d-md-inline">תשלום</span>
+                 <span class="d-md-none"><i class="fa fa-money"></i></span>
+                </a>
             </li>
         </ul>
-        <ul class="navbar-nav mr-auto">
+        `;
+        }
+
+        element += `<ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="http://localhost:8081/static/login.html" onclick="disconnectFromSite()">התנתקות</a>
             </li>
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>
-            </li>
-        <li>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
+            <!--<li class="nav-item dropdown">-->
+            <!--<a class="nav-link dropdown-toggle" href="#"-->
+            <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>-->
+            <!--</li>-->
+        <!--<li>-->
+            <!--<div class="dropdown-menu" aria-labelledby="dropdown01">-->
+                <!--<a class="dropdown-item" href="#">Action</a>-->
+                <!--<a class="dropdown-item" href="#">Another action</a>-->
+                <!--<a class="dropdown-item" href="#">Something else here</a>-->
+            <!--</div>-->
+        <!--</li>-->
     </ul>
   
     </div>`;

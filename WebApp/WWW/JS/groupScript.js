@@ -35,7 +35,6 @@ function allMembersInGroup() {
         return response.json();
     }).then(function (data){
         if(data.type == "1") {
-            console.log("hi");
             showMember(data.data, data.data.length);
         }else{
             illegalOperation(data.url);
@@ -122,6 +121,7 @@ function addNewMember(){
         }).then(function (data) {
             if(data.type == "1"){
                 someMembersInGroup();
+                getAllNotificationsFromServer();
             }else{
                 illegalOperation(data.url);
             }
@@ -184,24 +184,52 @@ function BuildNotificationJSON(JSON_obj)
     let notificationDiv = document.getElementById("notification-div");
     let element = `<h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>`;
     let paymentsOfTheGroup = JSON_obj;
-    for(let i =0; i < 5 && i <paymentsOfTheGroup.length; i++)
+    let counter = 0;
+    for(let i = paymentsOfTheGroup.length - 1; counter < 5 && i >= 0; i--)
     {
+        counter++;
         element += `<div class="media text-muted pt-3" dir="rtl">
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">${paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].user.fullname}</strong>`
-          if(paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].type ==="PAID"){
+          <strong class="d-block text-gray-dark">${paymentsOfTheGroup[i].user.fullname}</strong>`
+          if(paymentsOfTheGroup[i].type ==="PAID"){
               element += `<span dir="rtl">
-               שילם על הסל  ${paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].amount}
+               שילם על הסל  ${paymentsOfTheGroup[i].amount}
                 </span>`
 
-          } else if(paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].type ==="CLOSE"){
+          } else if(paymentsOfTheGroup[i].type ==="CLOSE"){
               element += `<span dir="rtl">
                 סגר את ההזמנה
                 </span>`
+          } else if(paymentsOfTheGroup[i].type ==="NEW_MEMBER"){
+              element += `<span dir="rtl">
+                הצטרף לקבוצה
+                </span>`
+
           }
             element +=`</p>
           </div>`
     }
+    element +=`  <small class="d-block text-right mt-3" id="allNotifications" >
+        <a href="#" data-toggle="modal" data-target="#exampleModalLong" onclick="getAllNotificationsFromServer()">לכל ההתראות</a>
+        <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body form-group" id="all_notifications">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">סגור</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </small>
+`;
 
     notificationDiv.innerHTML = element;
 
