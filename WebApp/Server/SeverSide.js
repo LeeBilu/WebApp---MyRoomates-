@@ -529,16 +529,19 @@ app.post('/Cart/AddProduct', function (req, res) {
 });
 
 let validatePayment = function(data){
-    if(!data.hasOwnProperty("firstname") || !data.hasOwnProperty("lastname") || !data.hasOwnProperty("email") || !data.hasOwnProperty("partOrFullPayment") ||
+    if(!data.hasOwnProperty("firstName") || !data.hasOwnProperty("lastName") || !data.hasOwnProperty("email") || !data.hasOwnProperty("partOrFullPayment") ||
     isNaN(data.group_id)){
         return false;
     }
-    if(!data.hasOwnProperty("AmountOfMoney") || !data.hasOwnProperty("paymentMethod") || !data.hasOwnProperty("cart_id") || !data.hasOwnProperty("group_id")||
-        isNaN(data.AmountOfMoney) || data.AmountOfMoney < 0)
+    if(data.partOrFullPayment != 'full' && (!data.hasOwnProperty("AmountOfMoney") || isNaN(data.AmountOfMoney) || data.AmountOfMoney < 0) ){
+        return false;
+    }
+    if( !data.hasOwnProperty("paymentMethod") || !data.hasOwnProperty("cart_id") || !data.hasOwnProperty("group_id"))
         return false;
 
     if(data.paymentMethod === "credit"){
         if(!data.hasOwnProperty("OwnerID") || !data.hasOwnProperty("VisaNumber") || !data.hasOwnProperty("VisaOwner")||!data.hasOwnProperty("monthOfExpiration")){
+        console.log("here3");
             return false;
         }
     }
