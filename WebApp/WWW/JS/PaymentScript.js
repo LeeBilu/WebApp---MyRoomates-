@@ -7,7 +7,7 @@ function onCouponsSubmission() {
     let coupon = document.getElementById("CouponNumber").value;
     let cart_ID = document.getElementById("Cart_ID").value;
     let coupon_invalid_div= document.getElementById("coupon-invalid");
-
+    let coupon_invalid_div_already_used= document.getElementById( "coupon-invalid_already_used");
     if(coupon === '')
     {
         coupon_invalid_div.style.display = "inline";
@@ -34,12 +34,19 @@ function onCouponsSubmission() {
             if(data.type == "1" ){
                 if(data.data === "OK")
                 {
+                    coupon_invalid_div_already_used.display = "none";
                     coupon_invalid_div.style.display = "none";
                     RequestCart();
+                }
+                else if(data.data === "CART_HAS_COUPON")
+                {
+                    coupon_invalid_div_already_used.style.display = "inline";
+                    coupon_invalid_div.style.display = "none";
                 }
                 else
                 {
                     coupon_invalid_div.style.display = "inline";
+                    coupon_invalid_div_already_used.display = "none";
                 }
             }else{
                 illegalOperation(data.url);
