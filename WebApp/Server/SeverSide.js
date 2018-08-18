@@ -61,7 +61,7 @@ app.use(function (req, res, next) {
 app.use('/static', express.static('../WWW'));
 
 app.post('/users/register', function (req, res) {
-    if(req.body.hasOwnProperty("user")|| ! req.body.hasOwnProperty("password") || !req.body.hasOwnProperty("name")|| !req.body.hasOwnProperty("phone")){
+    if(! req.body.hasOwnProperty("user")|| ! req.body.hasOwnProperty("password") || !req.body.hasOwnProperty("name")|| !req.body.hasOwnProperty("phone")){
         return res.send(JSON.stringify({'error': "ERROR", 'approve' : 0}));
     }
     let url = 'http://localhost:3000/users/register';
@@ -723,6 +723,35 @@ app.post('/Cart/RequestForCoupon', function (req, res) {
     });
 
 });
+
+app.post('Cart/getStatus', function (req, res) {
+    if(!req.body.hasOwnProperty("group_id") || isNaN(req.body.group_id)){
+        res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+        return;
+    }
+    let data = {group_id : req.body.group_id}
+    let url = 'http://localhost:3000/cart/getStatus';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type){
+            return res.send({"type" : 1, "bill" : data.bill});
+        } else{
+            return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
+        }
+    });
+
+});
+
+
 
 app.post('/users/logout/', function (req, res) {
     res.clearCookie("cookieName");

@@ -45,7 +45,7 @@ function getNav()
              </a>
             </li>
            <li class="nav-item ">
-                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/PaymentMethod.html",this.id)>
+                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClickPaymentPage("http://localhost:8081/static/PaymentMethod.html",this.id)>
                 <span class="d-none d-md-inline">תשלום</span>
                  <span class="d-md-none"><i class="fa fa-money"></i></span>
                 </a>
@@ -126,4 +126,51 @@ function findGetParameter(parameterName) {
         }
     }
     return result;
+}
+
+function NavButtonOnClickPaymentPage()
+{
+    let IsCartFullyPaid =  wasCartFullyPaid();
+    if(!IsCartFullyPaid)
+    {
+        let url = "http://localhost:8081/static/PaymentMethod.html";
+        window.location.replace(url + location.search);
+    }
+    else
+    {
+        let url = "http://localhost:8081/static/closeOrder.html";
+        window.location.replace(url + location.search);
+    }
+}
+
+function wasCartFullyPaid()
+{
+    let status = false;
+    let url = 'http://localhost:8081/Cart/getStatus';
+    let data = {"group_id": findGetParameter("group_id")};
+
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data){
+        if(data.type == "1") {
+            if(data.bill)
+            {
+                if(data.bill.total_amount - data.bill.paid === 0)
+                {
+                    return true;
+                }
+            }
+           return false;
+        }else{
+            illegalOperation(data.url);
+        }
+    });
 }

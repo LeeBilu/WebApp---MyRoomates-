@@ -202,6 +202,7 @@ function deleteProductFromCart(Product_ID, quantity)
             return response.json();
         }).then(function (data) {
             if(data.type == "1"){
+                localStorage['Want_to_Finish_Order'] = "No";
                 RequestCart();
             } else{
                 illegalOperation(data.url)
