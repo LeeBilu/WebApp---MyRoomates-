@@ -154,17 +154,17 @@ function loadCartFromJSON(jsonFile)
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום כולל</span>
-                <strong>${jsonFile.total_amount} &#8362   </strong>
+                <strong dir="ltr">${jsonFile.total_amount} &#8362   </strong>
                 </li></div>`
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום ששולם</span>
                 <strong>${jsonFile.total_amount_paid} &#8362   </strong>
                 </li></div>`
-    element+=`<div><li class="list-group-item d-flex justify-content-between">
+    element+=`<div dir="rtl"><li class="list-group-item d-flex justify-content-between">
                 <span>סכום שנשאר</span>
-                <strong>${jsonFile.total_amount - jsonFile.total_amount_paid} &#8362   </strong>
-                </li></div>`
+                <strong dir="ltr">${jsonFile.total_amount - jsonFile.total_amount_paid} &#8362   </strong>
+                </li></divdir>`
 
     element+=`<input type="hidden" id="Cart_ID" name="Cart_ID" value=${jsonFile.Cart_ID}>`
     my_cart.innerHTML = element;
