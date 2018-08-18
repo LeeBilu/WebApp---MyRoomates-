@@ -122,14 +122,15 @@ app.post('/groups/add', function (req, res) {
 app.post('/groups/update', function (req, res) {
     let body = req.body;
     let userFound = false;
+    let group_id = Number.parseInt(body.group_id);
     for(let id in users){
         for(let i =0; i<body.emails.length; i++){
             if(body.emails[i] == users[id].email){
-                if(users[id].groups_id.includes(body.group_id)){
+                if(users[id].groups_id.includes(group_id)){
                     res.json({"type" : 1, data: "ALREADY_EXIST"});
                     return;
                 }
-                users[id].groups_id.push(body.group_id);
+                users[id].groups_id.push(group_id);
                 groups[body.group_id].users_id.push(users[id].id);
                 let user = clone(users[id]);
                 delete user.password;

@@ -11,8 +11,6 @@ function getQueryVariable(variable)
 
 document.addEventListener("DOMContentLoaded", function(){
 
-    let url = window.location.href;
-    console.log(url);
     let c = getQueryVariable("variable");
     if(c)
     {
@@ -43,7 +41,6 @@ function submitRegisterationFunction(){
         };
 
         let myJSON = JSON.stringify(data);
-        console.log(myJSON);
         let url = 'http://localhost:8081/users/register';
         fetch(url,
             {

@@ -411,7 +411,6 @@ app.post('/Cart/finishPage', function (req, res) {
     let username = mappingRandToCookieNumber[req.cookies.cookieName].username;
     let data = {};
     data.group_id = group_id;
-    console.log(data.group_id);
     return groupPermission(group_id, username)
         .then(function (data) {
             if(data){
