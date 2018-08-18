@@ -397,6 +397,40 @@ app.post('/cart/deleteProduct', function (req, res) {
 });
 
 /**
+ * get the cart
+ * params: group_id
+ */
+app.post('/cart/getStatus', function (req, res) {
+
+    let body = req.body;
+    if(body.group_id === "undefined"){
+        res.json({"type" : 0, "data" : "BODY_ERROR"});
+        return;
+    }
+    let cart = false;
+    for(let i in carts ){
+        if(carts[i].group_id == body.group_id){
+            cart = carts[i];
+            break;
+        }
+    }
+    if(cart === false){
+        res.json({"type" : 0, "data" : "CART_NOT_FOUND"});
+        return;
+    }
+
+    let amount = getTotalAmount(cart);
+    cart.total_amount = Math.round(amount * 100) / 100;
+    let paid = getTotalPaid(cart.Cart_ID, orders);
+    cart.total_amount_paid = paid;
+    let bill =
+        {
+            "paid" : paid,
+            "total_amount" : cart.total_amount
+        };
+    res.json({"type" : 1, "data" : bill});
+});
+/**
  * edit product in the cart
  * params: cart_id product_id, amount
  */
