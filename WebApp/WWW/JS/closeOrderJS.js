@@ -70,6 +70,8 @@ function OnSubmitShipments() {
         return response.json();
     }).then(function (data) {
         if(data.type == 1){
+            localStorage['coupon'] = data.coupon;
+            localStorage.setItem('coupon_st', JSON.stringify(data.coupon));
             window.location.replace(data.url);
         }else{
             illegalOperation(data.url);

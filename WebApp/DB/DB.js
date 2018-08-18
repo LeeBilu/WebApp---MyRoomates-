@@ -528,11 +528,18 @@ app.post('/order/close', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    let cart = carts[body.cart_id]
+    let cart = carts[body.cart_id];
     let paid = getTotalPaid(body.cart_id);
     let total =  getTotalAmount(carts[body.cart_id]);
-    if(paid - total != 0){
-        return res.json({"type" : 0, "data" : "DB_ERROR"});
+    let coupon = {};
+    if(total - paid < 0){
+        let id = makeid();
+        let amount =  (paid - total);
+        coupon = {"product_ID" : id, "productName" : "זיכוי", "description" : "זיכוי בגין עסקה שחרגה", "price" : amount};
+        coupons[id] = coupon;
+        if(!insertToFile(coupons, "coupons", false)){
+            return res.json({"type" : 0, "data" : "DB_ERROR"});
+        }
     }
     if(!users[body.user_id]){
         return res.json({"type" : 0, "data" : "DB_ERROR"});
@@ -549,15 +556,25 @@ app.post('/order/close', function (req, res) {
     let notify = clone(shipment);
     notify.type = "CLOSE";
     groups[carts[body.cart_id].group_id].notifications.push(notify);
-    createCart(cart.group_id);
     delete carts[body.cart_id];
+    createCart(cart.group_id);
     if(!insertToFile(carts, "carts", false) || !insertToFile(groups, "groups", false)){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return
     }
 
-    res.json({"type" : 1, "data" : 1});
+    res.json({"type" : 1, "data" : coupon});
 });
+
+function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 6; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
 
 app.get('/data/clean', function (req, res) {
     ids = {"users_id":1,"group_id":1,"carts_id":1,"orders_id":1,"shipments_id":1};
@@ -602,11 +619,15 @@ let loadDBData = async function () {
 
 };
 
-let updateDBData = function(){
+let updateDBData = async function(){
     let data = {"users_id" : ids.users_id, "group_id" : ids.group_id, "carts_id" : ids.carts_id, "orders_id" : ids.orders_id, "shipments_id" : ids.shipments_id};
     try{
-        fs.writeFileSync("DBdata", JSON.stringify(data), 'utf8');
-        return true;
+        fs.writeFile("DBdata", JSON.stringify(data),function (err) {
+            if(err){
+                return false;
+            }
+            return true;
+        });
     } catch (e) {
         return false;
     }
@@ -617,6 +638,7 @@ let insertToFile = async function(data, filename, counter) {
     try{
         await fs.writeFile(filename,  JSON.stringify(data),function (err) {
             if(err){
+                return false;
             }
             if(counter){
                 ids[counter]++;

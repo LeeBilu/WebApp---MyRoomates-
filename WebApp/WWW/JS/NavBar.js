@@ -164,7 +164,7 @@ function wasCartFullyPaid()
             if(data.data)
             {
                 let paymentData = data.data;
-                if(paymentData.total_amount != 0 && paymentData.total_amount - paymentData.paid == 0 )
+                if(paymentData.total_amount != 0 && paymentData.total_amount - paymentData.paid <= 0 )
                 {
                     localStorage['Want_to_Finish_Order'] = "Yes";
                     url = "http://localhost:8081/static/closeOrder.html";

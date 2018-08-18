@@ -686,8 +686,7 @@ app.post('/Cart/Close', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-
-            return res.send(JSON.stringify({"type" : 1, "url":"http://localhost:8081/static/finishPage.html?group_id=" + group_id}));
+            return res.send(JSON.stringify({"type" : 1, "url":"http://localhost:8081/static/finishPage.html?group_id=" + group_id, "coupon" : data.data}));
         } else{
             return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
         }
