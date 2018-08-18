@@ -4,21 +4,6 @@ function initPage()
 
 }
 
-
-
-function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetParameter("group_id") , title = "my title", w = "600", h = "500")
-
-{
-
-
-    // let left = (screen.width/2)-(w/2);
-    // let top = (screen.height/2)-(h/2);
-    // window.open(url, title, 'toolbar=no, ' +
-    //     'location=no, directories=no, status=no, menubar=no, ' +
-    //     'scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-
-}
 function allMembersInGroup() {
     let url = 'http://localhost:8081/group/allMembers';
     let data = {};
@@ -76,7 +61,6 @@ function showMember(data, amount) {
                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                <div class="d-flex justify-content-between align-items-center w-100">
                <strong class="text-gray-dark">${data[id].name}</strong>
-           <!--<button type="button" class="btn btn-danger deleteButtons">להסרה</button>-->
                </div>
                <span class="d-block">${data[id].email}</span>
            </div>
@@ -84,7 +68,7 @@ function showMember(data, amount) {
     }
     if(document.getElementById("allMembersGroup")){
         document.getElementById("allMembersGroup").innerHTML = members;
-    }if(document.getElementById("allMemberGroup")){
+    }if(document.getElementById("allMemberGroup")&& amount == 3){
         document.getElementById("allMemberGroup").innerHTML = members;
     }
 
@@ -210,7 +194,7 @@ function getSomeNotificationsFromServer()
 function BuildNotificationJSON(JSON_obj, is_limited)
 {
     let notificationDiv = document.getElementById("notification-div");
-    let element = `<h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>`;
+    let notifications = `<h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>`;
     let paymentsOfTheGroup = JSON_obj;
     let counter = 0;
     let amount;
@@ -222,50 +206,32 @@ function BuildNotificationJSON(JSON_obj, is_limited)
     for(let i = paymentsOfTheGroup.length - 1; counter < amount && i >= 0; i--)
     {
         counter++;
-        element += `<div class="media text-muted pt-3" dir="rtl">
+        notifications += `<div class="media text-muted pt-3" dir="rtl">
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
           <strong class="d-block text-gray-dark">${paymentsOfTheGroup[i].user.fullname}</strong>`
           if(paymentsOfTheGroup[i].type ==="PAID"){
-              element += `<span dir="rtl">
+              notifications += `<span dir="rtl">
                שילם על הסל  ${paymentsOfTheGroup[i].amount} ש"ח
                 </span>`
 
           } else if(paymentsOfTheGroup[i].type ==="CLOSE"){
-              element += `<span dir="rtl">
+              notifications += `<span dir="rtl">
                 סגר את ההזמנה
                 </span>`
           } else if(paymentsOfTheGroup[i].type ==="NEW_MEMBER"){
-              element += `<span dir="rtl">
+              notifications += `<span dir="rtl">
                 הצטרף לקבוצה
                 </span>`
 
           }
-            element +=`</p>
+        notifications +=`</p>
           </div>`
     }
-    element +=`  <small class="d-block text-right mt-3" id="allNotifications" >
-        <a href="#" data-toggle="modal" data-target="#exampleModalLong" onclick="getAllNotificationsFromServer()">לכל ההתראות</a>
-        <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body form-group" id="all_notifications">
+    notificationDiv.innerHTML = notifications;
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">סגור</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </small>
-`;
-
-    notificationDiv.innerHTML = element;
+    if(document.getElementById("all_notifications")){
+        document.getElementById("all_notifications").innerHTML = notifications;
+    }
 
 }
 
