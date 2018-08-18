@@ -4,7 +4,7 @@ function init() {
     if(coupon_text && coupon_text != '{}'){
         let coupon = JSON.parse(coupon_text);
         let div = document.getElementById("text_info");
-        div.value += `<h2 class="text-muted"><b>קיבלתם קופון על סך ${coupon.price}, קוד קופון: ${coupon.product_ID}</b></h2>`;
+        div.innerHTML += `<h2 class="text-muted"><b>קיבלתם קופון על סך ${coupon.price}, קוד קופון: ${coupon.product_ID}</b></h2>`;
 
     }
     // initNavBar()
