@@ -38,7 +38,7 @@ function getNav()
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>
+                    <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>
             <span class="d-none d-md-inline">העגלה שלי</span>
                  <span class="d-md-none"><i class="fa fa-cart-plus"></i></span>
                 
@@ -130,22 +130,20 @@ function findGetParameter(parameterName) {
 
 function NavButtonOnClickPaymentPage()
 {
-    let IsCartFullyPaid =  wasCartFullyPaid();
-    if(!IsCartFullyPaid)
+    let finishedBefore = localStorage.getItem('Want_to_Finish_Order');
+    if(finishedBefore && finishedBefore ==="Yes")
     {
-        let url = "http://localhost:8081/static/PaymentMethod.html";
+        let url = "http://localhost:8081/static/closeOrder.html";
         window.location.replace(url + location.search);
     }
     else
     {
-        let url = "http://localhost:8081/static/closeOrder.html";
-        window.location.replace(url + location.search);
+        wasCartFullyPaid();
     }
 }
 
 function wasCartFullyPaid()
 {
-    let status = false;
     let url = 'http://localhost:8081/Cart/getStatus';
     let data = {"group_id": findGetParameter("group_id")};
 
@@ -161,16 +159,31 @@ function wasCartFullyPaid()
         return response.json();
     }).then(function (data){
         if(data.type == "1") {
-            if(data.bill)
+
+            let url = "http://localhost:8081/static/PaymentMethod.html";
+            if(data.data)
             {
-                if(data.bill.total_amount - data.bill.paid === 0)
+                let paymentData = data.data;
+                if(paymentData.total_amount != 0 && paymentData.total_amount - paymentData.paid == 0 )
                 {
-                    return true;
+                    localStorage['Want_to_Finish_Order'] = "Yes";
+                    url = "http://localhost:8081/static/closeOrder.html";
+                    window.location.replace(url + location.search);
+                }
+                else
+                {
+                    url = "http://localhost:8081/static/PaymentMethod.html";
+                    window.location.replace(url + location.search);
                 }
             }
-           return false;
-        }else{
-            illegalOperation(data.url);
+
+
         }
+        else{
+            illegalOperation(data.url);
+            return false;
+        }
+
+
     });
 }

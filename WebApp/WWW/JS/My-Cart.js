@@ -199,6 +199,7 @@ function addNewProductToCart(Product_ID, quantity)
          }).then(function (data) {
              if(data.type == "1"){
                  RequestCart();
+                 localStorage['Want_to_Finish_Order'] = "No";
              } else{
                  illegalOperation(data.url)
              }
