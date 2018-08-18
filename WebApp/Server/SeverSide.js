@@ -529,7 +529,7 @@ app.post('/Cart/AddProduct', function (req, res) {
 });
 
 let validatePayment = function(data){
-    if(!data.hasOwnProperty("firstName") || !data.hasOwnProperty("lastName") || !data.hasOwnProperty("email") || !data.hasOwnProperty("partOrFullPayment") ||
+    if(!data.hasOwnProperty("FullName")  || !data.hasOwnProperty("email") || !data.hasOwnProperty("partOrFullPayment") ||
     isNaN(data.group_id)){
         return false;
     }
@@ -559,8 +559,7 @@ app.post('/Cart/RequestToPay', function (req, res) {
     }
 
     let paymant_data ={
-        "firstName" : req.body.firstName,
-        "lastName" : req.body.lastName,
+        "FullName" : req.body.FullName,
         "email" : req.body.email,
         "partOrFullPayment" : req.body.partOrFullPayment
     };

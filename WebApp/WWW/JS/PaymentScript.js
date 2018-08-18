@@ -2,6 +2,35 @@ function initPage()
 {
     groupPermission();
 }
+
+function GetProfileDetails(){
+    let url = 'http://localhost:8081/users/myDetails';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "GET",
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+
+           let name = data.data.fullname;
+           let email = data.data.email;
+           addDefaultDetailsToPaymentPage(name, email);
+        }else{
+            illegalOperation(data.url)
+        }
+
+    })
+}
+
+function addDefaultDetailsToPaymentPage(name, email)
+{
+    let name_div = document.getElementById("FullName");
+    let email_div = document.getElementById("email");
+    email_div.value = email;
+    name_div.value = name;
+}
 function onCouponsSubmission() {
 
     let coupon = document.getElementById("CouponNumber").value;
@@ -140,6 +169,10 @@ function validateElement(element)
         }
         return true;
     }
+    else if(element.id === "cc_cvv")
+    {
+        return validateCCV(element.value);
+    }
     else
     {
         return true;
@@ -230,6 +263,7 @@ function groupPermission(){
         if(data.type == "1"){
             initNavBar();
             RequestCart();
+            GetProfileDetails();
             return;
         }else{
             illegalOperation(data.url);
