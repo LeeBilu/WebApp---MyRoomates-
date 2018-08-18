@@ -1,3 +1,4 @@
+let amountLeft;
 jsonFile = {
     "Cart_ID": "1",
     "cart": {
@@ -164,8 +165,8 @@ function loadCartFromJSON(jsonFile)
     element+=`<div dir="rtl"><li class="list-group-item d-flex justify-content-between">
                 <span>סכום שנשאר</span>
                 <strong dir="ltr">${jsonFile.total_amount - jsonFile.total_amount_paid} &#8362   </strong>
-                </li></divdir>`
-
+                </li></div>`
+    amountLeft = jsonFile.total_amount - jsonFile.total_amount_paid;
     element+=`<input type="hidden" id="Cart_ID" name="Cart_ID" value=${jsonFile.Cart_ID}>`
     my_cart.innerHTML = element;
 
