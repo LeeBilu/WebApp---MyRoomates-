@@ -697,7 +697,7 @@ app.post('/Cart/Close', function (req, res) {
 app.post('/Cart/RequestForCoupon', function (req, res) {
     let url = 'http://localhost:3000/coupons/checkandset';
     let body = req.body;
-    if(!body.hasOwnProperty("Cart_ID") || isNaN(body.Cart_ID) || ! body.hasOwnProperty("Coupon_ID") || isNaN(body.Coupon_ID)){
+    if(!body.hasOwnProperty("Cart_ID") || isNaN(body.Cart_ID) || ! body.hasOwnProperty("Coupon_ID") ){
         return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
     }
     let data = {};
@@ -724,7 +724,7 @@ app.post('/Cart/RequestForCoupon', function (req, res) {
 
 });
 
-app.post('Cart/getStatus', function (req, res) {
+app.post('/Cart/getStatus', function (req, res) {
     if(!req.body.hasOwnProperty("group_id") || isNaN(req.body.group_id)){
         res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
         return;
@@ -743,7 +743,7 @@ app.post('Cart/getStatus', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-            return res.send({"type" : 1, "bill" : data.bill});
+            return res.send({"type" : 1, "data" : data.data});
         } else{
             return res.send(JSON.stringify({"type" : 0 ,'url': ("/static/profilePage.html")}));
         }
