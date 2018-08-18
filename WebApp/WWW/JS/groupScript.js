@@ -104,7 +104,7 @@ function addNewMember(){
             return res.json();
         }).then(function (data) {
             if(data.type == "1"){
-                if(data.data === "NEW_MEMBER")
+                if(data.data === "NEW_USER")
                 {
                     someMembersInGroup();
                     getSomeNotificationsFromServer();
