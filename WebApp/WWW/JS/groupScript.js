@@ -109,15 +109,6 @@ function addNewMember(){
                     someMembersInGroup();
                     getSomeNotificationsFromServer();
                 }
-                else if(data.data === "NON_EXIST_USER")
-                {
-
-                }
-                else if(data.data === "ALREADY_EXIST")
-                {
-
-                }
-
 
             }else{
                 illegalOperation(data.url);
