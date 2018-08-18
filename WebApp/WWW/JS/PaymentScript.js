@@ -93,6 +93,11 @@ function OnSubmitPayment() {
                      approve = false;
                      invalidFeedbackBlock.style.display = "block";
                  }
+                 else if(validateElement(element) == false && element.id === "AmountOfMoney")
+                 {
+                     approve = false;
+                     invalidFeedbackBlock.style.display = "block";
+                 }
                  else
                  {
                      invalidFeedbackBlock.style.display = "none";
@@ -101,10 +106,6 @@ function OnSubmitPayment() {
              }
 
         });
-    if(approve)
-    {
-        sendPaymentDetailsToServer(elements);
-    }
 }
 
 function validateElement(element)
@@ -121,6 +122,19 @@ function validateElement(element)
     {
          return validateIDNumber(element.value);
 
+    }
+    else if(element.id === "AmountOfMoney")
+    {
+        let paymentMethod_value = document.getElementById ("partOrFullPayment").value;
+        if(paymentMethod_value === "partial")
+        {
+            if(element.value < 0 || element.value > amountLeft)
+            {
+                return false;
+            }
+
+        }
+        return true;
     }
     else
     {
