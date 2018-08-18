@@ -106,6 +106,10 @@ function OnSubmitPayment() {
              }
 
         });
+         if(approve)
+         {
+             sendPaymentDetailsToServer(elements);
+         }
 }
 
 function validateElement(element)
