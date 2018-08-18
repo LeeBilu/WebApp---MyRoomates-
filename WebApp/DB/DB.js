@@ -121,12 +121,13 @@ app.post('/groups/add', function (req, res) {
  */
 app.post('/groups/update', function (req, res) {
     let body = req.body;
-
+    let userFound = false;
     for(let id in users){
         for(let i =0; i<body.emails.length; i++){
             if(body.emails[i] == users[id].email){
                 if(users[id].groups_id.includes(body.group_id)){
-                    continue;
+                    res.json({"type" : 1, data: "ALREADY_EXIST"});
+                    return;
                 }
                 users[id].groups_id.push(body.group_id);
                 groups[body.group_id].users_id.push(users[id].id);
@@ -134,16 +135,21 @@ app.post('/groups/update', function (req, res) {
                 delete user.password;
                 let notify = {"user" : user, "type" : "NEW_MEMBER"};
                 groups[body.group_id].notifications.push(notify);
+                userFound = true;
 
             }
         }
     }
-
+    if(userFound === false)
+    {
+        res.json({"type" : 1, data: "NON_EXIST_USER"});
+        return;
+    }
     if(!insertToFile(users,"users", false) || !insertToFile(groups,"groups", false)){
         res.json({"type" : 0});
         return;
     }
-    res.json({"type" : 1});
+    res.json({"type" : 1, data: "NEW_USER"});
 });
 /**
  * Get group data by group id
