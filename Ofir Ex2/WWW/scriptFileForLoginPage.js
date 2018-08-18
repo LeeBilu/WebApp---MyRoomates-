@@ -13,7 +13,6 @@ function submitLogIn() {
     };
 
     let myJSON = JSON.stringify(data);
-    console.log(myJSON);
     let url = 'http://localhost:8081/users/login';
     fetch(url,
         {
@@ -29,7 +28,6 @@ function submitLogIn() {
 
         })
         .then(function (myJson) {
-            console.log(myJson);
             if (myJson.approve != 1) {
 
                 window.location.replace("http://localhost:8081/static/ideas.html");

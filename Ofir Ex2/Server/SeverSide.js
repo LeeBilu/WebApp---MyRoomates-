@@ -19,7 +19,6 @@ app.use(function (req, res, next) {
 
     loadIdeaDataFromFile();
     let cookie = req.cookies;
-    console.log(req.cookies);
     let notAValidCookie = false;
     if(cookie != undefined)
     {
@@ -313,8 +312,6 @@ function loadIdeaDataFromFile()
                 }
                 else {
 
-                    //   let dataFormFile = JSON.parse(data);
-                    //userData = data;
                     try{
 
                         userData = JSON.parse(data);
@@ -322,17 +319,12 @@ function loadIdeaDataFromFile()
                     }
                     catch(err)
                     {
-                        // //try
-                        // userData = data;
-                        // console.log("can't parse user idea file to JSON format")
+                        console.log("can't parse user idea file to JSON format")
                     }
                 }
 
 
             });
-
-
-            // Do something
         }
         else
         {
