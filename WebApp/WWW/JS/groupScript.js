@@ -140,32 +140,6 @@ function leftGroup(){
     });
 }
 
-function getAllNotificationsFromServer()
-{
-    let url = 'http://localhost:8081/group/getNotifications';
-    let data = {};
-    data.group_id = findGetParameter("group_id");
-    fetch(url,
-        {
-            credentials: "same-origin",
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(function (response) {
-
-        return response.json();
-    }).then(function (myJson) {
-            if(myJson.type = 1)
-            {
-                BuildNotificationJSON(myJson.data, false);
-            }
-        })
-        .catch(function (err) {
-            console.log(err.toString());
-        })
-}
 
 function getSomeNotificationsFromServer()
 {
