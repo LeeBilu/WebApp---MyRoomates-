@@ -39,7 +39,7 @@ function getNav()
             </li>
             <li class="nav-item">
                     <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>
-            <span class="d-none d-md-inline">העגלה שלי</span>
+            <span class="d-none d-md-inline">העגלה שלנו</span>
                  <span class="d-md-none"><i class="fa fa-cart-plus"></i></span>
                 
              </a>
@@ -162,7 +162,7 @@ function wasCartFullyPaid()
             if(data.data)
             {
                 let paymentData = data.data;
-                if(paymentData.total_amount != 0 && paymentData.total_amount - paymentData.paid <= 0 )
+                if(paymentData.total_amount != 0 && paymentData.total_amount - paymentData.paid <= 0 || paymentData.total_amount - paymentData.paid < 0)
                 {
                     localStorage['Want_to_Finish_Order'] = "Yes";
                     url = "http://localhost:8081/static/closeOrder.html";
