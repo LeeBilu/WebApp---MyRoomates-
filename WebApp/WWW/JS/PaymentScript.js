@@ -269,16 +269,4 @@ function groupPermission(){
         }
     });
 
-    function initPaymentPage()
-    {
-
-        let isCartEmpty = document.getElementById("totalAmountCart");
-
-        if(isCartEmpty === false)
-        {
-            document.getElementById("submitPayment").disabled = true ;
-            document.getElementById("empty_cart_error_div").style.display = "inline";
-        }
-
-    }
 }

@@ -45,7 +45,7 @@ function getNav()
              </a>
             </li>
            <li class="nav-item ">
-                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClickPaymentPage("http://localhost:8081/static/PaymentMethod.html",this.id)>
+                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClickPaymentPage()>
                 <span class="d-none d-md-inline">תשלום</span>
                  <span class="d-md-none"><i class="fa fa-money"></i></span>
                 </a>
@@ -106,7 +106,6 @@ function NavButtonOnClick(url, elementID = false)
 {
     if(elementID){
         window.location.replace(url + location.search);
-        localStorage['active-nav'] = elementID;
 
     } else{
         window.location.replace(url);
@@ -175,8 +174,6 @@ function wasCartFullyPaid()
                     window.location.replace(url + location.search);
                 }
             }
-
-
         }
         else{
             illegalOperation(data.url);
