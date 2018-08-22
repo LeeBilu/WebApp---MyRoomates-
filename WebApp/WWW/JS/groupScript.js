@@ -85,6 +85,14 @@ function findGetParameter(parameterName) {
     return result;
 }
 
+$(document).keypress(
+    function(event){
+        if (event.which == '13' && !document.getElementById('newMemberModal').getAttribute("aria-hidden")) {
+            addNewMember();
+            event.preventDefault();
+        }
+    });
+
 function addNewMember(){
     let newMemberEmail = document.getElementById("newMemberEmail").value;
     let url = 'http://localhost:8081/group/newMember';
