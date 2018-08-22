@@ -100,21 +100,47 @@ function addNewMember(){
                 "Content-Type": "application/json"
             }
         }).then(function (res) {
-            return res.json();
-        }).then(function (data) {
-            if(data.type == "1"){
-                if(data.data === "NEW_USER")
-                {
-                    someMembersInGroup();
-                    getSomeNotificationsFromServer();
-                }
+        return res.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+            let non_ex_div = document.getElementById("non_exists_error");
+            let all_ex_div = document.getElementById("already_exists_error");
 
-            }else{
-                illegalOperation(data.url);
+            if(data.data === "NEW_USER")
+            {
+                non_ex_div.style.display = "none";
+                all_ex_div.style.display = "none";
+                someMembersInGroup();
+                getSomeNotificationsFromServer();
+                $('#newMemberModal').modal('hide');
+                location.reload();
             }
+            else if(data.data === "ALREADY_EXIST")
+            {
+                non_ex_div.style.display = "none";
+                all_ex_div.style.display = "inline";
+            }
+            else if(data.data === 'NON_EXIST_USER')
+            {
+                non_ex_div.style.display = "inline";
+                all_ex_div.style.display = "none";
+            }
+
+
+        }else{
+            illegalOperation(data.url);
+        }
     });
 }
 
+function cancelError()
+{
+    let non_ex_div = document.getElementById("non_exists_error");
+    let all_ex_div = document.getElementById("already_exists_error");
+    non_ex_div.style.display = "none";
+    all_ex_div.style.display = "none";
+
+}
 function leftGroup(){
     let url = 'http://localhost:8081/group/leftGroup';
     let data = {};
@@ -139,32 +165,6 @@ function leftGroup(){
     });
 }
 
-function getAllNotificationsFromServer()
-{
-    let url = 'http://localhost:8081/group/getNotifications';
-    let data = {};
-    data.group_id = findGetParameter("group_id");
-    fetch(url,
-        {
-            credentials: "same-origin",
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(function (response) {
-
-        return response.json();
-    }).then(function (myJson) {
-            if(myJson.type = 1)
-            {
-                BuildNotificationJSON(myJson.data, false);
-            }
-        })
-        .catch(function (err) {
-            console.log(err.toString());
-        })
-}
 
 function getSomeNotificationsFromServer()
 {
@@ -212,21 +212,21 @@ function BuildNotificationJSON(JSON_obj, is_limited)
         notifications += `<div class="media text-muted pt-3" dir="rtl">
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
           <strong class="d-block text-gray-dark">${paymentsOfTheGroup[i].user.fullname}</strong>`
-          if(paymentsOfTheGroup[i].type ==="PAID"){
-              notifications += `<span dir="rtl">
+        if(paymentsOfTheGroup[i].type ==="PAID"){
+            notifications += `<span dir="rtl">
                שילם על הסל  ${paymentsOfTheGroup[i].amount} ש"ח
                 </span>`
 
-          } else if(paymentsOfTheGroup[i].type ==="CLOSE"){
-              notifications += `<span dir="rtl">
+        } else if(paymentsOfTheGroup[i].type ==="CLOSE"){
+            notifications += `<span dir="rtl">
                 סגר את ההזמנה
                 </span>`
-          } else if(paymentsOfTheGroup[i].type ==="NEW_MEMBER"){
-              notifications += `<span dir="rtl">
+        } else if(paymentsOfTheGroup[i].type ==="NEW_MEMBER"){
+            notifications += `<span dir="rtl">
                 הצטרף לקבוצה
                 </span>`
 
-          }
+        }
         notifications +=`</p>
           </div>`
     }
