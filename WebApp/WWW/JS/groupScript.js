@@ -91,7 +91,6 @@ function addNewMember(){
     let data = {};
     data.email = newMemberEmail;
     data.group_id = findGetParameter("group_id");
-    console.log(data.group_id);
     fetch(url,
         {
             credentials: "same-origin",

@@ -106,11 +106,8 @@ function RequestCart() {
 
 function loadCartFromJSON(jsonFile)
 {
-    //let CART = cartJSON.cart
-    console.log(jsonFile);
     let CART = jsonFile.cart;
     let my_cart = document.getElementById("my-cart");
-    //firstObject.innerHTML ="";
     let element ="";
     let numberOfTotalProducts = 0;
     for(let i in CART)
@@ -139,10 +136,7 @@ function loadCartFromJSON(jsonFile)
 
         }
     }
-     let Coupon = jsonFile.coupon;
-    // console.log(jsonFile);
-    // console.log(jsonFile.coupon);
-    // console.log(Coupon);
+    let Coupon = jsonFile.coupon;
     if(Coupon && Coupon.productName) {
         element += `<div><li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-success">

@@ -106,7 +106,6 @@ function NavButtonOnClick(url, elementID = false)
 {
     if(elementID){
         window.location.replace(url + location.search);
-        //parent = element.parentElement;
         localStorage['active-nav'] = elementID;
 
     } else{

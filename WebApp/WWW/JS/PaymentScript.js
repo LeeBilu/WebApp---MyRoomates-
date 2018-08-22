@@ -82,8 +82,6 @@ function onCouponsSubmission() {
             }
         });
     }
-        coupon = "";
-
 }
 
 function getPaymentMethod(value){
