@@ -33,7 +33,7 @@ function showUserDetails(){
 <button type="submit" class="btn btn-secondary" onclick="editProfileDetails()">עריכת פרופיל אישי</button>`
                 document.getElementById("profileDetails").innerHTML = profilePage;
             }else{
-                illegalOperation(data.url);
+                illegalOperation("http://localhost:8081/static/login.html");
             }
     });
 
@@ -93,7 +93,7 @@ function showAllGroups(){
                 });
             }
         }else{
-            illegalOperation(data.url);
+            illegalOperation("http://localhost:8081/static/login.html");
         }
 
     });
@@ -187,7 +187,7 @@ function editProfileDetails(){
             <button type="submit" class="btn btn-secondary" onclick="window.location.href='profilePage.html'">ביטול</button>`
         document.getElementById("profileDetails").innerHTML = profilePage;
         }else{
-            illegalOperation(data.url)
+            illegalOperation(data.url);
         }
 
     })

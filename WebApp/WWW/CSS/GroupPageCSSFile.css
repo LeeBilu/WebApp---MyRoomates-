@@ -3,3 +3,9 @@ ul {
     margin-bottom: 10px;
     position: static;
 }
+
+.my-invalid-feedback
+{
+    color: red;
+    display : none;
+}
