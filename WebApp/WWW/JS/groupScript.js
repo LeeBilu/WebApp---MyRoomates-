@@ -103,28 +103,11 @@ function addNewMember(){
             return res.json();
         }).then(function (data) {
             if(data.type == "1"){
-                let non_ex_div = document.getElementById("non_exists_error");
-                let all_ex_div = document.getElementById("already_exists_error");
-
-                if(data.data === "NEW_USER"  )
+                if(data.data === "NEW_USER")
                 {
-                    non_ex_div.style.display = "none";
-                    all_ex_div.style.display = "none";
                     someMembersInGroup();
                     getSomeNotificationsFromServer();
-                    $('#newMemberModal').modal('hide');
                 }
-                else if(data.data === "ALREADY_EXIST")
-                {
-                    non_ex_div.style.display = "none";
-                    all_ex_div.style.display = "inline";
-                }
-                else if(data.data === 'NON_EXIST_USER')
-                {
-                    non_ex_div.style.display = "inline";
-                    all_ex_div.style.display = "none";
-                }
-
 
             }else{
                 illegalOperation(data.url);
@@ -132,14 +115,6 @@ function addNewMember(){
     });
 }
 
-function cancelError()
-{
-    let non_ex_div = document.getElementById("non_exists_error");
-    let all_ex_div = document.getElementById("already_exists_error");
-    non_ex_div.style.display = "none";
-    all_ex_div.style.display = "none";
-
-}
 function leftGroup(){
     let url = 'http://localhost:8081/group/leftGroup';
     let data = {};
@@ -164,6 +139,32 @@ function leftGroup(){
     });
 }
 
+function getAllNotificationsFromServer()
+{
+    let url = 'http://localhost:8081/group/getNotifications';
+    let data = {};
+    data.group_id = findGetParameter("group_id");
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+
+        return response.json();
+    }).then(function (myJson) {
+            if(myJson.type = 1)
+            {
+                BuildNotificationJSON(myJson.data, false);
+            }
+        })
+        .catch(function (err) {
+            console.log(err.toString());
+        })
+}
 
 function getSomeNotificationsFromServer()
 {

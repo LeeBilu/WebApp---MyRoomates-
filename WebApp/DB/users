@@ -1,1 +1,1 @@
-{}
+{"1":{"id":1,"email":"a@a.com","password":"a","fullname":"לי","phone":"0500000000","groups_id":[7]},"2":{"id":2,"email":"lee@gmail.com","password":"a","fullname":"הוא","phone":"0500000000","groups_id":[1,2,3,4,5,6,7]}}
