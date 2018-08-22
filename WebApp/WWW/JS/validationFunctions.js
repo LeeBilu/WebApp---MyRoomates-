@@ -29,7 +29,7 @@ function validateIDNumber(number)
 function validateCCV(number)
 {
     let isnum = /^\d+$/;
-    return isnum.test(number)
+    return isnum.test(number) && number.length === 3;
 }
 
 function illegalOperation(url){

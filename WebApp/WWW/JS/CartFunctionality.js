@@ -155,7 +155,7 @@ function loadCartFromJSON(jsonFile)
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום כולל</span>
-                <strong dir="ltr">&#8362 ${jsonFile.total_amount}</strong>
+                <strong dir="ltr" >&#8362 ${jsonFile.total_amount}</strong>
                 </li></div>`
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
@@ -174,8 +174,21 @@ function loadCartFromJSON(jsonFile)
     if(numberOfProducts){
         numberOfProducts.innerText = numberOfTotalProducts.toString();
     }
+    let urlWithoutVariable = window.location.href.split("?")[0];
+    if(urlWithoutVariable === "http://localhost:8081/static/PaymentMethod.html")
+    {
+        initPaymentPage(jsonFile.total_amount);
+    }
 }
+function initPaymentPage(amount)
+{
+    if(amount === 0)
+    {
+        document.getElementById("submitPayment").disabled = true ;
+        document.getElementById("empty_cart_error_div").style.display = "inline";
+    }
 
+}
 function roundPrice(totalPriceProduct){
     return Math.round(totalPriceProduct * 100) / 100;
 }
