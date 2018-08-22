@@ -162,13 +162,13 @@ function editProfileDetails(){
                                 <div>
                                     <h6 class="my-0 text-right"><b>שם מלא</b></h6>
                                 </div>
-                                    <input type="text" id="InputFullName" placeholder=${data.data.fullname}>
+                                    <input type="text" id="InputFullName">
                             </li>
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between lh-condensed list-item-css">
                                     <h6 class="my-0"><b>כתובת מייל </b></h6>
                                 
-                                    <input type="text" id="InputEmail" placeholder=${data.data.email}>
+                                    <input type="text" id="InputEmail">
                                 </div>
                                 <div id="invalid-email" style="display: none">
                                    דרושה כתובת מייל חוקית
@@ -177,15 +177,20 @@ function editProfileDetails(){
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between lh-condensed list-item-css">
                                     <h6 class="my-0 text-right"><b>מספר טלפון סלולרי</b></h6>
-                                    <input type="text" id="InputPhoneNumber" placeholder=${data.data.phone}>
+                                    <input type="text" id="InputPhoneNumber">
                                  </div>
                                 <div id="invalid-phone" style="display: none">
                                     דרוש מספר פלאפון חוקי
                                 </div>
                             </li> </ul>
         <button type="submit" class="btn btn-secondary" onclick="changeDetails()">אישור</button>
-            <button type="submit" class="btn btn-secondary" onclick="window.location.href='profilePage.html'">ביטול</button>`
+            <button type="submit" class="btn btn-secondary" onclick="window.location.href='profilePage.html'">ביטול</button>`;
+
         document.getElementById("profileDetails").innerHTML = profilePage;
+        document.getElementById("InputFullName").value = data.data.fullname;
+        document.getElementById("InputPhoneNumber").value = data.data.phone;
+        document.getElementById("InputEmail").value = data.data.email;
+
         }else{
             illegalOperation(data.url);
         }
