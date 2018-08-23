@@ -488,6 +488,10 @@ app.post('/order/place', function (req, res) {
     let total =  getTotalAmount(carts[body.cart_id]);
     if(body.payment_data.partOrFullPayment == "full"){
         body.amount = total - paid;
+        if(body.amount < 0){
+            res.json({"type" : 1, "remainToPay" : body.amount});
+            return;
+        }
     } else {
         if(total  - (parseFloat(body.amount) + paid) < 0){
             body.amount = total - paid;

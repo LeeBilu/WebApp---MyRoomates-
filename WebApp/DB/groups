@@ -1,1 +1,1 @@
-{"1":{"id":1,"name":"אפליקציות","admin_id":4,"users_id":[4,2,1],"notifications":[{"user":{"id":2,"email":"lee@gmail.com","fullname":"לי בילו","phone":"0508843295","groups_id":[1]},"type":"NEW_MEMBER"},{"user":{"id":1,"email":"ofir@gmail.com","fullname":"אופיר לפיד","phone":"0546888254","groups_id":[1]},"type":"NEW_MEMBER"}]}}
+{}

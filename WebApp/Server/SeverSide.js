@@ -594,7 +594,7 @@ app.post('/Cart/RequestToPay', function (req, res) {
         return response.json();
     }).then(function (data) {
         if(data.type){
-            if(Math.floor(data.remainToPay) == 0){
+            if(Math.floor(data.remainToPay) <= 0){
                 return res.send({"type" : 1, "url" : "/static/closeOrder.html?group_id=" + group_id});
             }
             return res.send({"type" : 1, "url" : "/static/PaymentMethod.html?group_id=" + group_id});
