@@ -14,8 +14,9 @@ function validatePhone(phone) {
 
 function validateVisaNumber(number)
 {
+
     let isnum = /^\d+$/;
-    let valid =  isnum.test(number)
+    let valid =  isnum.test(number);
     return valid;
 }
 
@@ -23,6 +24,12 @@ function validateIDNumber(number)
 {
     let isnum = /^\d+$/;
     return isnum.test(number)
+}
+
+function validateCCV(number)
+{
+    let isnum = /^\d+$/;
+    return isnum.test(number) && number.length === 3;
 }
 
 function illegalOperation(url){

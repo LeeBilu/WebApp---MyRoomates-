@@ -30,67 +30,8 @@ function LoadProductsListAndPrices()
             illegalOperation(data.url);
         }
     });
-
-     // BuildProductListFromJson(ExampleForProductArray); //comment when server is ready
 }
-ExampleForProductArray = {
 
-    "Product_List": {
-        "0":
-            {
-
-                "product_ID": "1",
-                "productName": "מלפפון",
-                "price": "5",
-                "description": "מה שבילו אוהב"
-            },
-
-        "1":
-
-
-                    {
-                        "product_ID" : "2",
-                        "productName": "עגבנייה",
-                        "price": "4.80",
-                        "description": "מה שדניאל אוהבת"
-
-                    }
-            ,
-         "2":
-             {
-
-
-                         "product_ID" : "3",
-                         "productName": "תפוא",
-                         "price": "5.80",
-                         "description": "מה שדניאל אוהבת"
-
-
-             },
-         "3":
-             {
-
-
-                         "product_ID" : "4",
-                         "productName": "חציל",
-                         "price": "4.80",
-                         "description": "מה שדניאל אוהבת"
-
-
-             },
-         "4":
-             {
-
-
-                         "product_ID" : "5",
-                         "productName": "מלפפון",
-                         "price": "4.80",
-                         "description": "מה שדניאל אוהבת"
-
-
-             }
-    }
-};
 
 function BuildProductListFromJson(jsonFile)
 {
@@ -199,6 +140,7 @@ function addNewProductToCart(Product_ID, quantity)
          }).then(function (data) {
              if(data.type == "1"){
                  RequestCart();
+                 localStorage['Want_to_Finish_Order'] = "No";
              } else{
                  illegalOperation(data.url)
              }

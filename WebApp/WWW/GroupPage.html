@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="CSS/bootstrap.min.css">
     <link rel="stylesheet" href="CSS/GroupPageCSSFile.css">
     <script src="JS/bootstrap.js"></script>
-    <!--<script src="JS/npm.js"></script>-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
@@ -26,7 +26,7 @@
 
 <body class="bg-light" dir="rtl" onload="initPage()" >
 
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" id="navBar" >
+<nav class="navbar navbar-expand fixed-top navbar-dark bg-dark" id="navBar" >
 
 </nav>
 
@@ -38,24 +38,7 @@
 
     <div class="my-3 p-3 bg-white rounded box-shadow" id="notification-div" align="right">
         <h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>
-        <!--<div class="media text-muted pt-3">-->
-            <!--<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
-                <!--<strong class="d-block text-gray-dark">אופיר</strong>-->
-                <!--הוסיף חלב תנובה 5 אחוז.-->
-            <!--</p>-->
-        <!--</div>-->
-        <!--<div class="media text-muted pt-3">-->
-            <!--<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
-                <!--<strong class="d-block text-gray-dark">דניאל</strong>-->
-                <!--הסירה מהרשימה שני סוכר לבן-->
-            <!--</p>-->
-        <!--</div>-->
-        <!--<small class="d-block text-right mt-3">-->
-            <!--<a href="#">לכל עדכוני הקבוצה</a>-->
-        <!--</small>-->
     </div>
-    <!--<button onclick="getAllNotificationsFromServer()">תן את כל ההתראות</button>-->
-
     <div class="my-3 p-3 bg-white rounded box-shadow" id="group members" align="right">
         <div class = "text-left">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newMemberModal" >להוספת שותף לרשימה</button>
@@ -64,23 +47,27 @@
                     <div class="modal-content">
                         <div class="modal-header" align="right">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true" onclick="cancelError()">&times;</span>
                             </button>
                             <h5 class="col-11 modal-title " id="exampleModalLabel"  align="center">הוסף משתמש חדש לקבוצה</h5>
 
                         </div>
                         <div class="modal-body">
                             <form>
-                                <div class="form-group"align="right">
+                                <div class="form-group" align="right">
                                     <label for="newMemberEmail" class="col-form-label" >כתובת מייל של המשתמש החדש:</label>
                                     <input type="text" class="form-control" id="newMemberEmail">
+                                </div>
+                                <div align="right">
+                                    <text id="non_exists_error" class="my-invalid-feedback">המייל אינו קיים במערכת</text>
+                                    <text id="already_exists_error" class="my-invalid-feedback">משתמש זה כבר נמצא ברשימה</text>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">סגור</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"  onclick="cancelError()">סגור</button>
                             &nbsp;
-                            <button type="button" class="btn btn-primary" onclick="addNewMember()" data-dismiss="modal">הוסף</button>
+                            <button type="button" class="btn btn-primary" onclick="addNewMember()" >הוסף</button>
                         </div>
                     </div>
                 </div>
@@ -88,44 +75,8 @@
         </div>
         <h6 class="border-bottom border-gray pb-2 mb-0">חברי הקבוצה</h6>
         <div id="allMemberGroup"> </div>
-        <!--<div class="media text-muted pt-3">-->
-            <!--<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">-->
-            <!--<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
-                <!--<div class="d-flex justify-content-between align-items-center w-100">-->
-                    <!--<strong class="text-gray-dark">אופיר לפיד</strong>-->
-                    <!--<button type="button" class="btn btn-danger deleteButtons">להסרה</button>-->
-                <!--</div>-->
-                <!--<span class="d-block">ofiriro3@gmail.com</span>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="media text-muted pt-3">-->
-            <!--<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">-->
-            <!--<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
-                <!--<div class="d-flex justify-content-between align-items-center w-100">-->
-                    <!--<strong class="text-gray-dark">דניאל כהן</strong>-->
-                    <!--<button type="button" class="btn btn-danger deleteButtons">להסרה</button>-->
-                <!--</div>-->
-                <!--<span class="d-block">danielCohen@gmail.com</span>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="media text-muted pt-3">-->
-            <!--<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">-->
-            <!--<div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">-->
-                <!--<div class="d-flex justify-content-between align-items-center w-100">-->
-                    <!--<strong class="text-gray-dark">לי בילו</strong>-->
-                    <!--<button type="button" class="btn btn-danger deleteButtons">להסרה</button>-->
-                <!--</div>-->
-                <!--<span class="d-block">leeBilu@gmail.com</span>-->
-            <!--</div>-->
-        <!--</div>-->
         <small class="d-block text-right mt-3" id="forAllGroupMembers" >
             <a href="#" data-toggle="modal" data-target="#exampleModalLong" onclick="allMembersInGroup()">לכל חברי הקבוצה</a>
-            <!-- Button trigger modal -->
-            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">-->
-                <!--Launch demo modal-->
-            <!--</button>-->
-
-            <!-- Modal -->
             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -146,8 +97,8 @@
             </div>
         </small>
         <div class=" text-left">
-        <button type="button" class="btn btn-primary" onclick="leftGroup()" >צא מהקבוצה</button>
-    </div>
+            <button type="button" class="btn btn-primary" onclick="leftGroup()" >צא מהקבוצה</button>
+        </div>
     </div>
 
 </main>

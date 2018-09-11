@@ -1,78 +1,4 @@
-jsonFile = {
-    "Cart_ID": "1",
-    "cart": {
-        "0":
-            {
-                "product":
-                    {
-                        "product_ID": "0",
-                        "productName": "מלפפון",
-                        "price": "5",
-                        "description": "מה שבילו אוהב"
-
-                    },
-                "amount": "3"
-            },
-        "1":
-            {
-                "product":
-                    {
-                        "product_ID": "1",
-                        "productName": "עגבנייה",
-                        "price": "4.80",
-                        "description": "מה שדניאל אוהבת"
-
-                    },
-                "amount": "1"
-            },
-        "2":
-            {
-                "product":
-                    {
-                        "product_ID": "2",
-                        "productName": "מלפפון",
-                        "price": "5",
-                        "description": "מה שבילו אוהב"
-
-                    },
-                "amount": "3"
-            },
-        "3":
-            {
-                "product":
-                    {
-                        "product_ID": "3",
-                        "productName": "מלפפון",
-                        "price": "5",
-                        "description": "מה שבילו אוהב"
-
-                    },
-                "amount": "3"
-            },
-        "0":
-            {
-                "product":
-                    {
-                        "product_ID": "4",
-                        "productName": "מלפפון",
-                        "price": "5",
-                        "description": "מה שבילו אוהב"
-
-                    },
-                "amount": "3"
-            },
-    },
-    "coupon" : {
-
-        "product_ID": "1000",
-        "productName": "הנחת סטודנט",
-        "price": "1",
-        "description": "לבינתחומי יש רק שקל הנחה מצטערים"
-
-    },
-    "total_amount": "18.80",
-    "total_amount_paid": "300"
-}
+let amountLeft;
 
 function RequestCart() {
 
@@ -105,11 +31,8 @@ function RequestCart() {
 
 function loadCartFromJSON(jsonFile)
 {
-    //let CART = cartJSON.cart
-    console.log(jsonFile);
     let CART = jsonFile.cart;
     let my_cart = document.getElementById("my-cart");
-    //firstObject.innerHTML ="";
     let element ="";
     let numberOfTotalProducts = 0;
     for(let i in CART)
@@ -138,10 +61,7 @@ function loadCartFromJSON(jsonFile)
 
         }
     }
-     let Coupon = jsonFile.coupon;
-    // console.log(jsonFile);
-    // console.log(jsonFile.coupon);
-    // console.log(Coupon);
+    let Coupon = jsonFile.coupon;
     if(Coupon && Coupon.productName) {
         element += `<div><li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-success">
@@ -154,25 +74,40 @@ function loadCartFromJSON(jsonFile)
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום כולל</span>
-                <strong>${jsonFile.total_amount} &#8362   </strong>
+                <strong dir="ltr" >&#8362 ${jsonFile.total_amount}</strong>
                 </li></div>`
 
     element+=`<div><li class="list-group-item d-flex justify-content-between">
                 <span>סכום ששולם</span>
-                <strong>${jsonFile.total_amount_paid} &#8362   </strong>
+                <strong dir="ltr">&#8362 ${jsonFile.total_amount_paid}</strong>
                 </li></div>`
-    element+=`<div><li class="list-group-item d-flex justify-content-between">
+    element+=`<div dir="rtl"><li class="list-group-item d-flex justify-content-between">
                 <span>סכום שנשאר</span>
-                <strong>${jsonFile.total_amount - jsonFile.total_amount_paid} &#8362   </strong>
+                <strong dir="ltr">&#8362 ${jsonFile.total_amount - jsonFile.total_amount_paid}    </strong>
                 </li></div>`
-
+    amountLeft = jsonFile.total_amount - jsonFile.total_amount_paid;
     element+=`<input type="hidden" id="Cart_ID" name="Cart_ID" value=${jsonFile.Cart_ID}>`
     my_cart.innerHTML = element;
 
     let numberOfProducts = document.getElementById("numberOfProducts");
-    numberOfProducts.innerText = numberOfTotalProducts.toString();
+    if(numberOfProducts){
+        numberOfProducts.innerText = numberOfTotalProducts.toString();
+    }
+    let urlWithoutVariable = window.location.href.split("?")[0];
+    if(urlWithoutVariable === "http://localhost:8081/static/PaymentMethod.html")
+    {
+        initPaymentPage(jsonFile.total_amount);
+    }
 }
+function initPaymentPage(amount)
+{
+    if(amount === 0)
+    {
+        document.getElementById("submitPayment").disabled = true ;
+        document.getElementById("empty_cart_error_div").style.display = "inline";
+    }
 
+}
 function roundPrice(totalPriceProduct){
     return Math.round(totalPriceProduct * 100) / 100;
 }
@@ -202,6 +137,7 @@ function deleteProductFromCart(Product_ID, quantity)
             return response.json();
         }).then(function (data) {
             if(data.type == "1"){
+                localStorage['Want_to_Finish_Order'] = "No";
                 RequestCart();
             } else{
                 illegalOperation(data.url)

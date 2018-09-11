@@ -40,7 +40,7 @@ app.post('/users/register', function (req, res) {
         }
     }
 
-    users[ids.users_id] = {"id":ids.users_id, "email":body.email, password: body.password, "fullname": body.username, "phone": body.phone, "groups_id" : [], "invited_notifications" : {}, "orders_notifications" : {}};
+    users[ids.users_id] = {"id":ids.users_id, "email":body.email, password: body.password, "fullname": body.username, "phone": body.phone, "groups_id" : []};
     if(!insertToFile(users, "users", "users_id")){
         res.json({"type" : 0, "data" : "ERROR"});
         return;
@@ -121,22 +121,36 @@ app.post('/groups/add', function (req, res) {
  */
 app.post('/groups/update', function (req, res) {
     let body = req.body;
-
+    let userFound = false;
+    let group_id = Number.parseInt(body.group_id);
     for(let id in users){
         for(let i =0; i<body.emails.length; i++){
             if(body.emails[i] == users[id].email){
-                users[id].groups_id.push(body.group_id);
+                if(users[id].groups_id.includes(group_id)){
+                    res.json({"type" : 1, data: "ALREADY_EXIST"});
+                    return;
+                }
+                users[id].groups_id.push(group_id);
                 groups[body.group_id].users_id.push(users[id].id);
-                users[users[id].id].invited_notifications[body.group_id] = {"group" : groups[body.group_id]};
+                let user = clone(users[id]);
+                delete user.password;
+                let notify = {"user" : user, "type" : "NEW_MEMBER"};
+                groups[body.group_id].notifications.push(notify);
+                userFound = true;
+
             }
         }
     }
-
+    if(userFound === false)
+    {
+        res.json({"type" : 1, data: "NON_EXIST_USER"});
+        return;
+    }
     if(!insertToFile(users,"users", false) || !insertToFile(groups,"groups", false)){
         res.json({"type" : 0});
         return;
     }
-    res.json({"type" : 1});
+    res.json({"type" : 1, data: "NEW_USER"});
 });
 /**
  * Get group data by group id
@@ -256,20 +270,26 @@ app.post('/products/get', function (req, res) {
 app.post('/coupons/checkandset', function (req, res) {
     let body = req.body;
 
-    if(!carts[body.cart_id] || !coupons[body.coupon] ){
+    if(!carts[body.cart_id] || (!body.coupon && body.coupon != '' )){
+        console.log("hi");
         return res.json({"type" : 0, "data" : "DB_ERROR"});
+    }
+    else if(!coupons[body.coupon])
+    {
+        console.log("invalid coupon");
+        return res.json({"type" : 1, "data" : "NOT_A_VALID_COUPON"});
     }
 
     let cart = carts[body.cart_id];
     if(cart.coupon && cart.coupon.product_ID){
-        return res.json({"type" : 0, "data" : "CART_HAS_COUPON"});
+        return res.json({"type" : 1, "data" : "CART_HAS_COUPON"});
     }
     cart.coupon = coupons[body.coupon];
     carts[body.cart_id] = cart;
     delete coupons[body.coupon];
     insertToFile(carts, "carts", false);
     insertToFile(coupons, "coupons", false);
-    return res.json({"type" : 1, "data" : 1});
+    return res.json({"type" : 1, "data" : "OK"});
 
 });
 
@@ -384,6 +404,40 @@ app.post('/cart/deleteProduct', function (req, res) {
 });
 
 /**
+ * get the cart
+ * params: group_id
+ */
+app.post('/cart/getStatus', function (req, res) {
+
+    let body = req.body;
+    if(body.group_id === "undefined"){
+        res.json({"type" : 0, "data" : "BODY_ERROR"});
+        return;
+    }
+    let cart = false;
+    for(let i in carts ){
+        if(carts[i].group_id == body.group_id){
+            cart = carts[i];
+            break;
+        }
+    }
+    if(cart === false){
+        res.json({"type" : 0, "data" : "CART_NOT_FOUND"});
+        return;
+    }
+
+    let amount = getTotalAmount(cart);
+    cart.total_amount = Math.round(amount * 100) / 100;
+    let paid = getTotalPaid(cart.Cart_ID, orders);
+    cart.total_amount_paid = paid;
+    let bill =
+        {
+            "paid" : paid,
+            "total_amount" : cart.total_amount
+        };
+    res.json({"type" : 1, "data" : bill});
+});
+/**
  * edit product in the cart
  * params: cart_id product_id, amount
  */
@@ -434,6 +488,10 @@ app.post('/order/place', function (req, res) {
     let total =  getTotalAmount(carts[body.cart_id]);
     if(body.payment_data.partOrFullPayment == "full"){
         body.amount = total - paid;
+        if(body.amount < 0){
+            res.json({"type" : 1, "remainToPay" : body.amount});
+            return;
+        }
     } else {
         if(total  - (parseFloat(body.amount) + paid) < 0){
             body.amount = total - paid;
@@ -442,20 +500,12 @@ app.post('/order/place', function (req, res) {
     let group_id = carts[body.cart_id].group_id;
     let user = clone(users[body.user_id]);
     delete user.password;
-    delete user.invited_notifications;
-    delete user.orders_notifications;
     let order = {"id" : ids.orders_id, "cart_id" : body.cart_id, "type" : body.type, "payment_data": body.payment_data, "amount": body.amount, "user" :user};
     orders[ids.orders_id] = order;
 
-    if(!groups[group_id]){
-        return  res.json({"type" : 0, "data" : "DB_ERROR"});
+    if(!groups[group_id]) {
+        return res.json({"type": 0, "data": "DB_ERROR"});
     }
-    // for(let i =0; i < groups[group_id].users_id.length; i++){
-    //     if(!users[groups[group_id].users_id[i]]){
-    //         continue;
-    //     }
-    //     users[groups[group_id].users_id[i]].orders_notifications[group_id] = {"order" :order };
-    // }
     let notify = clone(order);
     notify.type="PAID";
     groups[group_id].notifications.push(notify);
@@ -483,19 +533,24 @@ app.post('/order/close', function (req, res) {
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return;
     }
-    let cart = carts[body.cart_id]
+    let cart = carts[body.cart_id];
     let paid = getTotalPaid(body.cart_id);
     let total =  getTotalAmount(carts[body.cart_id]);
-    if(paid - total != 0){
-        return res.json({"type" : 0, "data" : "DB_ERROR"});
+    let coupon = {};
+    if(total - paid < 0){
+        let id = makeid();
+        let amount =  (paid - total);
+        coupon = {"product_ID" : id, "productName" : "זיכוי", "description" : "זיכוי בגין עסקה שחרגה", "price" : amount};
+        coupons[id] = coupon;
+        if(!insertToFile(coupons, "coupons", false)){
+            return res.json({"type" : 0, "data" : "DB_ERROR"});
+        }
     }
     if(!users[body.user_id]){
         return res.json({"type" : 0, "data" : "DB_ERROR"});
     }
     let user = clone(users[body.user_id]);
     delete user.password;
-    delete user.invited_notifications;
-    delete user.orders_notifications;
 
     let shipment = {"id" : ids.shipments_id, "user" : user, "cart_data" : cart, "shipments_data" : body.shipments_data};
     shipments[ids.shipments_id] = shipment;
@@ -506,32 +561,61 @@ app.post('/order/close', function (req, res) {
     let notify = clone(shipment);
     notify.type = "CLOSE";
     groups[carts[body.cart_id].group_id].notifications.push(notify);
-    createCart(cart.group_id);
     delete carts[body.cart_id];
+    createCart(cart.group_id);
     if(!insertToFile(carts, "carts", false) || !insertToFile(groups, "groups", false)){
         res.json({"type" : 0, "data" : "DB_ERROR"});
         return
     }
 
-    res.json({"type" : 1, "data" : 1});
+    res.json({"type" : 1, "data" : coupon});
 });
 
-let loadDBData = function () {
+function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 6; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+app.get('/data/clean', function (req, res) {
+    ids = {"users_id":1,"group_id":1,"carts_id":1,"orders_id":1,"shipments_id":1};
+    users={};
+    groups ={};
+    carts ={};
+    shipments ={};
+    orders={};
+    if(!insertToFile(ids,'DBdata', false) ||
+    !insertToFile(users,'users', false)||
+    !insertToFile(groups,'groups', false)||
+    !insertToFile(carts,'carts', false) ||
+    !insertToFile(shipments,'shipments', false)||
+    !insertToFile(orders,'orders', false)){
+        return res.json({"type" : 0});
+    }
+    res.json({"type" : 1});
+
+
+});
+
+let loadDBData = async function () {
     try{
-        let data = fs.readFileSync("DBdata").toString();
-        let db_data = JSON.parse(data);
+        let db_data = await readFile("DBdata");
         ids.users_id = db_data.users_id;
         ids.group_id = db_data.group_id;
         ids.carts_id = db_data.carts_id;
         ids.orders_id = db_data.orders_id;
         ids.shipments_id = db_data.shipments_id;
-        carts = JSON.parse(fs.readFileSync("carts").toString());
-        orders = JSON.parse(fs.readFileSync("orders").toString());
-        coupons = JSON.parse(fs.readFileSync("coupons").toString());
-        groups = JSON.parse(fs.readFileSync("groups").toString());
-        products = JSON.parse(fs.readFileSync("products").toString());
-        users = JSON.parse(fs.readFileSync("users").toString());
-        shipments = JSON.parse(fs.readFileSync("shipments").toString());
+        carts = await readFile("carts");
+        orders = await readFile("orders");
+        coupons = await readFile("coupons");
+        groups = await readFile("groups");
+        products = await readFile("products");
+        users = await readFile("users");
+        shipments = await readFile("shipments");
         return true;
     }
     catch(e){
@@ -540,25 +624,34 @@ let loadDBData = function () {
 
 };
 
-let updateDBData = function(){
+let updateDBData = async function(){
     let data = {"users_id" : ids.users_id, "group_id" : ids.group_id, "carts_id" : ids.carts_id, "orders_id" : ids.orders_id, "shipments_id" : ids.shipments_id};
     try{
-        fs.writeFileSync("DBdata", JSON.stringify(data), 'utf8');
-        return true;
+        fs.writeFile("DBdata", JSON.stringify(data),function (err) {
+            if(err){
+                return false;
+            }
+            return true;
+        });
     } catch (e) {
         return false;
     }
 };
 
 
-let insertToFile = function(data, filename, counter) {
+let insertToFile = async function(data, filename, counter) {
     try{
-        fs.writeFileSync(filename,  JSON.stringify(data), 'utf8');
-        if(counter){
-            ids[counter]++;
-            updateDBData();
-        }
-        return true;
+        await fs.writeFile(filename,  JSON.stringify(data),function (err) {
+            if(err){
+                return false;
+            }
+            if(counter){
+                ids[counter]++;
+                updateDBData();
+            }
+            return true;
+        });
+
     } catch (e) {
         return false;
     }
@@ -566,14 +659,17 @@ let insertToFile = function(data, filename, counter) {
 };
 
 
-// let getFromFile = function (filename) {
-//     try{
-//         let data = fs.readFileSync(filename).toString();
-//         return JSON.parse(data);
-//     } catch(e){
-//         return false;
-//     }
-// };
+function readFile(path) {
+    return new Promise(function (resolve, reject) {
+        fs.readFile(path, function (error, result) {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(JSON.parse(result.toString()));
+            }
+        });
+    });
+}
 function clone(obj) {
     let copy;
 

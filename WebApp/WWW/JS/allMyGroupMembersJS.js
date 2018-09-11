@@ -15,7 +15,6 @@ function allMembersInGroup() {
         return response.json();
     }).then(function (data){
         if(data.type == "1") {
-            console.log("hi");
             showMember(data.data, data.data.length);
         }else{
             illegalOperation(data.url);

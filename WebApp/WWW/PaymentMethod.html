@@ -4,13 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="description" content="">
     <meta name="author" content="">
     <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <title>MyPartners</title>
     <script src="JS/NavBar.js"></script>
-    <link href="CSS/bootstrap.min.css" rel="stylesheet">
+    <link href="CSS/bootstrap.css" rel="stylesheet">
     <script src="JS/PaymentScript.js"></script>
     <link rel="stylesheet" href="CSS/PaymentCssFile.css">
     <script src="JS/CartFunctionality.js"></script>
@@ -20,48 +21,26 @@
 
 <body onload="initPage()" class="bg-light" >
 
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" id="navBar" >
+<nav class="navbar navbar-expand fixed-top navbar-dark bg-dark" id="navBar" >
 
 </nav>
 
 <div class="container" dir="rtl">
     <div class="py-5 text-center">
-        <!--<img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
-        <h2 >תשלום עבור המשלוח</h2>
+        <img class="d-block mx-auto mb-4" src="" alt="" width="72" height="72">
+        <h2 >תשלום עבור ההזמנה</h2>
+        <div id="empty_cart_error_div" class="my-invalid-feedback">
+            לא ניתן לבצע תשלום כי הסכום הכולל הינו 0
+        </div>
     </div>
 
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">העגלה שלך</span>
-                <span class="badge badge-secondary badge-pill" id="numberOfProducts">3</span>
+                <span class="badge badge-secondary badge-pill" id="numberOfProducts">0</span>
             </h4>
             <ul class="list-group mb-3" id="my-cart" style="max-height: 400px ;overflow: auto">
-                <!--<li class="list-group-item d-flex justify-content-between lh-condensed list-item-css ">-->
-                    <!--<div>-->
-                        <!--<h6 class="my-0 text-right">מוצר א'</h6>-->
-                        <!--<small class="text-muted">תיאור מוצר א'</small>-->
-                    <!--</div>-->
-                    <!--<span class="text-muted">12 &#8362</span>-->
-                <!--</li>-->
-                <!--<li class="list-group-item d-flex justify-content-between lh-condensed .list-item-css">-->
-                    <!--<div>-->
-                        <!--<h6 class="my-0">מוצר ב'</h6>-->
-                        <!--<small class="text-muted">תיאור מוצר ב'</small>-->
-                    <!--</div>-->
-                    <!--<span class="text-muted">13 &#8362</span>-->
-                <!--</li>-->
-                <!--<li class="list-group-item d-flex justify-content-between bg-light">-->
-                    <!--<div class="text-success">-->
-                        <!--<h6 class="my-0">קוד קופון</h6>-->
-                        <!--<small>הנחת סטודנט</small>-->
-                    <!--</div>-->
-                    <!--<span class="text-success">10- &#8362</span>-->
-                <!--</li>-->
-                <!--<li class="list-group-item d-flex justify-content-between">-->
-                    <!--<span>סכום כולל</span>-->
-                    <!--<strong>15 &#8362   </strong>-->
-                <!--</li>-->
             </ul>
 
             <div class="card p-2">
@@ -70,36 +49,34 @@
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-secondary" onclick="onCouponsSubmission()">הכנס קוד קופון</button>
                     </div>
+
                 </div>
             </div>
-            <!--<button type="submit" class="btn btn-secondary" onclick="RequestCart()">בדיקת JSON</button>-->
+            <div class="my-invalid-feedback coupon-invalid" id="coupon-invalid">
+                קופון לא תקין
+            </div>
+            <div class="my-invalid-feedback coupon-invalid" id="coupon-invalid_already_used">
+                השתמשת כבר בעבר בקופון
+            </div>
         </div>
 
         <div class="col-md-8 order-md-1" align="right">
-            <h4 class="mb-3">פרטי משלוח</h4>
+            <h4 class="mb-3">פרטי התשלום</h4>
             <div class="needs-validation" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="firstName">שם פרטי</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="">
+                        <label for="FullName">שם פרטי</label>
+                        <input type="text" class="form-control" id="FullName" placeholder="" value="">
                         <div class="my-invalid-feedback">
                             דרוש שם פרטי חוקי
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="lastName">שם משפחה</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" >
+                        <label for="email">כתובת מייל </label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
                         <div class="my-invalid-feedback">
-                            דרוש שם משפחה
+                            דרוש המייל האישי
                         </div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email">כתובת מייל </label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                    <div class="my-invalid-feedback">
-                        דרוש המייל האישי
                     </div>
                 </div>
 
@@ -196,6 +173,10 @@
                                 <option>20</option>
                                 <option>21</option>
                                 <option>22</option>
+                                <option>23</option>
+                                <option>24</option>
+                                <option>25</option>
+                                <option>26</option>
                             </select>
                             <div class="my-invalid-feedback">
                                 הזן שנה
@@ -212,19 +193,11 @@
                     </div>
                 </div>
                 <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="OnSubmitPayment()"> לתשלום לחץ כאן</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit" id="submitPayment" onclick="OnSubmitPayment()"> לתשלום לחץ כאן</button>
             </div>
         </div>
     </div>
 
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2018 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-    </footer>
 </div>
 
 </body>

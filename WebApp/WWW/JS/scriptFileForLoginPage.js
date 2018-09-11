@@ -54,7 +54,9 @@ function initLocalMemory()
             "http://localhost:8081/static/profilePage.html" : 1,
             "http://localhost:8081/static/GroupPage.html"   : 2,
             "http://localhost:8081/static/My-Cart.html" : 3,
-            "http://localhost:8081/static/PaymentMethod.html" : 4
+            "http://localhost:8081/static/PaymentMethod.html" : 4,
+            "http://localhost:8081/static/closeOrder.html" : 4,
+            "http://localhost:8081/static/finishPage.html" : 4
         };
     // Put the object into storage
     localStorage.setItem('nav_keys', JSON.stringify(nav_keys));

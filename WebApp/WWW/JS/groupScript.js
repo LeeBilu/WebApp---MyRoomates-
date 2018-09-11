@@ -4,21 +4,6 @@ function initPage()
 
 }
 
-
-
-function getAllGroupMembers(url = "AllMyGroupMembers.html?group_id=" + findGetParameter("group_id") , title = "my title", w = "600", h = "500")
-
-{
-
-
-    // let left = (screen.width/2)-(w/2);
-    // let top = (screen.height/2)-(h/2);
-    // window.open(url, title, 'toolbar=no, ' +
-    //     'location=no, directories=no, status=no, menubar=no, ' +
-    //     'scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-
-
-}
 function allMembersInGroup() {
     let url = 'http://localhost:8081/group/allMembers';
     let data = {};
@@ -35,7 +20,6 @@ function allMembersInGroup() {
         return response.json();
     }).then(function (data){
         if(data.type == "1") {
-            console.log("hi");
             showMember(data.data, data.data.length);
         }else{
             illegalOperation(data.url);
@@ -77,7 +61,6 @@ function showMember(data, amount) {
                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                <div class="d-flex justify-content-between align-items-center w-100">
                <strong class="text-gray-dark">${data[id].name}</strong>
-           <!--<button type="button" class="btn btn-danger deleteButtons">להסרה</button>-->
                </div>
                <span class="d-block">${data[id].email}</span>
            </div>
@@ -85,7 +68,7 @@ function showMember(data, amount) {
     }
     if(document.getElementById("allMembersGroup")){
         document.getElementById("allMembersGroup").innerHTML = members;
-    }if(document.getElementById("allMemberGroup")){
+    }if(document.getElementById("allMemberGroup")&& amount == 3){
         document.getElementById("allMemberGroup").innerHTML = members;
     }
 
@@ -102,13 +85,20 @@ function findGetParameter(parameterName) {
     return result;
 }
 
+$(document).keypress(
+    function(event){
+        if (event.which == '13' && !document.getElementById('newMemberModal').getAttribute("aria-hidden")) {
+            addNewMember();
+            event.preventDefault();
+        }
+    });
+
 function addNewMember(){
     let newMemberEmail = document.getElementById("newMemberEmail").value;
     let url = 'http://localhost:8081/group/newMember';
     let data = {};
     data.email = newMemberEmail;
     data.group_id = findGetParameter("group_id");
-    console.log(data.group_id);
     fetch(url,
         {
             credentials: "same-origin",
@@ -118,16 +108,47 @@ function addNewMember(){
                 "Content-Type": "application/json"
             }
         }).then(function (res) {
-            return res.json();
-        }).then(function (data) {
-            if(data.type == "1"){
+        return res.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+            let non_ex_div = document.getElementById("non_exists_error");
+            let all_ex_div = document.getElementById("already_exists_error");
+
+            if(data.data === "NEW_USER")
+            {
+                non_ex_div.style.display = "none";
+                all_ex_div.style.display = "none";
                 someMembersInGroup();
-            }else{
-                illegalOperation(data.url);
+                getSomeNotificationsFromServer();
+                $('#newMemberModal').modal('hide');
+                location.reload();
             }
+            else if(data.data === "ALREADY_EXIST")
+            {
+                non_ex_div.style.display = "none";
+                all_ex_div.style.display = "inline";
+            }
+            else if(data.data === 'NON_EXIST_USER')
+            {
+                non_ex_div.style.display = "inline";
+                all_ex_div.style.display = "none";
+            }
+
+
+        }else{
+            illegalOperation(data.url);
+        }
     });
 }
 
+function cancelError()
+{
+    let non_ex_div = document.getElementById("non_exists_error");
+    let all_ex_div = document.getElementById("already_exists_error");
+    non_ex_div.style.display = "none";
+    all_ex_div.style.display = "none";
+
+}
 function leftGroup(){
     let url = 'http://localhost:8081/group/leftGroup';
     let data = {};
@@ -152,7 +173,8 @@ function leftGroup(){
     });
 }
 
-function getAllNotificationsFromServer()
+
+function getSomeNotificationsFromServer()
 {
     let url = 'http://localhost:8081/group/getNotifications';
     let data = {};
@@ -169,41 +191,58 @@ function getAllNotificationsFromServer()
 
         return response.json();
     }).then(function (myJson) {
-            if(myJson.type = 1)
-            {
-                BuildNotificationJSON(myJson.data);
-            }
-        })
+        if(myJson.type = 1)
+        {
+            BuildNotificationJSON(myJson.data, true);
+        }
+    })
         .catch(function (err) {
             console.log(err.toString());
         })
 }
 
-function BuildNotificationJSON(JSON_obj)
+
+function BuildNotificationJSON(JSON_obj, is_limited)
 {
     let notificationDiv = document.getElementById("notification-div");
-    let element = `<h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>`;
+    let notifications = `<h6 class="border-bottom border-gray pb-2 mb-0">העדכונים האחרונים בקבוצה</h6>`;
     let paymentsOfTheGroup = JSON_obj;
-    for(let i =0; i < 5 && i <paymentsOfTheGroup.length; i++)
+    let counter = 0;
+    let amount;
+    if(is_limited){
+        amount = 5;
+    } else{
+        amount = Number.MAX_SAFE_INTEGER;
+    }
+    for(let i = paymentsOfTheGroup.length - 1; counter < amount && i >= 0; i--)
     {
-        element += `<div class="media text-muted pt-3" dir="rtl">
+        counter++;
+        notifications += `<div class="media text-muted pt-3" dir="rtl">
           <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">${paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].user.fullname}</strong>`
-          if(paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].type ==="PAID"){
-              element += `<span dir="rtl">
-               שילם על הסל  ${paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].amount}
+          <strong class="d-block text-gray-dark">${paymentsOfTheGroup[i].user.fullname}</strong>`
+        if(paymentsOfTheGroup[i].type ==="PAID"){
+            notifications += `<span dir="rtl">
+               שילם על הסל  ${paymentsOfTheGroup[i].amount} ש"ח
                 </span>`
 
-          } else if(paymentsOfTheGroup[paymentsOfTheGroup.length - i - 1].type ==="CLOSE"){
-              element += `<span dir="rtl">
+        } else if(paymentsOfTheGroup[i].type ==="CLOSE"){
+            notifications += `<span dir="rtl">
                 סגר את ההזמנה
                 </span>`
-          }
-            element +=`</p>
+        } else if(paymentsOfTheGroup[i].type ==="NEW_MEMBER"){
+            notifications += `<span dir="rtl">
+                הצטרף לקבוצה
+                </span>`
+
+        }
+        notifications +=`</p>
           </div>`
     }
+    notificationDiv.innerHTML = notifications;
 
-    notificationDiv.innerHTML = element;
+    if(document.getElementById("all_notifications")){
+        document.getElementById("all_notifications").innerHTML = notifications;
+    }
 
 }
 
@@ -224,7 +263,7 @@ function groupPermission(){
         if(data.type == "1"){
             someMembersInGroup();
             initNavBar();
-            getAllNotificationsFromServer();
+            getSomeNotificationsFromServer();
             return;
         }else{
             illegalOperation(data.url);

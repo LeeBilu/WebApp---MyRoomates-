@@ -12,7 +12,6 @@ function getQueryVariable(variable) {
 
 
     let query = window.location.search.substring(1);
-    console.log(query);
 
     let vars = query.split("&");
     for (let i = 0; i < vars.length; i++) {
@@ -36,9 +35,7 @@ function findGetParameter(parameterName) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log(window.location.search);
     let url = window.location.href;
-    console.log(url);
     let c = findGetParameter("variable");
     if (c) {
 
@@ -116,7 +113,6 @@ function submitRegisterationFunction() {
     };
 
     let myJSON = JSON.stringify(data);
-    console.log(myJSON);
     let url = 'http://localhost:8081/users/register';
     fetch(url,
         {
@@ -129,19 +125,16 @@ function submitRegisterationFunction() {
         .then(function (response) {
 
 
-            console.log("success");
             return response.json();
         })
         .then(function (myJson) {
             if (myJson.approve == 1) {
-                console.log('returing to login page');
                 window.location.replace(myJson.url);
             }
             else {
                 if(myJson.error == "USER_EXISTS"){
                     existEmail.style.display = "inline-block";
                 }
-                console.log('Problem occured during addition to array');
             }
         })
         .catch(function (err) {

@@ -2,11 +2,46 @@ function initPage()
 {
     groupPermission();
 }
+
+function GetProfileDetails(){
+    let url = 'http://localhost:8081/users/myDetails';
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "GET",
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        if(data.type == "1"){
+
+           let name = data.data.fullname;
+           let email = data.data.email;
+           addDefaultDetailsToPaymentPage(name, email);
+        }else{
+            illegalOperation(data.url)
+        }
+
+    })
+}
+
+function addDefaultDetailsToPaymentPage(name, email)
+{
+    let name_div = document.getElementById("FullName");
+    let email_div = document.getElementById("email");
+    email_div.value = email;
+    name_div.value = name;
+}
 function onCouponsSubmission() {
 
     let coupon = document.getElementById("CouponNumber").value;
     let cart_ID = document.getElementById("Cart_ID").value;
-    if(coupon != null)
+    let coupon_invalid_div= document.getElementById("coupon-invalid");
+    let coupon_invalid_div_already_used= document.getElementById( "coupon-invalid_already_used");
+    if(coupon === '')
+    {
+        coupon_invalid_div.style.display = "inline";
+    }
+    else if(coupon != null)
     {
         let url = 'http://localhost:8081/Cart/RequestForCoupon';
         let data = {
@@ -25,15 +60,28 @@ function onCouponsSubmission() {
             })  .then(function (response) {
             return response.json();
         }).then(function (data) {
-            if(data.type == "1"){
-                RequestCart();
+            if(data.type == "1" ){
+                if(data.data === "OK")
+                {
+                    coupon_invalid_div_already_used.display = "none";
+                    coupon_invalid_div.style.display = "none";
+                    RequestCart();
+                }
+                else if(data.data === "CART_HAS_COUPON")
+                {
+                    coupon_invalid_div_already_used.style.display = "inline";
+                    coupon_invalid_div.style.display = "none";
+                }
+                else
+                {
+                    coupon_invalid_div.style.display = "inline";
+                    coupon_invalid_div_already_used.display = "none";
+                }
             }else{
                 illegalOperation(data.url);
             }
         });
     }
-        coupon = "";
-
 }
 
 function getPaymentMethod(value){
@@ -72,6 +120,11 @@ function OnSubmitPayment() {
                      approve = false;
                      invalidFeedbackBlock.style.display = "block";
                  }
+                 else if(validateElement(element) == false && element.id === "AmountOfMoney")
+                 {
+                     approve = false;
+                     invalidFeedbackBlock.style.display = "block";
+                 }
                  else
                  {
                      invalidFeedbackBlock.style.display = "none";
@@ -80,10 +133,10 @@ function OnSubmitPayment() {
              }
 
         });
-    if(approve)
-    {
-        sendPaymentDetailsToServer(elements);
-    }
+         if(approve)
+         {
+             sendPaymentDetailsToServer(elements);
+         }
 }
 
 function validateElement(element)
@@ -100,6 +153,23 @@ function validateElement(element)
     {
          return validateIDNumber(element.value);
 
+    }
+    else if(element.id === "AmountOfMoney")
+    {
+        let paymentMethod_value = document.getElementById ("partOrFullPayment").value;
+        if(paymentMethod_value === "partial")
+        {
+            if(element.value < 0 || element.value > amountLeft)
+            {
+                return false;
+            }
+
+        }
+        return true;
+    }
+    else if(element.id === "cc_cvv")
+    {
+        return validateCCV(element.value);
     }
     else
     {
@@ -191,10 +261,12 @@ function groupPermission(){
         if(data.type == "1"){
             initNavBar();
             RequestCart();
+            GetProfileDetails();
             return;
         }else{
             illegalOperation(data.url);
 
         }
     });
+
 }

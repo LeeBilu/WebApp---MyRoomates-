@@ -21,37 +21,46 @@ function initActivationBar()
 
 function getNav()
 {
-    element =
-    `<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
+    let element = `<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault" dir="rtl">
         <ul class="navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" id = "nav1" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html")> הפרופיל האישי </a>
+                <a class="nav-link" id = "nav1" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/profilePage.html")>
+                 <span class="d-none d-md-inline">הפרופיל האישי</span>
+                 <span class="d-md-none"><i class="fa fa-address-card"></i></span>
+                 </a>
+            </li>`;
+        if(findGetParameter("group_id") != ''){
+        element += ` <li class="nav-item">
+                <a class="nav-link" id = "nav2" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html",this.id)>
+                                 <span class="d-none d-md-inline">הקבוצה הנוכחית</span>
+                 <span class="d-md-none"><i class="fa fa-group"></i></span>
+           
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id = "nav2" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/GroupPage.html",this.id)>הקבוצה הנוכחית</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>העגלה שלי</a>
+                    <a class="nav-link" id = "nav3" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/My-Cart.html",this.id)>
+            <span class="d-none d-md-inline">העגלה שלנו</span>
+                 <span class="d-md-none"><i class="fa fa-cart-plus"></i></span>
+                
+             </a>
             </li>
            <li class="nav-item ">
-                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClick("http://localhost:8081/static/PaymentMethod.html",this.id)>תשלום</a>
+                <a class="nav-link" id = "nav4" href="#" onclick = NavButtonOnClickPaymentPage()>
+                <span class="d-none d-md-inline">תשלום</span>
+                 <span class="d-md-none"><i class="fa fa-money"></i></span>
+                </a>
             </li>
         </ul>
-        <ul class="navbar-nav mr-auto">
+        `;
+        }
+        else
+        {
+            element += `</ul>`
+        }
+        element += `<ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="http://localhost:8081/static/login.html" onclick="disconnectFromSite()">התנתקות</a>
             </li>
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">הגדרות</a>
-            </li>
-        <li>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
     </ul>
   
     </div>`;
@@ -76,6 +85,7 @@ function disconnectFromSite() {
                 {
                     window.location.replace(response.url);
                 }
+
                 return response.json();
             })
             .then(function (myJson) {
@@ -96,8 +106,6 @@ function NavButtonOnClick(url, elementID = false)
 {
     if(elementID){
         window.location.replace(url + location.search);
-        //parent = element.parentElement;
-        localStorage['active-nav'] = elementID;
 
     } else{
         window.location.replace(url);
@@ -116,4 +124,62 @@ function findGetParameter(parameterName) {
         }
     }
     return result;
+}
+
+function NavButtonOnClickPaymentPage()
+{
+    let finishedBefore = localStorage.getItem('Want_to_Finish_Order');
+    if(finishedBefore && finishedBefore ==="Yes")
+    {
+        let url = "http://localhost:8081/static/closeOrder.html";
+        window.location.replace(url + location.search);
+    }
+    else
+    {
+        wasCartFullyPaid();
+    }
+}
+
+function wasCartFullyPaid()
+{
+    let url = 'http://localhost:8081/Cart/getStatus';
+    let data = {"group_id": findGetParameter("group_id")};
+
+    fetch(url,
+        {
+            credentials: "same-origin",
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })  .then(function (response) {
+        return response.json();
+    }).then(function (data){
+        if(data.type == "1") {
+
+            let url = "http://localhost:8081/static/PaymentMethod.html";
+            if(data.data)
+            {
+                let paymentData = data.data;
+                if(paymentData.total_amount != 0 && paymentData.total_amount - paymentData.paid <= 0 || paymentData.total_amount - paymentData.paid < 0)
+                {
+                    localStorage['Want_to_Finish_Order'] = "Yes";
+                    url = "http://localhost:8081/static/closeOrder.html";
+                    window.location.replace(url + location.search);
+                }
+                else
+                {
+                    url = "http://localhost:8081/static/PaymentMethod.html";
+                    window.location.replace(url + location.search);
+                }
+            }
+        }
+        else{
+            illegalOperation(data.url);
+            return false;
+        }
+
+
+    });
 }
